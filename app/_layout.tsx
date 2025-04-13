@@ -11,8 +11,13 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { getAuth } from "firebase/auth";
-import { firebaseApp } from "@/firebase";
+import {
+  getAuth, initializeAuth,
+  // @ts-ignore
+  getReactNativePersistence
+} from "firebase/auth";
+import { firebaseApp } from "@/firebaseConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,7 +38,9 @@ export default function RootLayout() {
     return null;
   }
 
-  const auth = getAuth(firebaseApp);
+  const auth = initializeAuth(firebaseApp, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  })
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
