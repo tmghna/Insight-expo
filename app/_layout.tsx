@@ -19,6 +19,10 @@ import {
 import { firebaseApp } from "@/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// app/_layout.tsx
+import { TamaguiProvider } from 'tamagui'
+import config from '../tamagui.config'
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -43,12 +47,12 @@ export default function RootLayout() {
   })
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <TamaguiProvider config={config}>    
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
-    </ThemeProvider>
+    </TamaguiProvider>
   );
 }
