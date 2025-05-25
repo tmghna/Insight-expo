@@ -15,8 +15,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.harshita1314.Insight"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -37,13 +36,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "ef69c8b5-a80e-4e2f-b39e-3bfc840576bb"
-      }
-    },
-    "owner": "harshita1314"
+    }
   }
 }
