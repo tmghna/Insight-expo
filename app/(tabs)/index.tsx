@@ -1,6 +1,8 @@
 import { ImageBackground } from 'react-native'
 import { YStack, Text, Button } from 'tamagui'
 import { LinearGradient } from '@tamagui/linear-gradient'
+import signInMethod from '@/services/auth'
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin'
 export default function Home() {
   return (
     <ImageBackground
@@ -17,7 +19,11 @@ export default function Home() {
     >
       <YStack ai="center">
         <Text fontSize={24} mb="$4">Hello from Tamagui 👋</Text>
-        <Button onPress={() => alert('It works!')}>Press me</Button>
+        <GoogleSigninButton
+          style={{ width: 192, height: 48}}
+          size = {GoogleSigninButton.Size.Wide}
+          color = {GoogleSigninButton.Color.Dark}
+          onPress={() => signInMethod().then(() => console.log("Signed In"))} />
       </YStack>
       </LinearGradient>
       </ImageBackground>

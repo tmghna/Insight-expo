@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "372122265926",
+    "project_id": "insight-expo-62564",
+    "storage_bucket": "insight-expo-62564.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372122265926:android:b105a59c1c81fe22895d47",
+        "android_client_info": {
+          "package_name": "com.turing.insight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372122265926-0mvvkm77ko6n2its2n2p1js7s44skfd4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.turing.insight",
+            "certificate_hash": "f301fe4d1bd19ca27f4de0f594f6a2637bf1795b"
+          }
+        },
+        {
+          "client_id": "372122265926-jako302r2cfcrk9ne6qtgt62arme3dps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXb5TlpArL5ZzDcP6FqwqLZVrYKUNb-yI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372122265926-jako302r2cfcrk9ne6qtgt62arme3dps.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

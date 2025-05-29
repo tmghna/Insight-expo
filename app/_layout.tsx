@@ -11,13 +11,6 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import {
-  getAuth, initializeAuth,
-  // @ts-ignore
-  getReactNativePersistence
-} from "firebase/auth";
-import { firebaseApp } from "@/firebaseConfig";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // app/_layout.tsx
 import { TamaguiProvider } from 'tamagui'
@@ -41,10 +34,6 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
-  const auth = initializeAuth(firebaseApp, {
-    persistence: getReactNativePersistence(AsyncStorage)
-  })
 
   return (
     <TamaguiProvider config={config}>    
