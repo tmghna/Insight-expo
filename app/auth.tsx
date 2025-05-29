@@ -56,7 +56,14 @@ export default function Home() {
               uri: require("../assets/images/insight_logo.png"),
             }}
           />
-          <LoginButton mt="45" onPress={() => alert("It works!")}>
+          <LoginButton
+            mt="45"
+            onPress={() =>
+              signInMethod(router).then((user) => {
+                onAuthStateChanged(user);
+              })
+            }
+          >
             Guest Login
           </LoginButton>
           <LoginButton
