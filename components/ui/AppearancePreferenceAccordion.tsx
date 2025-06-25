@@ -12,8 +12,31 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export function CampusFacilities() {
   const [isOpen, setIsOpen] = useState(false);
+  // Tracker for height anim
   const animation = useRef(new Animated.Value(0)).current;
-  const rotateAnim = useRef(new Animated.Value(0)).current;
+  // Tracker for chevron rotation anim
+  const openAnim = useRef(new Animated.Value(0)).current;
+  const closeAnim = useRef(new Animated.Value(1)).current;
+
+  const triggerAnimation = (toOpen: boolean) => {
+    if (toOpen) {
+      closeAnim.setValue(1); // reset the close anim
+      Animated.timing(openAnim, {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    } else {
+      openAnim.setValue(0); // reset the open anim
+      Animated.timing(closeAnim, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    }
+  };
 
   const toggle = () => {
     setIsOpen(prev => !prev);
@@ -29,23 +52,24 @@ export function CampusFacilities() {
     }).start();
 
     // Animate rotation
-    Animated.timing(rotateAnim, {
-      toValue: isOpen ? 1 : 0,
-      duration: 250,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
+    triggerAnimation(isOpen);
   }, [isOpen]);
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 120], // Needs to be responsive. Tamaghna
+    outputRange: [0, 35*5], // Needs to be responsive. Tamaghna
+  });
+  // Open and close with jerks
+  const openingRotation = openAnim.interpolate({
+    inputRange: [0, 0.7, 0.9, 1],
+    outputRange: ['0deg', '210deg', '170deg', '180deg'],
   });
 
-  const rotation = rotateAnim.interpolate({
+  const closingRotation = closeAnim.interpolate({
     inputRange: [0, 0.1, 0.3, 1],
     outputRange: ['0deg', '-30deg', '10deg', '180deg'],
   });
+  const rotation = isOpen ? openingRotation : closingRotation;
 
   return (
     <View style={styles.container}>
@@ -60,10 +84,11 @@ export function CampusFacilities() {
 
       <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
         <View style={styles.contentInner}>
-          <Text style={styles.contentText}>• Market</Text>
-          <Text style={styles.contentText}>• Library</Text>
-          <Text style={styles.contentText}>• Contacts</Text>
-          <Text style={styles.contentText}>• Complaints</Text>
+          <Text style={styles.contentText}>Market</Text>
+          <Text style={styles.contentText}>Complaints</Text>
+          <Text style={styles.contentText}>Contacts</Text>
+          <Text style={styles.contentText}>Campus Map</Text>
+          <Text style={styles.contentText}>Timings</Text>
         </View>
       </Animated.View>
     </View>
@@ -72,8 +97,31 @@ export function CampusFacilities() {
 
 export function HelpfulTiles() {
   const [isOpen, setIsOpen] = useState(false);
+  // Tracker for height anim
   const animation = useRef(new Animated.Value(0)).current;
-  const rotateAnim = useRef(new Animated.Value(0)).current;
+  // Tracker for chevron rotation anim
+  const openAnim = useRef(new Animated.Value(0)).current;
+  const closeAnim = useRef(new Animated.Value(1)).current;
+
+  const triggerAnimation = (toOpen: boolean) => {
+    if (toOpen) {
+      closeAnim.setValue(1); // reset the close anim
+      Animated.timing(openAnim, {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    } else {
+      openAnim.setValue(0); // reset the open anim
+      Animated.timing(closeAnim, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    }
+  };
 
   const toggle = () => {
     setIsOpen(prev => !prev);
@@ -89,23 +137,24 @@ export function HelpfulTiles() {
     }).start();
 
     // Animate rotation
-    Animated.timing(rotateAnim, {
-      toValue: isOpen ? 1 : 0,
-      duration: 250,
-      easing: Easing.inOut(Easing.ease),
-      useNativeDriver: true,
-    }).start();
+    triggerAnimation(isOpen);
   }, [isOpen]);
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 120], // You can adjust this depending on how much content there is
+    outputRange: [0, 35*4], // Needs to be responsive. Tamaghna
+  });
+  // Open and close with jerks
+  const openingRotation = openAnim.interpolate({
+    inputRange: [0, 0.7, 0.9, 1],
+    outputRange: ['0deg', '210deg', '170deg', '180deg'],
   });
 
-  const rotation = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
+  const closingRotation = closeAnim.interpolate({
+    inputRange: [0, 0.1, 0.3, 1],
+    outputRange: ['0deg', '-30deg', '10deg', '180deg'],
   });
+  const rotation = isOpen ? openingRotation : closingRotation;
 
   return (
     <View style={styles.container}>
@@ -123,7 +172,7 @@ export function HelpfulTiles() {
           <Text style={styles.contentText}>Lost & Found</Text>
           <Text style={styles.contentText}>Emergency Contacts</Text>
           <Text style={styles.contentText}>Book Material</Text>
-          {/* <Text style={styles.contentText}>Laundry</Text> */}
+          <Text style={styles.contentText}>Laundry</Text>
         </View>
       </Animated.View>
     </View>
@@ -163,6 +212,6 @@ const styles = StyleSheet.create({
   contentText: {
     color: '#ccc',
     fontSize: 14,
-    marginBottom: 8,
+    marginBottom: 12,
   },
 });

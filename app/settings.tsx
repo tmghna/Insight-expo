@@ -10,7 +10,6 @@ import {
   Linking,
 } from 'react-native';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
-import { YStack } from 'tamagui';
 import {CampusFacilities, HelpfulTiles} from '@/components/ui/AppearancePreferenceAccordion';
 
 const Settings = () => {
@@ -45,37 +44,6 @@ const Settings = () => {
 
       {/* Preferences */}
       <Text style={styles.sectionHeader}>Preferences</Text>
-
-      {/* Collapsible Section 1 */}
-      <TouchableOpacity
-        style={styles.collapseHeader}
-        onPress={() => setCampusOpen(!campusOpen)}
-      >
-        <Text style={styles.collapseText}>Campus Facilities</Text>
-        <AntDesign name={campusOpen ? 'up' : 'down'} size={16} color="#AAA" />
-      </TouchableOpacity>
-      {campusOpen && (
-        <View style={styles.collapseContent}>
-          <Text style={styles.collapseItem}>• Hostels</Text>
-          <Text style={styles.collapseItem}>• Library</Text>
-          <Text style={styles.collapseItem}>• Sports Complex</Text>
-        </View>
-      )}
-
-      {/* Collapsible Section 2 */}
-      <TouchableOpacity
-        style={styles.collapseHeader}
-        onPress={() => setTilesOpen(!tilesOpen)}
-      >
-        <Text style={styles.collapseText}>Helpful Tiles</Text>
-        <AntDesign name={tilesOpen ? 'up' : 'down'} size={16} color="#AAA" />
-      </TouchableOpacity>
-      {tilesOpen && (
-        <View style={styles.collapseContent}>
-          <Text style={styles.collapseItem}>• Bus Schedule</Text>
-          <Text style={styles.collapseItem}>• Mess Menu</Text>
-        </View>
-      )}
       <CampusFacilities/>
       <HelpfulTiles/>
 
@@ -83,12 +51,13 @@ const Settings = () => {
       {/* Footer Section */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>Dev Blog</Text>
-        <TouchableOpacity onPress={() => Linking.openURL('https://iiserm.github.io/insights/')}>
-          <Text style={styles.linkText}>https://iiserm.github.io/Insights/</Text>
+        <TouchableOpacity style={styles.githubLink} onPress={() => Linking.openURL('https://github.com/IISERM/Insight-expo')}>
+          <AntDesign name="github" size={16} color="#FFF" style={styles.githubIcon} />
+          <Text style={styles.linkText}>Github</Text>
         </TouchableOpacity>
 
         <Text style={[styles.footerText, { marginTop: 10 }]}>Updates</Text>
-        <Text style={styles.regularText}>Version 3.0.0</Text>
+        <Text style={styles.regularText}>Version 4.0.0</Text>
 
         <Text style={[styles.regularText, { marginTop: 16 }]}>
           An Initiative by The Turing Club
@@ -164,14 +133,9 @@ const styles = StyleSheet.create({
   sectionHeader: {
     color: '#A678F1',
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '600',
     marginTop: 20,
     marginBottom: 8,
-  },
-  linkText: {
-    color: '#BBB',
-    fontSize: 14,
-    marginBottom: 12,
   },
   collapseHeader: {
     flexDirection: 'row',
@@ -196,8 +160,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 6,
   },
+  githubLink: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    backgroundColor: '#1c1c1c',
+    marginTop: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+  },
+  githubIcon: {
+    marginRight: 6,
+    opacity: 0.8,
+  },
+  linkText: {
+    color: '#BBB',
+    fontSize: 12,
+  },
   footer: {
-    marginTop: 30,
+    marginTop: 20,
   },
   footerText: {
     color: '#A678F1',
