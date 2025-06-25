@@ -49,18 +49,22 @@ const facilities = [
   {
     id: "Market",
     image: require("../assets/images/market2.png"),
+    push: "/+not-found",
   },
   {
     id: "Complaints",
     image: require("../assets/images/complaints2.png"),
+    push: "/+not-found",
   },
   {
     id: "Contacts",
     image: require("../assets/images/menu2.png"),
+    push: "/contacts",
   },
   {
     id: "Timings",
     image: require("../assets/images/time2.png"),
+    push: "/+not-found",
   },
 ];
 
@@ -350,7 +354,7 @@ export default function HomePage() {
                   backgroundColor: "#00000000",
                   borderColor: "#00000000",
                 }}
-                onPress={()=> router.push("/contacts")}
+                onPress={()=> router.push(item.push)}
               >
                 <RNText
                   adjustsFontSizeToFit
