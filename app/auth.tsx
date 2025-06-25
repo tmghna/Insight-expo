@@ -58,6 +58,7 @@ export default function Home() {
           />
           <LoginButton 
             mt="45" 
+            onPress={() => router.push("/homepage")}
           >
             Guest Login
           </LoginButton>
