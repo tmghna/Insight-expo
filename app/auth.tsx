@@ -56,13 +56,8 @@ export default function Home() {
               uri: require("../assets/images/insight_logo.png"),
             }}
           />
-          <LoginButton
-            mt="45"
-            onPress={() =>
-              signInMethod(router).then((user) => {
-                onAuthStateChanged(user);
-              })
-            }
+          <LoginButton 
+            mt="45" 
           >
             Guest Login
           </LoginButton>
@@ -86,6 +81,7 @@ export default function Home() {
             bottom={"1.4%"}
             right={"1.5%"}
             chromeless
+
           >
             {"< dev login >"}
           </Button>
