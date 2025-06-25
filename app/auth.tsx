@@ -58,11 +58,7 @@ export default function Home() {
           />
           <LoginButton
             mt="45"
-            onPress={() =>
-              signInMethod(router).then((user) => {
-                onAuthStateChanged(user);
-              })
-            }
+            onPress={() => router.push('/settings')} 
           >
             Guest Login
           </LoginButton>
