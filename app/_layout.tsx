@@ -81,6 +81,7 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
             <Stack.Screen name="homepage" options={{ headerShown: false }} />
+            <Stack.Screen name="contacts" options={{ headerShown: false }} />
           </Stack>
           <StatusBar style="auto" />
         </AuthProvider>
