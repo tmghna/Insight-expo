@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import {
-  Platform,
-  Image,
   View,
   Text,
   StyleSheet,
@@ -13,12 +12,21 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {CampusFacilities, HelpfulTiles} from '@/components/ui/AppearancePreferenceAccordion';
 
 const Settings = () => {
-  const [campusOpen, setCampusOpen] = useState(false);
-  const [tilesOpen, setTilesOpen] = useState(false);
+  // const [campusOpen, setCampusOpen] = useState(false);
+  // const [tilesOpen, setTilesOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <ScrollView style={styles.container}>
       {/* Header Section */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <MaterialIcons name="arrow-back" size={24} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Settings</Text>
+      </View>
+
+      {/* Profile Section */}
       <View style={styles.profileSection}>
         <View style={styles.profileInfo}>
           <View style={styles.avatar}>
@@ -64,9 +72,9 @@ const Settings = () => {
         </Text>
         <Text style={styles.regularText}>Convener: Gokul P B</Text>
         <Text style={styles.regularText}>
-          Co-Convener:{'\n'}
+          Co-Convener:{'\n'} Harshita{'\n'} Aniket
         </Text>
-        <Text style={styles.regularText}>Developer Team:</Text>
+        <Text style={styles.regularText}>&lt;/&gt; Developer Team:</Text>
         <Text style={styles.regularText}>
           {'\n'}{'\n'}{'\n'}
         </Text>
@@ -78,6 +86,21 @@ const Settings = () => {
 export default Settings;
 
 const styles = StyleSheet.create({
+  header: {
+    paddingTop: 20,
+    paddingHorizontal: 4,
+    paddingBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButton: {
+    marginRight: 18,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '400',
+    color: 'white',
+  },
   container: {
     flex: 1,
     backgroundColor: '#111111',
@@ -88,6 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
+    marginTop: 8,
   },
   profileInfo: {
     flexDirection: 'row',
@@ -193,7 +217,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: '#A678F1', // Violet shade
-    marginVertical: 12,
+    marginVertical: 10,
     opacity: 0.4,
   },
 });
