@@ -1,13 +1,8 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState, useContext, createContext } from "react";
+import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -34,12 +29,13 @@ export default function RootLayout() {
     GeneralSans600: require("../assets/fonts/GeneralSans-Variable.ttf"),
     GeneralSans700: require("../assets/fonts/GeneralSans-Variable.ttf"),
     Icon1: require("../assets/fonts/icon1.ttf"),
-    Kreadon200: require("../assets/fonts/KreadonVF.ttf"),
-    Kreadon300: require("../assets/fonts/KreadonVF.ttf"),
-    Kreadon400: require("../assets/fonts/KreadonVF.ttf"),
-    Kreadon500: require("../assets/fonts/KreadonVF.ttf"),
-    Kreadon600: require("../assets/fonts/KreadonVF.ttf"),
-    Kreadon700: require("../assets/fonts/KreadonVF.ttf"),
+    Kreadon200: require("../assets/fonts/Kreadon-EL.otf"),
+    Kreadon300: require("../assets/fonts/Kreadon-L.otf"),
+    Kreadon400: require("../assets/fonts/Kreadon-R.otf"),
+    Kreadon500: require("../assets/fonts/Kreadon-M.otf"),
+    Kreadon600: require("../assets/fonts/Kreadon-D.otf"),
+    Kreadon700: require("../assets/fonts/Kreadon-B.otf"),
+    Kreadon800: require("../assets/fonts/Kreadon-EB.otf"),
     Lato400: require("../assets/fonts/Lato-Regular.ttf"),
     Montserrat400: require("../assets/fonts/Montserrat-Regular.ttf"),
     Mukta400: require("../assets/fonts/Mukta-Regular.ttf"),
@@ -49,15 +45,9 @@ export default function RootLayout() {
     Rubik400: require("../assets/fonts/Rubik-Regular.ttf"),
     VarelaRound400: require("../assets/fonts/VarelaRound-Regular.ttf"),
     Verdanab700: require("../assets/fonts/verdanab.ttf"),
-    WorkSans100: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans200: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans300: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans400: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans500: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans600: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans700: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans800: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
-    WorkSans900: require("../assets/fonts/WorkSans-VariableFont_wght.ttf"),
+    WorkSans400: require("../assets/fonts/WorkSans-Regular.ttf"),
+    WorkSans500: require("../assets/fonts/WorkSans-Medium.ttf"),
+    WorkSans600: require("../assets/fonts/WorkSans-SemiBold.ttf"),
   });
 
   useEffect(() => {
