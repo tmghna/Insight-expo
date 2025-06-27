@@ -56,10 +56,7 @@ export default function Home() {
               uri: require("../assets/images/insight_logo.png"),
             }}
           />
-          <LoginButton 
-            mt="45" 
-            onPress={() => router.push("/homepage")}
-          >
+          <LoginButton mt="45" onPress={() => router.push("/homepage")}>
             Guest Login
           </LoginButton>
           <LoginButton
@@ -82,7 +79,6 @@ export default function Home() {
             bottom={"1.4%"}
             right={"1.5%"}
             chromeless
-
           >
             {"< dev login >"}
           </Button>

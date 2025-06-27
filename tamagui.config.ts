@@ -67,6 +67,7 @@ const Kreadon = createFont({
     500: "Kreadon500",
     600: "Kreadon600",
     700: "Kreadon700",
+    800: "Kreadon800",
   },
   size: tamaguiDefaultConfig.fonts.body.size,
   face: {
@@ -76,6 +77,7 @@ const Kreadon = createFont({
     500: { normal: "Kreadon500", },
     600: { normal: "Kreadon600", },
     700: { normal: "Kreadon700", },
+    800: { normal: "Kreadon800", },
   }
 })
 
@@ -181,27 +183,15 @@ const Verdanab = createFont({
 const WorkSans = createFont({
   family: "WorkSans",
   weight: {
-    100: "WorkSans100",
-    200: "WorkSans200",
-    300: "WorkSans300",
     400: "WorkSans400",
     500: "WorkSans500",
     600: "WorkSans600",
-    700: "WorkSans700",
-    800: "WorkSans800",
-    900: "WorkSans900",
   },
   size: tamaguiDefaultConfig.fonts.body.size,
   face: {
-    100: { normal: "WorkSans100", },
-    200: { normal: "WorkSans200", },
-    300: { normal: "WorkSans300", },
     400: { normal: "WorkSans400", },
     500: { normal: "WorkSans500", },
     600: { normal: "WorkSans600", },
-    700: { normal: "WorkSans700", },
-    800: { normal: "WorkSans800", },
-    900: { normal: "WorkSans900", },
   }
 })
 
