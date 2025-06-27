@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import {
   View,
-  Text,
+  // Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   Linking,
 } from 'react-native';
-// import {Text} from 'tamagui';
+import {Text} from 'tamagui';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {CampusFacilities, HelpfulTiles} from '@/components/ui/AppearancePreferenceAccordion';
 import { Tamagui } from '@tamagui/core';
@@ -23,7 +23,7 @@ const Settings = () => {
       {/* Header Section */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <MaterialIcons name="arrow-back" size={24} color="white" />
+          <MaterialIcons name="arrow-back-ios" size={20} color="white" />
         </TouchableOpacity>
         <Text style={styles.title}>Settings</Text>
       </View>
@@ -35,25 +35,32 @@ const Settings = () => {
             <MaterialIcons name="person" size={28} color="#FFF" />
           </View>
           <View style={styles.profileText}>
-            <Text style={styles.name}>USER ID</Text>
+            <Text style={styles.name}>User Name</Text>
             <Text style={styles.email}>xxxxxxx@iisermohali.ac.in</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.logoutIcon} onPress={() => {}}>
           <MaterialIcons name="logout" size={16} color="#FFF" style={styles.logoutIconIcon} />
-          <Text style={styles.logoutText}>Logout</Text>
+          <Text style={styles.logoutText}>Log out</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.divider} />
 
       {/* Permissions */}
-      <Text style={styles.sectionHeader}>Permissions</Text>
+      <View style={styles.headingContainer}>
+        <View style={styles.bullet} />
+        <Text style={styles.sectionHeader}>Permissions</Text>
+      </View>
       <TouchableOpacity>
-        <Text style={styles.linkText}>Give Notification Access &gt;</Text>
+        <Text style={styles.subText}>Give Notification Access &gt;</Text>
       </TouchableOpacity>
 
       {/* Preferences */}
-      <Text style={styles.sectionHeader}>Preferences</Text>
+      <View style={styles.headingContainer}>
+        <View style={styles.bullet} />
+        <Text style={styles.sectionHeader}>Preferences</Text>
+      </View>
+      <Text style={styles.subText}>Homepage Appearances</Text>
       <CampusFacilities/>
       <HelpfulTiles/>
 
@@ -96,12 +103,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backButton: {
-    marginRight: 18,
+    marginRight: 20,
   },
   title: {
     fontSize: 18,
     fontWeight: '400',
     color: 'white',
+    fontFamily: 'Nunito'
   },
   container: {
     flex: 1,
@@ -109,16 +117,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   profileSection: {
+    position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 4,
     marginTop: 8,
+    paddingRight: 100,
   },
   profileInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     flexShrink: 1,
+    flexGrow: 1,
   },
   avatar: {
     width: 48,
@@ -127,17 +138,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#8345cf',
     justifyContent: 'center',
     alignItems: 'center',
+    flexShrink: 0,
   },
   profileText: {
     marginLeft: 12,
+    flexShrink: 1,
   },
   logoutIcon: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#2C2C2C',
+    backgroundColor: '#222',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 10,
+    flexShrink: 0,
   },
   logoutIconIcon: {
     marginRight: 6,
@@ -145,51 +162,52 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#DDD',
     fontWeight: '400',
-    fontSize: 15,
+    fontSize: 14,
+    fontFamily: 'Nunito',
   },
   name: {
     color: '#FFFFFF',
     fontSize: 18,
-    // fontFamily: "WorkSans400",
+    fontWeight: 500,
+    fontFamily: "WorkSans",
   },
   email: {
     color: '#AAA',
     fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Nunito',
   },
-  sectionHeader: {
-    color: '#A678F1',
-    fontSize: 20,
+  headingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 20,
     marginBottom: 8,
-    // fontFamily:"WorkSans400",
   },
-  collapseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#2C2C2C',
-    padding: 12,
-    borderRadius: 16,
-    marginTop: 10,
+  bullet: {
+    width: 6,
+    height: 20,
+    borderRadius: 2,
+    backgroundColor: '#8345cf',
+    marginRight: 10,
   },
-  collapseText: {
+  sectionHeader: {
     color: '#FFF',
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: 400,
+    fontFamily:"WorkSans",
   },
-  collapseContent: {
-    backgroundColor: '#1A1A1A',
-    padding: 12,
-    marginTop: 2,
-    borderRadius: 6,
-  },
-  collapseItem: {
-    color: '#CCC',
+  subText: {
+    color: '#999',
     fontSize: 14,
-    marginBottom: 6,
+    lineHeight: 18,
+    fontWeight: '400',
+    fontFamily: 'Nunito',
+    paddingLeft: 15, 
   },
   githubLink: {
     alignSelf: 'flex-start',
     flexDirection: 'row',
-    backgroundColor: '#1c1c1c',
+    backgroundColor: '#222',
     marginTop: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -200,27 +218,32 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   linkText: {
-    color: '#BBB',
+    color: '#CCC',
     fontSize: 12,
+    fontWeight: '400',
+    fontFamily: 'Nunito',
   },
   footer: {
     marginTop: 20,
   },
   footerText: {
     color: '#DDD',
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '400',
-    // family: 'WorkSans',
+    fontFamily: 'WorkSans',
   },
   regularText: {
     color: '#999',
-    fontSize: 13,
+    fontSize: 12,
     lineHeight: 18,
+    fontWeight: '400',
+    fontFamily: 'Nunito',
   },
   divider: {
     height: 1,
-    backgroundColor: '#A678F1', // Violet shade
+    backgroundColor: '#A678F1',
     marginVertical: 10,
-    opacity: 0.4,
+    opacity: 0.2,
+    marginHorizontal: -20
   },
 });

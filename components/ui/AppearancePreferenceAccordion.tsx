@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
-  Text,
+  // Text,
   TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import {Text} from 'tamagui';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export function CampusFacilities() {
@@ -21,6 +22,7 @@ export function CampusFacilities() {
     { key: 'map', label: 'Campus Map', onCheck: () => {} },
     { key: 'timings', label: 'Timings', onCheck: () => {} },
   ];
+  const outputRangeMax = 24+items.length*35;
 
   const toggleCheckbox = (key: string, callback: () => void) => {
     setCheckedItems(prev => {
@@ -76,7 +78,7 @@ export function CampusFacilities() {
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 35*items.length], // Needs to be responsive. Tamaghna
+    outputRange: [0, outputRangeMax], // Needs to be responsive. Tamaghna
   });
   // Open and close with jerks
   const openingRotation = openAnim.interpolate({
@@ -135,6 +137,7 @@ export function HelpfulTiles() {
     { key: 'bookmaterial', label: 'Book Material', onCheck: () => {} },
     { key: 'laundry', label: 'Laundry', onCheck: () => {} },
   ];
+  const outputRangeMax = 24+items.length*35;
 
   const toggleCheckbox = (key: string, callback: () => void) => {
     setCheckedItems(prev => {
@@ -190,7 +193,7 @@ export function HelpfulTiles() {
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 35*items.length], // Needs to be responsive. Tamaghna
+    outputRange: [0, outputRangeMax], // Needs to be responsive. Tamaghna
   });
   // Open and close with jerks
   const openingRotation = openAnim.interpolate({
@@ -243,7 +246,7 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width - 40,
     alignSelf: 'center',
-    backgroundColor: '#2c2c2c',
+    backgroundColor: '#222',
     borderRadius: 12,
     overflow: 'hidden',
     marginVertical: 6,
@@ -254,12 +257,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 6,
     paddingHorizontal: 16,
-    backgroundColor: '#2c2c2c',
+    backgroundColor: '#222',
   },
   headerText: {
     color: 'white',
     fontWeight: '400',
     fontSize: 16,
+    fontFamily: 'Nunito',
   },
   contentContainer: {
     overflow: 'hidden',
@@ -273,16 +277,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   contentText: {
     color: '#ccc',
     fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Nunito'
   },
   checkbox: {
     width: 18,
     height: 18,
-    borderRadius: 6,
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: '#999',
     justifyContent: 'center',
