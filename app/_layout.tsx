@@ -70,6 +70,7 @@ export default function RootLayout() {
     return null;
   }
   console.log("Hello");
+  console.log('Fonts loaded:', loaded);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <TamaguiProvider config={config}>
@@ -82,6 +83,7 @@ export default function RootLayout() {
             <Stack.Screen name="+not-found" />
             <Stack.Screen name="homepage" options={{ headerShown: false }} />
             <Stack.Screen name="contacts" options={{ headerShown: false }} />
+            <Stack.Screen name="settings" options={{ headerShown: false }} />
           </Stack>
           <StatusBar style="auto" />
         </AuthProvider>

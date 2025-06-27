@@ -11,7 +11,7 @@ export default function NavBar() {
     { icon: "home", path: "/homepage" },
     { icon: "fastfood", path: "/+not-found" },
     { icon: "notifications", path: "/(tabs)/explore" },
-    { icon: "calendar-today", path: "/homepage" },
+    { icon: "calendar-today", path: "/+not-found" },
     { icon: "auto-awesome-mosaic", path: "/+not-found" },
   ];
 
@@ -47,7 +47,7 @@ export default function NavBar() {
             }}
             onPress={() => {
               if (!isActive) {
-                router.push(tab.path);
+                router.push(tab.path as any);
               }
             }}
           >
@@ -62,7 +62,7 @@ export default function NavBar() {
               }}
             >
               <MaterialIcons
-                name={tab.icon}
+                name={tab.icon as any}
                 size={30}
                 color={isActive ? "#ffffff" : "#95a1ac"}
               />

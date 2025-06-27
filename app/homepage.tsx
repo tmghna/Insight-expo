@@ -137,6 +137,7 @@ export default function HomePage() {
             height={60}
             size={60}
             backgroundColor={"#384c7e00"}
+            onPress={()=>router.push('/settings')}
             icon={
               <Image
                 source={{ uri: "https://i.postimg.cc/kGFzn7Vs/image.png" }}
@@ -354,7 +355,7 @@ export default function HomePage() {
                   backgroundColor: "#00000000",
                   borderColor: "#00000000",
                 }}
-                onPress={()=> router.push(item.push)}
+                onPress={()=> router.push(item.push as any)}
               >
                 <RNText
                   adjustsFontSizeToFit
