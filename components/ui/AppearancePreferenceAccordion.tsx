@@ -1,19 +1,89 @@
+// Responsive version of your CampusFacilities & HelpfulTiles component
+
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
-  // Text,
   TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
 } from 'react-native';
-import {Text} from 'tamagui';
+import { Text } from 'tamagui';
 import { MaterialIcons } from '@expo/vector-icons';
 
+const useResponsiveStyles = () => {
+  const { width } = useWindowDimensions();
+  const paddingHorizontal = width < 360 ? 12 : width < 400 ? 16 : 20;
+  const fontSize = width < 360 ? 13 : 14;
+
+  return StyleSheet.create({
+    container: {
+      width: width - 32,
+      alignSelf: 'center',
+      backgroundColor: '#222',
+      borderRadius: 12,
+      overflow: 'hidden',
+      marginVertical: 6,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: paddingHorizontal,
+      backgroundColor: '#222',
+    },
+    headerText: {
+      color: 'white',
+      fontWeight: '500',
+      fontSize: fontSize + 2,
+      fontFamily: 'Nunito',
+    },
+    contentContainer: {
+      overflow: 'hidden',
+      backgroundColor: '#1c1c1c',
+    },
+    contentInner: {
+      paddingHorizontal: paddingHorizontal*1.2,
+      paddingVertical: 10,
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 18,
+    },
+    contentText: {
+      color: '#ccc',
+      fontSize: fontSize,
+      fontWeight: '400',
+      fontFamily: 'Nunito',
+    },
+    checkbox: {
+      width: 18,
+      height: 18,
+      borderRadius: 9,
+      borderWidth: 2,
+      borderColor: '#999',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    checkedBox: {
+      backgroundColor: '#8345cf',
+      borderColor: '#8345cf',
+    },
+    checkMark: {
+      color: 'white',
+      fontSize: 14,
+    },
+  });
+};
+
 export function CampusFacilities() {
+  const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState({});
 
   const items = [
     { key: 'market', label: 'Market', onCheck: () => {} },
@@ -22,26 +92,23 @@ export function CampusFacilities() {
     { key: 'map', label: 'Campus Map', onCheck: () => {} },
     { key: 'timings', label: 'Timings', onCheck: () => {} },
   ];
-  const outputRangeMax = 24+items.length*35;
+  const outputRangeMax = 24 + items.length * 35;
 
-  const toggleCheckbox = (key: string, callback: () => void) => {
-    setCheckedItems(prev => {
-      const newState = { ...prev, [key]: !prev[key] };
-      if (newState[key]) {
-        callback(); // Only call if checked
-      }
-      return newState;
-    });
-  };
-  // Tracker for height anim
   const animation = useRef(new Animated.Value(0)).current;
-  // Tracker for chevron rotation anim
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const triggerAnimation = (toOpen: boolean) => {
+  const toggleCheckbox = (key, callback) => {
+    setCheckedItems(prev => {
+      const newState = { ...prev, [key]: !prev[key] };
+      if (newState[key]) callback();
+      return newState;
+    });
+  };
+
+  const triggerAnimation = (toOpen) => {
     if (toOpen) {
-      closeAnim.setValue(1); // reset the close anim
+      closeAnim.setValue(1);
       Animated.timing(openAnim, {
         toValue: 1,
         duration: 400,
@@ -49,7 +116,7 @@ export function CampusFacilities() {
         useNativeDriver: true,
       }).start();
     } else {
-      openAnim.setValue(0); // reset the open anim
+      openAnim.setValue(0);
       Animated.timing(closeAnim, {
         toValue: 0,
         duration: 400,
@@ -59,33 +126,27 @@ export function CampusFacilities() {
     }
   };
 
-  const toggle = () => {
-    setIsOpen(prev => !prev);
-  };
+  const toggle = () => setIsOpen(prev => !prev);
 
   useEffect(() => {
-    // Animate height
     Animated.timing(animation, {
       toValue: isOpen ? 1 : 0,
       duration: 400,
       easing: Easing.out(Easing.ease),
       useNativeDriver: false,
     }).start();
-
-    // Animate rotation
     triggerAnimation(isOpen);
   }, [isOpen]);
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, outputRangeMax], // Needs to be responsive. Tamaghna
+    outputRange: [0, outputRangeMax],
   });
-  // Open and close with jerks
+
   const openingRotation = openAnim.interpolate({
     inputRange: [0, 0.7, 0.9, 1],
     outputRange: ['0deg', '210deg', '170deg', '180deg'],
   });
-
   const closingRotation = closeAnim.interpolate({
     inputRange: [0, 0.1, 0.3, 1],
     outputRange: ['0deg', '-30deg', '10deg', '180deg'],
@@ -105,7 +166,7 @@ export function CampusFacilities() {
 
       <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
         <View style={styles.contentInner}>
-        {items.map(item => (
+          {items.map(item => (
             <View key={item.key} style={styles.row}>
               <Text style={styles.contentText}>{item.label}</Text>
               <TouchableOpacity
@@ -113,8 +174,7 @@ export function CampusFacilities() {
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
-                ]}
-              >
+                ]}>
                 {checkedItems[item.key] && (
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
@@ -125,11 +185,12 @@ export function CampusFacilities() {
       </Animated.View>
     </View>
   );
-};
+}
 
 export function HelpfulTiles() {
+  const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState({});
 
   const items = [
     { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
@@ -137,26 +198,23 @@ export function HelpfulTiles() {
     { key: 'bookmaterial', label: 'Book Material', onCheck: () => {} },
     { key: 'laundry', label: 'Laundry', onCheck: () => {} },
   ];
-  const outputRangeMax = 24+items.length*35;
+  const outputRangeMax = 24 + items.length * 35;
 
-  const toggleCheckbox = (key: string, callback: () => void) => {
-    setCheckedItems(prev => {
-      const newState = { ...prev, [key]: !prev[key] };
-      if (newState[key]) {
-        callback(); // Only call if checked
-      }
-      return newState;
-    });
-  };
-  // Tracker for height anim
   const animation = useRef(new Animated.Value(0)).current;
-  // Tracker for chevron rotation anim
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const triggerAnimation = (toOpen: boolean) => {
+  const toggleCheckbox = (key, callback) => {
+    setCheckedItems(prev => {
+      const newState = { ...prev, [key]: !prev[key] };
+      if (newState[key]) callback();
+      return newState;
+    });
+  };
+
+  const triggerAnimation = (toOpen) => {
     if (toOpen) {
-      closeAnim.setValue(1); // reset the close anim
+      closeAnim.setValue(1);
       Animated.timing(openAnim, {
         toValue: 1,
         duration: 400,
@@ -164,7 +222,7 @@ export function HelpfulTiles() {
         useNativeDriver: true,
       }).start();
     } else {
-      openAnim.setValue(0); // reset the open anim
+      openAnim.setValue(0);
       Animated.timing(closeAnim, {
         toValue: 0,
         duration: 400,
@@ -174,33 +232,27 @@ export function HelpfulTiles() {
     }
   };
 
-  const toggle = () => {
-    setIsOpen(prev => !prev);
-  };
+  const toggle = () => setIsOpen(prev => !prev);
 
   useEffect(() => {
-    // Animate height
     Animated.timing(animation, {
       toValue: isOpen ? 1 : 0,
       duration: 400,
       easing: Easing.out(Easing.ease),
       useNativeDriver: false,
     }).start();
-
-    // Animate rotation
     triggerAnimation(isOpen);
   }, [isOpen]);
 
   const animatedHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, outputRangeMax], // Needs to be responsive. Tamaghna
+    outputRange: [0, outputRangeMax],
   });
-  // Open and close with jerks
+
   const openingRotation = openAnim.interpolate({
     inputRange: [0, 0.7, 0.9, 1],
     outputRange: ['0deg', '210deg', '170deg', '180deg'],
   });
-
   const closingRotation = closeAnim.interpolate({
     inputRange: [0, 0.1, 0.3, 1],
     outputRange: ['0deg', '-30deg', '10deg', '180deg'],
@@ -228,8 +280,7 @@ export function HelpfulTiles() {
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
-                ]}
-              >
+                ]}>
                 {checkedItems[item.key] && (
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
@@ -240,66 +291,4 @@ export function HelpfulTiles() {
       </Animated.View>
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    width: Dimensions.get('window').width - 40,
-    alignSelf: 'center',
-    backgroundColor: '#222',
-    borderRadius: 12,
-    overflow: 'hidden',
-    marginVertical: 6,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 16,
-    backgroundColor: '#222',
-  },
-  headerText: {
-    color: 'white',
-    fontWeight: '400',
-    fontSize: 16,
-    fontFamily: 'Nunito',
-  },
-  contentContainer: {
-    overflow: 'hidden',
-    backgroundColor: '#1c1c1c',
-  },
-  contentInner: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  contentText: {
-    color: '#ccc',
-    fontSize: 14,
-    fontWeight: '400',
-    fontFamily: 'Nunito'
-  },
-  checkbox: {
-    width: 18,
-    height: 18,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#999',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkedBox: {
-    backgroundColor: '#8345cf',
-    borderColor: '#8345cf',
-  },
-  checkMark: {
-    color: 'white',
-    fontSize: 14,
-  }
-});
+}
