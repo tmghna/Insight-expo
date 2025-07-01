@@ -1,5 +1,3 @@
-// Responsive version of your CampusFacilities & HelpfulTiles component
-
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
@@ -7,37 +5,35 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  useWindowDimensions,
 } from 'react-native';
 import { Text } from 'tamagui';
 import { MaterialIcons } from '@expo/vector-icons';
+// for responsive version of your CampusFacilities & HelpfulTiles component
+import { Metrics } from '@/constants/Metric';
 
 const useResponsiveStyles = () => {
-  const { width } = useWindowDimensions();
-  const paddingHorizontal = width < 360 ? 12 : width < 400 ? 16 : 20;
-  const fontSize = width < 360 ? 13 : 14;
 
   return StyleSheet.create({
     container: {
-      width: width - 32,
+      width: Metrics.screenWidth-Metrics.moderateScale(32,.2),
       alignSelf: 'center',
       backgroundColor: '#222',
-      borderRadius: 12,
+      borderRadius: Metrics.moderateScale(12,.1),
       overflow: 'hidden',
-      marginVertical: 6,
+      marginVertical: Metrics.moderateScale(6,.2),
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: 10,
-      paddingHorizontal: paddingHorizontal,
+      paddingVertical: Metrics.moderateScale(6,.2),
+      paddingHorizontal: Metrics.moderateScale(16,.2),
       backgroundColor: '#222',
     },
     headerText: {
       color: 'white',
-      fontWeight: '500',
-      fontSize: fontSize + 2,
+      fontWeight: '400',
+      fontSize: Metrics.moderateScale(14,.1),
       fontFamily: 'Nunito',
     },
     contentContainer: {
@@ -45,26 +41,26 @@ const useResponsiveStyles = () => {
       backgroundColor: '#1c1c1c',
     },
     contentInner: {
-      paddingHorizontal: paddingHorizontal*1.2,
-      paddingVertical: 10,
+      paddingHorizontal: Metrics.moderateScale(20,.2),
+      paddingVertical: Metrics.moderateScale(12,.2),
     },
     row: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 18,
+      marginBottom: Metrics.moderateScale(18,.2),
     },
     contentText: {
       color: '#ccc',
-      fontSize: fontSize,
+      fontSize: Metrics.moderateScale(13,.1),
       fontWeight: '400',
       fontFamily: 'Nunito',
     },
     checkbox: {
-      width: 18,
-      height: 18,
-      borderRadius: 9,
-      borderWidth: 2,
+      width: Metrics.moderateScale(16,.1),
+      height: Metrics.moderateScale(16,.1),
+      borderRadius: '50%',
+      borderWidth: Metrics.moderateScale(2,.1),
       borderColor: '#999',
       justifyContent: 'center',
       alignItems: 'center',
@@ -75,15 +71,19 @@ const useResponsiveStyles = () => {
     },
     checkMark: {
       color: 'white',
-      fontSize: 14,
+      fontSize: Metrics.moderateScale(12,.1),
     },
+    chevron: {
+      color: '#aaa',
+      fontSize: Metrics.moderateScale(24,.1),
+    }
   });
 };
 
 export function CampusFacilities() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
 
   const items = [
     { key: 'market', label: 'Market', onCheck: () => {} },
@@ -92,13 +92,13 @@ export function CampusFacilities() {
     { key: 'map', label: 'Campus Map', onCheck: () => {} },
     { key: 'timings', label: 'Timings', onCheck: () => {} },
   ];
-  const outputRangeMax = 24 + items.length * 35;
+  const outputRangeMax = Metrics.moderateScale(24,.1) + items.length * Metrics.moderateScale(35,.1);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const toggleCheckbox = (key, callback) => {
+  const toggleCheckbox = (key: string, callback: () => void) => {
     setCheckedItems(prev => {
       const newState = { ...prev, [key]: !prev[key] };
       if (newState[key]) callback();
@@ -106,7 +106,7 @@ export function CampusFacilities() {
     });
   };
 
-  const triggerAnimation = (toOpen) => {
+  const triggerAnimation = (toOpen: boolean) => {
     if (toOpen) {
       closeAnim.setValue(1);
       Animated.timing(openAnim, {
@@ -159,7 +159,7 @@ export function CampusFacilities() {
         <View style={styles.header}>
           <Text style={styles.headerText}>Campus Facilities</Text>
           <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-            <MaterialIcons name="expand-more" size={24} color="#aaa" />
+            <MaterialIcons name="expand-more" style={styles.chevron} />
           </Animated.View>
         </View>
       </TouchableOpacity>
@@ -190,7 +190,7 @@ export function CampusFacilities() {
 export function HelpfulTiles() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
 
   const items = [
     { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
@@ -198,13 +198,13 @@ export function HelpfulTiles() {
     { key: 'bookmaterial', label: 'Book Material', onCheck: () => {} },
     { key: 'laundry', label: 'Laundry', onCheck: () => {} },
   ];
-  const outputRangeMax = 24 + items.length * 35;
+  const outputRangeMax = Metrics.moderateScale(24,.1) + items.length * Metrics.moderateScale(35,.1);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const toggleCheckbox = (key, callback) => {
+  const toggleCheckbox = (key: string, callback: () => void) => {
     setCheckedItems(prev => {
       const newState = { ...prev, [key]: !prev[key] };
       if (newState[key]) callback();
@@ -212,7 +212,7 @@ export function HelpfulTiles() {
     });
   };
 
-  const triggerAnimation = (toOpen) => {
+  const triggerAnimation = (toOpen: boolean) => {
     if (toOpen) {
       closeAnim.setValue(1);
       Animated.timing(openAnim, {
@@ -265,7 +265,7 @@ export function HelpfulTiles() {
         <View style={styles.header}>
           <Text style={styles.headerText}>Helpful Tiles</Text>
           <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-            <MaterialIcons name="expand-more" size={24} color="#aaa" />
+            <MaterialIcons name="expand-more" style={styles.chevron} />
           </Animated.View>
         </View>
       </TouchableOpacity>
