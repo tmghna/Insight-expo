@@ -15,7 +15,7 @@ const useResponsiveStyles = () => {
 
   return StyleSheet.create({
     container: {
-      width: Metrics.screenWidth-Metrics.moderateScale(32,.2),
+      width: '100%',
       alignSelf: 'center',
       backgroundColor: '#222',
       borderRadius: Metrics.moderateScale(12,.1),
