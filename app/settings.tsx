@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import {Text} from 'tamagui';
@@ -16,8 +17,10 @@ import { Metrics } from '@/constants/Metric';
 const Settings = () => {
   // const [campusOpen, setCampusOpen] = useState(false);
   // const [tilesOpen, setTilesOpen] = useState(false);
+  // const allLoaded = campusOpen && tilesOpen;
   const router = useRouter();
   const styles = useResponsiveStyles();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#111" }} edges={["top"]}>
       <ScrollView style={styles.container}>

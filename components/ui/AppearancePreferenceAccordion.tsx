@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Text } from 'tamagui';
 import { MaterialIcons } from '@expo/vector-icons';
-// for responsive version of your CampusFacilities & HelpfulTiles component
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Metrics } from '@/constants/Metric';
 
 const useResponsiveStyles = () => {
@@ -84,6 +84,7 @@ export function CampusFacilities() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
     { key: 'market', label: 'Market', onCheck: () => {} },
@@ -98,12 +99,30 @@ export function CampusFacilities() {
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const toggleCheckbox = (key: string, callback: () => void) => {
-    setCheckedItems(prev => {
-      const newState = { ...prev, [key]: !prev[key] };
-      if (newState[key]) callback();
-      return newState;
-    });
+useEffect(() => {
+  (async () => {
+    try {
+      const savedState: { [key: string]: boolean } = {};
+      for (const item of items) {
+        const value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
+        console.log(`${item.key}:`, value); // Debug
+        savedState[item.key] = value === 'true';
+      }
+      setCheckedItems(savedState);
+    } catch (e) {
+      console.error("Error loading checkbox state:", e);
+    } finally {
+      setIsLoaded(true); // renders after this
+    }
+  })();
+}, []);
+
+  const toggleCheckbox = async (key: string, callback: () => void) => {
+    const newValue = !checkedItems[key];
+    const newState = { ...checkedItems, [key]: newValue };
+    setCheckedItems(newState);
+    await AsyncStorage.setItem(`CampusFacilities:${key}`, JSON.stringify(newValue));
+    if (newValue) callback();
   };
 
   const triggerAnimation = (toOpen: boolean) => {
@@ -185,12 +204,13 @@ export function CampusFacilities() {
       </Animated.View>
     </View>
   );
-}
+};
 
 export function HelpfulTiles() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
     { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
@@ -204,12 +224,30 @@ export function HelpfulTiles() {
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-  const toggleCheckbox = (key: string, callback: () => void) => {
-    setCheckedItems(prev => {
-      const newState = { ...prev, [key]: !prev[key] };
-      if (newState[key]) callback();
-      return newState;
-    });
+  useEffect(() => {
+  (async () => {
+    try {
+      const savedState: { [key: string]: boolean } = {};
+      for (const item of items) {
+        const value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
+        console.log(`${item.key}:`, value); // Debug
+        savedState[item.key] = value === 'true';
+      }
+      setCheckedItems(savedState);
+    } catch (e) {
+      console.error("Error loading checkbox state:", e);
+    } finally {
+      setIsLoaded(true); // renders after this
+    }
+  })();
+}, []);
+
+  const toggleCheckbox = async (key: string, callback: () => void) => {
+    const newValue = !checkedItems[key];
+    const newState = { ...checkedItems, [key]: newValue };
+    setCheckedItems(newState);
+    await AsyncStorage.setItem(`HelpfulTiles:${key}`, JSON.stringify(newValue));
+    if (newValue) callback();
   };
 
   const triggerAnimation = (toOpen: boolean) => {
@@ -291,4 +329,4 @@ export function HelpfulTiles() {
       </Animated.View>
     </View>
   );
-}
+};
