@@ -26,7 +26,7 @@ const useResponsiveStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: Metrics.moderateScale(6,.2),
+      paddingVertical: Metrics.moderateScale(4,.2),
       paddingHorizontal: Metrics.moderateScale(16,.2),
       backgroundColor: '#222',
     },
