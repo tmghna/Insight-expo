@@ -104,7 +104,7 @@ const useResponsiveStyles = () => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#111111',
+      backgroundColor: '#111',
       paddingHorizontal: Metrics.moderateScale(15,.2),
       paddingTop: Metrics.moderateScale(20,.2),
     },
@@ -127,20 +127,17 @@ const useResponsiveStyles = () => {
       color: 'white',
       fontFamily: 'Nunito'
     },
+    // This needs to be dynamic using flexboxes. Tamaghna
     profileSection: {
       position: 'relative',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: Metrics.moderateScale(4,.2),
     },
     profileInfo: {
       flexDirection: 'row',
       alignItems: 'center',
       flex: 1,
-      width: '2%',
-      flexShrink: 1,
-      flexGrow: 1,
       paddingRight: Metrics.moderateScale(100,.2)
     },
     avatar: {
@@ -153,7 +150,7 @@ const useResponsiveStyles = () => {
       flexShrink: 0,
     },
     avatarIcon: {
-      fontSize: Metrics.moderateScale(28,.2),
+      fontSize: Metrics.moderateScale(28,.1),
       color: '#FFF',
     },
     profileText: {
@@ -224,17 +221,18 @@ const useResponsiveStyles = () => {
     },
     githubLink: {
       alignSelf: 'flex-start',
+      alignItems: 'center',
       flexDirection: 'row',
       backgroundColor: '#222',
       marginTop: Metrics.moderateScale(5,.2),
       paddingVertical: Metrics.moderateScale(5,.2),
-      paddingHorizontal: Metrics.moderateScale(10,.2),
-      borderRadius: Metrics.moderateScale(7,.1),
+      paddingHorizontal: Metrics.moderateScale(8,.2),
+      borderRadius: Metrics.moderateScale(8,.1),
     },
     githubIcon: {
       marginRight: Metrics.moderateScale(6,.2),
       opacity: 0.8,
-      fontSize: Metrics.moderateScale(16,.2),
+      fontSize: Metrics.moderateScale(16,.1),
       color: '#FFF',
     },
     linkText: {
@@ -264,7 +262,7 @@ const useResponsiveStyles = () => {
       backgroundColor: '#A678F1',
       marginVertical: Metrics.moderateScale(10,.2),
       opacity: 0.2,
-      marginHorizontal: Metrics.moderateScale(-20,.2)
+      marginHorizontal: Metrics.moderateScale(-15,.2)
     },
   });
 };
