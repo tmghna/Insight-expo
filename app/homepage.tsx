@@ -11,7 +11,7 @@ import {
 } from "tamagui";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Feather from "@expo/vector-icons/Feather";
-import { Dimensions, ImageBackground, Text as RNText } from "react-native";
+import { Dimensions, ImageBackground, Text as RNText, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiScrollView } from "moti";
 import Animated, {
@@ -72,6 +72,7 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const AnimatedView = Animated.createAnimatedComponent(XStack);
 
 export default function HomePage() {
+  const styles = useResponsiveLayout();
   const router = useRouter();
 
   const scrollX = useSharedValue(0);
@@ -87,24 +88,15 @@ export default function HomePage() {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#181818" }} edges={["top"]}>
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <ScrollView
-        flex={1}
-        flexDirection="column"
-        backgroundColor="#181818"
+        style={styles.container}
         contentContainerStyle={{
           justifyContent: "flex-start",
           alignItems: "center",
         }}
       >
-        <XStack
-          flex={1}
-          justifyContent="space-between"
-          alignItems="center"
-          paddingEnd={10}
-          marginTop={40}
-          marginHorizontal={40}
-        >
+        <XStack style={styles.header}>
           <YStack flex={1} alignItems="flex-start" paddingRight={10}>
             <Text
               paddingBottom={10}
@@ -1027,3 +1019,26 @@ function IndicatorSegment({ index, scrollX, activeIndex }) {
     />
   );
 }
+
+const useResponsiveLayout = () => {
+  return StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: "#181818",
+    },
+    container: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: "#181818",
+      paddingHorizontal: 20,
+    },
+    header: {
+      flex: 1,
+      justifyContent: "space-between",
+      alignItems: "center",
+      // paddingEnd: 10,
+      marginTop: 20,
+      // marginHorizontal: 40,
+    },
+  });
+};
