@@ -35,6 +35,7 @@ const useResponsiveStyles = () => {
       fontWeight: '400',
       fontSize: Metrics.moderateScale(14,.1),
       fontFamily: 'Nunito',
+      letterSpacing: Metrics.moderateScale(1,.2),
     },
     contentContainer: {
       overflow: 'hidden',
@@ -99,23 +100,23 @@ export function CampusFacilities() {
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
-useEffect(() => {
-  (async () => {
-    try {
-      const savedState: { [key: string]: boolean } = {};
-      for (const item of items) {
-        const value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
-        console.log(`${item.key}:`, value); // Debug
-        savedState[item.key] = value === 'true';
+  useEffect(() => {
+    (async () => {
+      try {
+        const savedState: { [key: string]: boolean } = {};
+        for (const item of items) {
+          const value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
+          console.log(`${item.key}:`, value); // Debug
+          savedState[item.key] = value === 'true';
+        }
+        setCheckedItems(savedState);
+      } catch (e) {
+        console.error("Error loading checkbox state:", e);
+      } finally {
+        setIsLoaded(true); // renders after this
       }
-      setCheckedItems(savedState);
-    } catch (e) {
-      console.error("Error loading checkbox state:", e);
-    } finally {
-      setIsLoaded(true); // renders after this
-    }
-  })();
-}, []);
+    })();
+  }, []);
 
   const toggleCheckbox = async (key: string, callback: () => void) => {
     const newValue = !checkedItems[key];
