@@ -11,7 +11,7 @@ import {
 } from "tamagui";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Feather from "@expo/vector-icons/Feather";
-import { Dimensions, ImageBackground, Text as RNText, StyleSheet } from "react-native";
+import { Dimensions, ImageBackground, Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiScrollView } from "moti";
 import Animated, {
@@ -26,6 +26,8 @@ import Animated, {
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "expo-router";
+import { Metrics } from "@/constants/Metric";
+import NotifCards from "@/components/ui/CarouselCards";
 
 const { width: ScreenWidth } = Dimensions.get("window");
 const NotifWidth = 0.85 * ScreenWidth;
@@ -92,186 +94,42 @@ export default function HomePage() {
       <ScrollView
         style={styles.container}
         contentContainerStyle={{
-          justifyContent: "flex-start",
           alignItems: "center",
         }}
       >
+        {/* Header Section */}
         <XStack style={styles.header}>
-          <YStack flex={1} alignItems="flex-start" paddingRight={10}>
-            <Text
-              paddingBottom={10}
-              fontSize={20}
-              fontWeight={400}
-              fontFamily={"$WorkSans"}
-              letterSpacing={0}
-              color={"#95a1ac"}
-            >
+          <YStack style={styles.profileInfo}>
+            <Text style={styles.greetingText}>
               Hello,
             </Text>
-            <RNText
-              adjustsFontSizeToFit
-              style={{
-                fontSize: 30,
-                fontWeight: "400",
-                fontFamily: "WorkSans400",
-                color: "#ffffff",
-                letterSpacing: 0,
-              }}
-              numberOfLines={1}
-              ellipsizeMode="clip"
-            >
+            <Text
+              style={styles.nameText}>
               UserName
-            </RNText>
+            </Text>
           </YStack>
-          <Button
-            circular
-            width={60}
-            height={60}
-            size={60}
-            backgroundColor={"#384c7e00"}
-            onPress={()=>router.push('/settings')}
-            icon={
-              <Image
-                source={{ uri: "https://i.postimg.cc/kGFzn7Vs/image.png" }}
-                width={"100%"}
-                height={"100%"}
-                resizeMode="cover"
-                borderRadius={60}
-                borderWidth={1}
-                borderColor={"#4a6ece00"}
-              />
-            }
-            pressStyle={{
-              backgroundColor: "#384c7e00",
-              borderColor: "#384c7e00",
-            }}
-            focusStyle={{
-              backgroundColor: "#384c7e00",
-              borderColor: "#384c7e00",
-            }}
-            hoverStyle={{
-              backgroundColor: "#384c7e00",
-              borderColor: "#384c7e00",
-            }}
-          />
+          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
+            <MaterialIcons name="person" style={styles.avatarIcon} />
+          </TouchableOpacity>
         </XStack>
-        <Text
-          paddingStart={30}
-          paddingTop={20}
-          paddingBottom={5}
-          flex={1}
-          flexDirection="row"
-          alignSelf="flex-start"
-          fontSize={20}
-          fontWeight={400}
-          letterSpacing={0}
-          fontFamily={"$Poppins"}
-          color={"#d7d7d7"}
-        >
+
+        {/* Notification Section */}
+        <Text style={styles.sectionHeader}>
           Notifications
         </Text>
-        <AnimatedScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={scrollHandler}
-          paddingTop={5}
-          paddingBottom={40}
-          borderRadius={30}
-          width={"100%"}
-          height={200}
-          snapToInterval={NotifWidth}
-        >
-          {notification.map((item) => (
-            <Card
-              key={item.id}
-              flex={1}
-              width={NotifWidth}
-              height={175}
-              backgroundColor={"#00000000"}
-              borderColor={"#00000000"}
-              marginHorizontal={26}
-            >
-              <Image
-                source={item.image}
-                width={"100%"}
-                height={"100%"}
-                resizeMode="cover"
-                overflow="hidden"
-                borderRadius={22}
-                opacity={0.8}
-              />
-              <Text
-                position="absolute"
-                top={"55%"}
-                px={20}
-                paddingTop={20}
-                paddingBottom={10}
-                fontSize={12}
-                fontWeight={600}
-                fontFamily={"$Poppins"}
-                color={item.textcolor}
-                letterSpacing={0}
-              >
-                {item.description}
-              </Text>
-            </Card>
-          ))}
-        </AnimatedScrollView>
+        <View style={styles.notifScroll}>
+          <NotifCards/>
+        </View>
 
-        {/* Indicator */}
-        <XStack
-          flex={1}
-          justifyContent="space-between"
-          alignItems="center"
-          paddingEnd={5}
-          marginHorizontal={16}
-          marginBottom={16}
-          height={24}
-          width={"85%"}
-        >
-          <XGroup>
-            {notification.map((_, i) => (
-              <IndicatorSegment
-                key={i}
-                index={i}
-                scrollX={scrollX}
-                activeIndex={activeIndex}
-              />
-            ))}
-          </XGroup>
-          <FontAwesome5 name="angle-double-right" size={17} color="#ffffff55" />
-        </XStack>
-        <ImageBackground
-          source={require("../assets/images/Card.png")}
-          style={{ width: "85%", height: 123, marginBottom: 40 }}
-          imageStyle={{
-            width: "100%",
-            height: 123,
-            resizeMode: "cover",
-            borderRadius: 8,
-          }}
-        >
-          <Button
-            marginBottom={40}
-            borderRadius={8}
-            width={"100%"}
-            height={"100%"}
-            backgroundColor={"#00000000"}
-            pressStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            focusStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            hoverStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
+        {/* Events Section */}
+        <TouchableOpacity activeOpacity={0.8} style={styles.eventButton} onPress={() => {}}>
+          <Image
+            source={require('../assets/images/Card.png')}
+            style={styles.eventImage}
           />
-        </ImageBackground>
+        </TouchableOpacity>
+
+        {/* Campus Facilities */}
         <YStack paddingStart={20} paddingBottom={10} flex={1}>
           <Text
             paddingStart={10}
@@ -970,56 +828,6 @@ export default function HomePage() {
   );
 }
 
-function IndicatorSegment({ index, scrollX, activeIndex }) {
-  //TODO:- TS error - Harshita
-  const animatedStyle = useAnimatedStyle(() => {
-    const isVisible = Math.abs(activeIndex.value - index) <= 1;
-
-    if (!isVisible) {
-      return {
-        width: 0,
-        opacity: 0,
-        backgroundColor: "#4b39ef4c",
-      };
-    }
-
-    const inputRange = [
-      (index - 1) * NotifWidth,
-      index * NotifWidth,
-      (index + 1) * NotifWidth,
-    ];
-
-    const width = interpolate(
-      scrollX.value,
-      inputRange,
-      [16, 48, 16],
-      Extrapolate.CLAMP
-    );
-
-    const opacity = interpolate(
-      scrollX.value,
-      inputRange,
-      [0.3, 1, 0.3],
-      Extrapolate.CLAMP
-    );
-
-    return {
-      width,
-      opacity,
-      backgroundColor: isVisible ? "#4a6ece" : "#4b39ef4c",
-    };
-  });
-
-  return (
-    <AnimatedView
-      height={8}
-      borderRadius={22}
-      marginRight={8}
-      style={animatedStyle}
-    />
-  );
-}
-
 const useResponsiveLayout = () => {
   return StyleSheet.create({
     safeArea: {
@@ -1036,9 +844,83 @@ const useResponsiveLayout = () => {
       flex: 1,
       justifyContent: "space-between",
       alignItems: "center",
-      // paddingEnd: 10,
       marginTop: 20,
-      // marginHorizontal: 40,
+      borderColor: '#1FF',
+      borderWidth: 2
     },
+    profileInfo: {
+      flex: 1,
+      alignItems: "flex-start",
+      borderColor: '#F32',
+      borderWidth: 2
+    },
+    greetingText: {
+      fontSize: 18,
+      fontWeight: '400',
+      fontFamily: "WorkSans",
+      letterSpacing: 1,
+      color: "#95a1ac",
+      borderColor: '#F32',
+      borderWidth: 1,
+    },
+    nameText: {
+      fontSize: 24,
+      fontWeight: "400",
+      fontFamily: "WorkSans",
+      color: "#ffffff",
+      letterSpacing: 0,
+      borderColor: '#F32',
+      borderWidth: 2
+    },
+    avatar: {
+      width: Metrics.moderateScale(60,.2),
+      height: Metrics.moderateScale(60,.2),
+      borderRadius: '50%',
+      backgroundColor: '#8345cf',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexShrink: 0,
+      borderColor: "#FFF",
+      borderWidth: 2
+    },
+    avatarIcon: {
+      fontSize: Metrics.moderateScale(36,.1),
+      color: '#FFF',
+    },
+    sectionHeader: {
+      paddingTop: 20,
+      // paddingBottom: 5,
+      // flex: 1,
+      flexDirection: "row",
+      alignSelf: "flex-start",
+      fontSize: 20,
+      fontWeight: '400',
+      letterSpacing: 1,
+      fontFamily: "WorkSans",
+      color: "#DDD",
+    },
+    notifScroll: {
+    alignItems: "center",
+    justifyContent: 'center',
+    backgroundColor: '#181818',
+    flex:1,
+    marginHorizontal: -20,
+    },
+    eventImage: {
+      width: "100%",
+      height: '100%',
+    },
+    eventButton: {
+      width: Metrics.screenWidth*0.85,
+      height: 120,
+      borderRadius: 16,
+      overflow: "hidden",
+      justifyContent: "center",
+      alignItems: "center",
+      position: "relative",
+      marginTop: 10,
+      marginBottom: 20,
+      boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
+    }
   });
 };

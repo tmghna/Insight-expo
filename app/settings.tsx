@@ -69,14 +69,14 @@ const Settings = () => {
 
         <View style={styles.divider} />
         {/* Footer Section */}
-        <View style={styles.footer}>
+        <View>
           <Text style={styles.footerText}>Dev Blog</Text>
           <TouchableOpacity style={styles.githubLink} onPress={() => Linking.openURL('https://github.com/IISERM/Insight-expo')}>
             <AntDesign name="github" style={styles.githubIcon} />
             <Text style={styles.linkText}>Github</Text>
           </TouchableOpacity>
 
-          <Text style={[styles.footerText, { marginTop: Metrics.moderateScale(10,.2) }]}>Updates</Text>
+          <Text style={styles.footerText}>Updates</Text>
           <Text style={styles.regularText}>Version 4.0.0</Text>
 
           <Text style={[styles.regularText, { marginTop: Metrics.moderateScale(16,.2) }]}>
@@ -241,14 +241,12 @@ const useResponsiveStyles = () => {
       fontWeight: '400',
       fontFamily: 'Nunito',
     },
-    footer: {
-      marginTop: Metrics.moderateScale(20,.2),
-    },
     footerText: {
       color: '#DDD',
       fontSize: Metrics.moderateScale(18,.2),
       fontWeight: '400',
       fontFamily: 'WorkSans',
+      marginTop: Metrics.moderateScale(10,.2)
     },
     regularText: {
       color: '#999',
