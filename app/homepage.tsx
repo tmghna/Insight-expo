@@ -11,7 +11,7 @@ import {
 } from "tamagui";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Feather from "@expo/vector-icons/Feather";
-import { Dimensions, ImageBackground, Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MotiScrollView } from "moti";
 import Animated, {
@@ -27,25 +27,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "expo-router";
 import { Metrics } from "@/constants/Metric";
-import NotifCards from "@/components/ui/CarouselCards";
-
-const { width: ScreenWidth } = Dimensions.get("window");
-const NotifWidth = 0.85 * ScreenWidth;
-const notification = [
-  {
-    id: "1",
-    description: "Something",
-    image: require("../assets/images/Card.png"),
-    textcolor: "#ffffff",
-  },
-  {
-    id: "2",
-    description:
-      "Insight got a Brand New Update! Check it out by updating through PlayStore or AppStore",
-    image: { uri: "https://i.postimg.cc/SNWHZmNy/hceyyyryrinsight.png" },
-    textcolor: "#181818",
-  },
-];
+import { NotifCards, CampusFacilityCards } from "@/components/ui/CarouselCards";
 
 const facilities = [
   {
@@ -70,24 +52,9 @@ const facilities = [
   },
 ];
 
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-const AnimatedView = Animated.createAnimatedComponent(XStack);
-
 export default function HomePage() {
   const styles = useResponsiveLayout();
   const router = useRouter();
-
-  const scrollX = useSharedValue(0);
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollX.value = event.contentOffset.x;
-    },
-  });
-
-  const activeIndex = useDerivedValue(() => {
-    return Math.floor(scrollX.value / NotifWidth);
-  });
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -108,7 +75,7 @@ export default function HomePage() {
               UserName
             </Text>
           </YStack>
-          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
+          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/idk')}>
             <MaterialIcons name="person" style={styles.avatarIcon} />
           </TouchableOpacity>
         </XStack>
@@ -130,98 +97,13 @@ export default function HomePage() {
         </TouchableOpacity>
 
         {/* Campus Facilities */}
-        <YStack paddingStart={20} paddingBottom={10} flex={1}>
-          <Text
-            paddingStart={10}
-            paddingBottom={15}
-            fontSize={23}
-            fontWeight={400}
-            fontFamily={"$WorkSans"}
-            letterSpacing={0}
-            color={"#d7d7d7"}
-          >
+        <YStack flex={1}>
+          <Text style={styles.sectionHeader}>
             Campus Facilities
           </Text>
-          <MotiScrollView
-            horizontal
-            style={{ flex: 0, flexDirection: "row", marginBottom: 10 }}
-            contentContainerStyle={{
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-            showsHorizontalScrollIndicator={false}
-            from={{
-              opacity: 0,
-              translateX: 21,
-            }}
-            animate={{
-              opacity: 1,
-              translateX: 0,
-            }}
-            transition={{
-              opacity: {
-                delay: 0,
-                easing: Easing.inOut(Easing.ease),
-                type: "timing",
-                duration: 450,
-              },
-              translateX: {
-                delay: 0,
-                easing: Easing.inOut(Easing.ease),
-                type: "timing",
-                duration: 460,
-              },
-            }}
-          >
-            {facilities.map((item) => (
-              <Button
-                key={item.id}
-                margin={5}
-                px={10}
-                paddingTop={5}
-                width={135}
-                height={67}
-                backgroundColor={"#1f1f1f"}
-                borderColor={"#1f1f1f"}
-                borderRadius={20}
-                icon={
-                  <Image
-                    source={item.image}
-                    borderRadius={8}
-                    width={35}
-                    height={35}
-                    resizeMode="cover"
-                  />
-                }
-                pressStyle={{
-                  backgroundColor: "#00000000",
-                  borderColor: "#00000000",
-                }}
-                focusStyle={{
-                  backgroundColor: "#00000000",
-                  borderColor: "#00000000",
-                }}
-                hoverStyle={{
-                  backgroundColor: "#00000000",
-                  borderColor: "#00000000",
-                }}
-                onPress={()=> router.push(item.push as any)}
-              >
-                <RNText
-                  adjustsFontSizeToFit
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 400,
-                    fontFamily: "WorkSans400",
-                    color: "#ffffff",
-                    textAlign: "center",
-                  }}
-                >
-                  {item.id}
-                </RNText>
-              </Button>
-            ))}
-          </MotiScrollView>
+          <View style={[styles.notifScroll, {paddingVertical: 20}]}>
+            <CampusFacilityCards/>
+          </View>
         </YStack>
         <Button
           width={"80%"}
@@ -919,7 +801,6 @@ const useResponsiveLayout = () => {
       alignItems: "center",
       position: "relative",
       marginTop: 10,
-      marginBottom: 20,
       boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
     }
   });

@@ -1,17 +1,20 @@
-import React, { useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import Animated, {
+  Easing,
   useSharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   interpolate,
+  withTiming,
 } from "react-native-reanimated";
-import { Image, Text } from "tamagui";
+import { Image, Text, Button } from "tamagui";
 import { Metrics } from "@/constants/Metric";
+import { useRouter } from "expo-router";
 
 const width = Metrics.screenWidth;
 const CARD_WIDTH = width * 0.85;
@@ -41,7 +44,7 @@ const data = [
 
 ];
 
-export default function NotifCards() {
+export function NotifCards() {
   const scrollX = useSharedValue(0);
   const scrollRef = useRef<Animated.ScrollView>(null);
 
@@ -114,9 +117,83 @@ export default function NotifCards() {
       })}
     </Animated.ScrollView>
   );
-}
+};
+
+const facilities = [
+  {
+    id: "Market",
+    image: require("@/assets/images/market2.png"),
+    push: "/+not-found",
+  },
+  {
+    id: "Complaints",
+    image: require("@/assets/images/complaints2.png"),
+    push: "/+not-found",
+  },
+  {
+    id: "Contacts",
+    image: require("@/assets/images/menu2.png"),
+    push: "/contacts",
+  },
+  {
+    id: "Timings",
+    image: require("@/assets/images/time2.png"),
+    push: "/+not-found",
+  },
+];
+
+const BOX_WIDTH = 135;
+const BOX_HEIGHT = 65;
+
+export function CampusFacilityCards() {
+  const router = useRouter();
+
+  const opacity = useSharedValue(0);
+  const translateX = useSharedValue(20);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, {
+      duration: 450,
+      easing: Easing.inOut(Easing.ease),
+    });
+    translateX.value = withTiming(0, {
+      duration: 460,
+      easing: Easing.inOut(Easing.ease),
+    });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  return (
+    <Animated.ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={styles.container}
+      contentContainerStyle={styles.scrollContent}
+    >
+      {facilities.map((item) => (
+        <Animated.View key={item.id} style={[animatedStyle, styles.animatedCard]}>
+          <TouchableOpacity
+            onPress={() => router.push(item.push as any)}
+            style={styles.campusCard}
+            activeOpacity={0.7}
+          >
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
+              {item.id}
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+      ))}
+    </Animated.ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
+  // Notif styles
   card: {
     width: CARD_WIDTH,
     height: Metrics.moderateScale(160,.2),
@@ -139,5 +216,42 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontFamily: "Nunito",
     paddingBottom: Metrics.moderateScale(20,.2),
+  },
+  container: {
+    flex: 0,
+    flexDirection: "row",
+  },
+  scrollContent: {
+    paddingLeft: 20,
+    paddingRight: 10,
+    alignItems: "center",
+  },
+  animatedCard: {
+    marginRight: 10,
+  },
+  campusCard: {
+    width: BOX_WIDTH,
+    height: BOX_HEIGHT,
+    borderRadius: 16,
+    backgroundColor: "#1f1f1f",
+    borderColor: "#1f1f1f",
+    flexDirection: "row",
+    alignItems: "center",
+    // paddingHorizontal: 12,
+    justifyContent: 'space-evenly'
+  },
+  image: {
+    width: "25%",
+    aspectRatio: 1,
+    borderRadius: 8,
+    resizeMode: "cover",
+  },
+  text: {
+    // flexShrink: 1,
+    fontSize: 14,
+    color: "#fff",
+    fontWeight: '400',
+    fontFamily: "Nunito",
+    letterSpacing: 1,
   },
 });
