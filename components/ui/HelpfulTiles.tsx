@@ -5,22 +5,24 @@ import { Easing } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons, } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { Metrics } from "@/constants/Metric";
 
 const tiles = [
   {
-    id: "Lost and Found",
+    id: '1',
+    title: "Lost & Found",
     color: ["#5499bb", "#4475a6"],
     buttons: [
       {
         buttonUI: "playlist-add",
         buttonText: 'Add',
-        UIcolor: '#341840',
         onClick: () => {}
       }
     ],
   },
   {
-    id: "LH Booking",
+    id: '2',
+    title: "LH Booking",
     color: ["#5c6bc1","#4758ad"], 
     buttons: [
       {
@@ -32,7 +34,8 @@ const tiles = [
     ],
   },
   {
-    id: "Academic Links",
+    id: '3',
+    title: "Academia",
     color: ["#795cc1","#6043b1"],
     buttons: [
       {
@@ -56,8 +59,8 @@ const tiles = [
     ],
   },
   {
-    id: "Helpline",
-    // color: ["#95d9ee", "#92f3e7"],
+    id: '4',
+    title: "Helpline",
     color: [ "#c15c9c", "#a84388"],
     buttons: [
       {
@@ -106,10 +109,11 @@ export default function Tiles() {
             start={[0.1, 0.1]}
             end={[.9, .9]}
             style={styles.gradientCommon}
+            key={item.id}
           >
             <XStack style={styles.tileContainer}>
               <YStack style={styles.contentStack}>
-                <Text style={styles.headingText}>{item.id}</Text>
+                <Text style={styles.headingText}>{item.title}</Text>
                 {item.buttons.map((btn) => (
                   <LinearGradient
                     colors={item.color as any}
@@ -118,7 +122,7 @@ export default function Tiles() {
                     end={[0.8, 1]}
                     style={styles.buttonGradient}>
                     <TouchableOpacity style={styles.solidButton} activeOpacity={0.8} onPress={() => btn.onClick}>
-                      <MaterialIcons name={btn.buttonUI as any} style={[styles.icon, {color: "#ccc"}]} />
+                      <MaterialIcons name={btn.buttonUI as any} style={styles.icon} />
                       <Text style={styles.titleText}>{btn.buttonText}</Text>
                     </TouchableOpacity>
                   </LinearGradient>
@@ -135,18 +139,16 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     flexDirection: "row",
-    // paddingHorizontal: 10,
-    paddingTop: 20,
+    paddingVertical: Metrics.moderateScale(20,.2),
   },
   gradientCommon: {
-    height: 250,
-    width: 180,
-    borderRadius: 20,
-    marginHorizontal: 5,
+    height: Metrics.moderateScale(240,.2),
+    width: Metrics.moderateScale(160,.2),
+    borderRadius: Metrics.moderateScale(16,.1),
+    marginHorizontal: Metrics.moderateScale(5,.2),
     boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
   },
   tileContainer: {
-    borderRadius: 20,
     width: "100%",
     height: "100%",
     backgroundColor: "transparent",
@@ -156,28 +158,28 @@ const styles = StyleSheet.create({
   contentStack: {
     flex: 1,
     width: "100%",
-    paddingTop: 15,
-    paddingHorizontal: 10,
+    paddingTop: Metrics.moderateScale(15,.2),
+    paddingHorizontal: Metrics.moderateScale(10,.2),
     alignItems: "center",
-    gap: 12,
+    gap: Metrics.moderateScale(12,.2),
   },
   headingText: {
-    fontSize: 18,
+    fontSize: Metrics.moderateScale(16,.2),
     fontWeight: "700",
     fontFamily: "Kreadon",
     color: "#ddd",
     marginBottom: 5,
   },
   titleText: {
-    fontSize: 12,
+    fontSize: Metrics.moderateScale(13,.2),
     fontWeight: "600",
     fontFamily: "Kreadon",
-    color: "#ddd",
+    color: "#ccc",
   },
   buttonGradient: {
-    height: 40,
-    width: 110,
-    borderRadius: 10,
+    height: Metrics.moderateScale(40,.2),
+    width: Metrics.moderateScale(110,.2),
+    borderRadius: Metrics.moderateScale(14,.1),
     overflow: "hidden",
     boxShadow: '3px 3px 6px rgba(0,0,0,0.3)',
   },
@@ -186,11 +188,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    paddingHorizontal: 20,
+    gap: Metrics.moderateScale(8,.2),
+    paddingHorizontal: Metrics.moderateScale(20,.2),
     backgroundColor: "transparent",
   },
   icon: {
-    fontSize: 20,
+    fontSize: Metrics.moderateScale(20,.2),
+    color: "#ccc",
   },
 });

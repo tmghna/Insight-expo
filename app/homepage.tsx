@@ -1,57 +1,12 @@
-import { LinearGradient } from "@tamagui/linear-gradient";
-import {
-  Button,
-  Card,
-  Image,
-  ScrollView,
-  Text,
-  XGroup,
-  XStack,
-  YStack,
-} from "tamagui";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Feather from "@expo/vector-icons/Feather";
+import { Image, ScrollView, Text, XStack, YStack } from "tamagui";
 import { Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MotiScrollView } from "moti";
-import Animated, {
-  Easing,
-  Extrapolate,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-} from "react-native-reanimated";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "expo-router";
 import { Metrics } from "@/constants/Metric";
 import { NotifCards, CampusFacilityCards } from "@/components/ui/CarouselCards";
 import Tiles from "../components/ui/HelpfulTiles";
-
-const facilities = [
-  {
-    id: "Market",
-    image: require("../assets/images/market2.png"),
-    push: "/+not-found",
-  },
-  {
-    id: "Complaints",
-    image: require("../assets/images/complaints2.png"),
-    push: "/+not-found",
-  },
-  {
-    id: "Contacts",
-    image: require("../assets/images/menu2.png"),
-    push: "/contacts",
-  },
-  {
-    id: "Timings",
-    image: require("../assets/images/time2.png"),
-    push: "/+not-found",
-  },
-];
 
 export default function HomePage() {
   const styles = useResponsiveLayout();
@@ -67,18 +22,18 @@ export default function HomePage() {
       >
         {/* Header Section */}
         <XStack style={styles.header}>
+          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
+            <MaterialIcons name="person" style={styles.avatarIcon} />
+          </TouchableOpacity>
           <YStack style={styles.profileInfo}>
             <Text style={styles.greetingText}>
               Hello,
             </Text>
             <Text
               style={styles.nameText}>
-              UserName
+              User Name
             </Text>
           </YStack>
-          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
-            <MaterialIcons name="person" style={styles.avatarIcon} />
-          </TouchableOpacity>
         </XStack>
 
         {/* Notification Section */}
@@ -102,65 +57,33 @@ export default function HomePage() {
           <Text style={styles.sectionHeader}>
             Campus Facilities
           </Text>
-          <View style={[styles.notifScroll, {paddingVertical: 20}]}>
+          <View style={[styles.notifScroll, {paddingVertical: Metrics.moderateScale(20,.2)}]}>
             <CampusFacilityCards/>
           </View>
         </YStack>
-        <Button
-          width={"80%"}
-          pressStyle={{
-            backgroundColor: "#857cc9ff",
-            borderColor: "#857cc9ff",
-          }}
-          focusStyle={{
-            backgroundColor: "#857cc9ff",
-            borderColor: "#857cc9ff",
-          }}
-          hoverStyle={{
-            backgroundColor: "#857cc9ff",
-            borderColor: "#857cc9ff",
-          }}
-          height={50}
-          borderRadius={24}
-          backgroundColor={"#857cc9ff"}
-          textAlign="center"
-        >
+
+        {/* Manthan Button */}
+        <TouchableOpacity style={styles.manthanButton} activeOpacity={0.8} onPress={() => {}}>
           <Image
             source={require("../assets/images/newspaper.png")}
-            opacity={0.2}
-            width={200}
-            height={50}
-            resizeMode="cover"
-            borderRadius={20}
-            position="absolute"
-            top={0}
-            left={0}
-            overflow="hidden"
+            style={styles.manthanImage}
           />
-          <Text
-            fontSize={26}
-            fontWeight={400}
-            fontFamily={"$OldEnglishFive"}
-            color={"#ffffffcb"}
-            letterSpacing={0}
-            style={{
-              textShadowColor: "#1f1f1fff",
-              textShadowOffset: { width: 2, height: 2 },
-              textShadowRadius: 2,
-            }}
-          >
+          <Text style={styles.manthanText}>
             Manthan Times
           </Text>
-        </Button>
+        </TouchableOpacity>
+
+        {/* Helpful Tiles */}
         <Text style={styles.sectionHeader}>Helpful</Text>
         <View style={styles.notifScroll}>
           <Tiles/>
         </View>
+
       </ScrollView>
       <NavBar/>
     </SafeAreaView>
   );
-}
+};
 
 const useResponsiveLayout = () => {
   return StyleSheet.create({
@@ -172,64 +95,52 @@ const useResponsiveLayout = () => {
       flex: 1,
       flexDirection: "column",
       backgroundColor: "#181818",
-      paddingHorizontal: 20,
+      paddingHorizontal: Metrics.moderateScale(20,.2),
     },
     header: {
       flex: 1,
       justifyContent: "space-between",
       alignItems: "center",
-      marginTop: 20,
-      borderColor: '#1FF',
-      borderWidth: 2
+      marginTop: Metrics.moderateScale(20,.2),
     },
     profileInfo: {
       flex: 1,
       alignItems: "flex-start",
-      borderColor: '#F32',
-      borderWidth: 2
     },
     greetingText: {
-      fontSize: 18,
+      fontSize: Metrics.moderateScale(18,.2),
       fontWeight: '400',
       fontFamily: "WorkSans",
-      letterSpacing: 1,
+      letterSpacing: Metrics.moderateScale(1,.2),
       color: "#95a1ac",
-      borderColor: '#F32',
-      borderWidth: 1,
     },
     nameText: {
-      fontSize: 24,
+      fontSize: Metrics.moderateScale(24,.2),
       fontWeight: "400",
       fontFamily: "WorkSans",
       color: "#ffffff",
-      letterSpacing: 0,
-      borderColor: '#F32',
-      borderWidth: 2
     },
     avatar: {
       width: Metrics.moderateScale(60,.2),
       height: Metrics.moderateScale(60,.2),
-      borderRadius: '50%',
+      borderRadius: '20%',
       backgroundColor: '#8345cf',
       justifyContent: 'center',
       alignItems: 'center',
       flexShrink: 0,
-      borderColor: "#FFF",
-      borderWidth: 2
+      marginRight: Metrics.moderateScale(10,.2),
     },
     avatarIcon: {
-      fontSize: Metrics.moderateScale(36,.1),
+      fontSize: Metrics.moderateScale(35,.1),
       color: '#FFF',
     },
     sectionHeader: {
-      paddingTop: 20,
-      // paddingBottom: 5,
-      // flex: 1,
+      paddingTop: Metrics.moderateScale(20,.2),
       flexDirection: "row",
       alignSelf: "flex-start",
-      fontSize: 20,
+      fontSize: Metrics.moderateScale(22,.2),
       fontWeight: '400',
-      letterSpacing: 1,
+      letterSpacing: Metrics.moderateScale(1,.2),
       fontFamily: "WorkSans",
       color: "#DDD",
     },
@@ -238,7 +149,7 @@ const useResponsiveLayout = () => {
     justifyContent: 'center',
     backgroundColor: '#181818',
     flex:1,
-    marginHorizontal: -20,
+    marginHorizontal: Metrics.moderateScale(-20,.2),
     },
     eventImage: {
       width: "100%",
@@ -246,14 +157,42 @@ const useResponsiveLayout = () => {
     },
     eventButton: {
       width: Metrics.screenWidth*0.85,
-      height: 120,
-      borderRadius: 16,
+      height: Metrics.moderateScale(120,.2),
+      borderRadius: Metrics.moderateScale(18,.2),
       overflow: "hidden",
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      marginTop: 10,
+      marginTop: Metrics.moderateScale(10,.2),
       boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
+    },
+    manthanButton: {
+      flexDirection: 'row',
+      width: '80%',
+      height: Metrics.moderateScale(50,.2),
+      borderRadius: Metrics.moderateScale(24,.2),
+      backgroundColor: "#857cc9ff",
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderColor: '#fff',
+      borderWidth: Metrics.moderateScale(1,.2)
+    },
+    manthanImage: {
+      opacity: 0.2,
+      width: '80%',
+      height: '100%',
+      resizeMode: "cover",
+      position: "absolute",
+      overflow: "hidden",
+    },
+    manthanText: {
+      fontSize: Metrics.moderateScale(22,.2),
+      fontWeight: '400',
+      fontFamily: "OldEnglishFive",
+      color: "#ffffffcb",
+      textShadowColor: "#1f1f1f",
+      textShadowOffset: { width: Metrics.moderateScale(2,.2), height: Metrics.moderateScale(2,.2) },
+      textShadowRadius: Metrics.moderateScale(2,.2),
     }
   });
 };
