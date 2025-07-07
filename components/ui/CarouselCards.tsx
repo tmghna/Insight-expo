@@ -106,7 +106,7 @@ export function NotifCards() {
           <TouchableOpacity
             key={item.id}
             onPress={() => handleCardPress(index)}
-            activeOpacity={0.95}
+            activeOpacity={1}
           >
             <Animated.View style={[styles.card, animatedStyle]}>
               <Image source={item.image} style={styles.cardImage} />
@@ -143,7 +143,7 @@ const facilities = [
 ];
 
 const BOX_WIDTH = 135;
-const BOX_HEIGHT = 65;
+const BOX_HEIGHT = 60;
 
 export function CampusFacilityCards() {
   const router = useRouter();
@@ -179,7 +179,7 @@ export function CampusFacilityCards() {
           <TouchableOpacity
             onPress={() => router.push(item.push as any)}
             style={styles.campusCard}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
           >
             <Image source={item.image} style={styles.image} />
             <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
@@ -222,36 +222,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   scrollContent: {
-    paddingLeft: 20,
-    paddingRight: 10,
+    paddingLeft: Metrics.moderateScale(20,.2),
+    paddingRight: Metrics.moderateScale(10,.2),
     alignItems: "center",
   },
   animatedCard: {
-    marginRight: 10,
+    marginRight: Metrics.moderateScale(10,.2),
   },
   campusCard: {
     width: BOX_WIDTH,
     height: BOX_HEIGHT,
-    borderRadius: 16,
+    borderRadius: Metrics.moderateScale(16,.1),
     backgroundColor: "#1f1f1f",
     borderColor: "#1f1f1f",
     flexDirection: "row",
     alignItems: "center",
-    // paddingHorizontal: 12,
     justifyContent: 'space-evenly'
   },
   image: {
     width: "25%",
     aspectRatio: 1,
-    borderRadius: 8,
+    borderRadius: Metrics.moderateScale(8,.1),
     resizeMode: "cover",
   },
   text: {
     // flexShrink: 1,
-    fontSize: 14,
+    fontSize: Metrics.moderateScale(14,.2),
     color: "#fff",
     fontWeight: '400',
     fontFamily: "Nunito",
-    letterSpacing: 1,
+    letterSpacing: Metrics.moderateScale(1,.2),
   },
 });
