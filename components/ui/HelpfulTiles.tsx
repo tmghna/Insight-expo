@@ -14,6 +14,7 @@ const tiles = [
     color: ["#5499bb", "#4475a6"],
     buttons: [
       {
+        key: 'add',
         buttonUI: "playlist-add",
         buttonText: 'Add',
         onClick: () => {}
@@ -26,6 +27,7 @@ const tiles = [
     color: ["#5c6bc1","#4758ad"], 
     buttons: [
       {
+        key: 'book',
         buttonUI: "schedule",
         buttonText: "Book",
         UIcolor: '#341840',
@@ -39,18 +41,21 @@ const tiles = [
     color: ["#795cc1","#6043b1"],
     buttons: [
       {
+        key: 'drive',
         buttonUI: "storage",
         buttonText: 'Drive Material',
         UIcolor: '#341840',
         onClick: () => {}
       },
       {
+        key: 'course',
         buttonUI: "library-books",
         buttonText: 'Course Structure',
         UIcolor: '#341840',
         onClick: () => {}
       },
       {
+        key: 'calendar',
         buttonUI: "calendar-month",
         buttonText: 'Academic Calender',
         UIcolor: '#341840',
@@ -64,12 +69,14 @@ const tiles = [
     color: [ "#c15c9c", "#a84388"],
     buttons: [
       {
+        key: 'ambulance',
         buttonUI: "health-and-safety",
         buttonText: 'Ambulance',
         UIcolor: '#341840',
         onClick: () => {}
       },
       {
+        key: 'hospital',
         buttonUI: "local-hospital",
         buttonText: 'Hospital',
         UIcolor: '#341840',
@@ -120,7 +127,8 @@ export default function Tiles() {
                     locations={[0, 1]}
                     start={[0., 0]}
                     end={[0.8, 1]}
-                    style={styles.buttonGradient}>
+                    style={styles.buttonGradient}
+                    key={btn.key}>
                     <TouchableOpacity style={styles.solidButton} activeOpacity={0.8} onPress={() => btn.onClick}>
                       <MaterialIcons name={btn.buttonUI as any} style={styles.icon} />
                       <Text style={styles.titleText}>{btn.buttonText}</Text>
