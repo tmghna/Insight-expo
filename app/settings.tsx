@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
-import {Text} from 'tamagui';
+import {Text, XStack, YStack} from 'tamagui';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {CampusFacilities, HelpfulTiles} from '@/components/ui/AppearancePreferenceAccordion';
 import { Metrics } from '@/constants/Metric';
@@ -18,6 +18,7 @@ const Settings = () => {
   // const [tilesOpen, setTilesOpen] = useState(false);
   const router = useRouter();
   const styles = useResponsiveStyles();
+  const isWide = Metrics.screenWidth >= 600;
 
   return (
     // This safeview bgcolor is an issue for light-theme. Tamaghna
@@ -49,7 +50,10 @@ const Settings = () => {
             <Text 
               numberOfLines={1}
               ellipsizeMode='tail'
-              style={styles.email}>xxxxxx@iisermohali.ac.in</Text>
+              style={styles.email}
+            >
+              xxxxxx@iisermohali.ac.in
+            </Text>
           </View>
           <View style={styles.buttonSection}>
             <TouchableOpacity style={styles.logoutIcon} onPress={() => {}}>
@@ -75,8 +79,17 @@ const Settings = () => {
           <Text style={styles.sectionHeader}>Preferences</Text>
         </View>
         <Text style={styles.subText}>Homepage Appearances</Text>
-        <CampusFacilities/>
-        <HelpfulTiles/>
+        {isWide ?(
+          <XStack justifyContent='space-between' alignItems='flex-start' gap={Metrics.moderateHorizontalScale(10,.2)}>
+            <CampusFacilities/>
+            <HelpfulTiles/>
+          </XStack>
+        ):(
+          <YStack>
+            <CampusFacilities/>
+            <HelpfulTiles/>
+          </YStack>
+        )}
 
         <View style={styles.divider} />
         {/* Footer Section */}
@@ -186,8 +199,10 @@ const useResponsiveStyles = () => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: '#222',
+      borderWidth: Metrics.moderateHorizontalScale(1,.2),
+      borderColor: '#666',
       paddingVertical: Metrics.moderateVerticalScale(6,.2),
-      paddingHorizontal: Metrics.moderateHorizontalScale(12,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(10,.2),
       borderRadius: Metrics.moderateHorizontalScale(8,.1),
     },
     logoutIconIcon: {
@@ -204,7 +219,7 @@ const useResponsiveStyles = () => {
     headingContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: Metrics.moderateVerticalScale(20,.2),
+      marginTop: Metrics.moderateVerticalScale(10,.2),
       marginBottom: Metrics.moderateVerticalScale(8,.2),
     },
     bullet: {
@@ -227,12 +242,15 @@ const useResponsiveStyles = () => {
       fontWeight: '400',
       fontFamily: 'Nunito',
       paddingLeft: Metrics.moderateHorizontalScale(16,.2), 
+      marginBottom: Metrics.moderateHorizontalScale(5,.2)
     },
     githubLink: {
       alignSelf: 'flex-start',
       alignItems: 'center',
       flexDirection: 'row',
       backgroundColor: '#222',
+      borderWidth: Metrics.moderateHorizontalScale(1.2),
+      borderColor: '#666',
       marginTop: Metrics.moderateVerticalScale(5,.2),
       paddingVertical: Metrics.moderateVerticalScale(5,.2),
       paddingHorizontal: Metrics.moderateHorizontalScale(8,.2),

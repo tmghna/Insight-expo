@@ -1,11 +1,16 @@
 // HelpfulTiles.tsx
 import { YStack, XStack, Text } from "tamagui";
-import { MotiScrollView } from "moti";
-import { Easing } from "react-native-reanimated";
+import Animated, { 
+  Easing, 
+  useAnimatedStyle, 
+  useSharedValue, 
+  withTiming,
+} from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons, } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Metrics } from "@/constants/Metric";
+import { useEffect } from "react";
 
 const tiles = [
   {
@@ -87,27 +92,30 @@ const tiles = [
 ]
 
 export default function Tiles() {
+  const opacity = useSharedValue(0);
+  const translateX = useSharedValue(20);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, {
+      duration: 450,
+      easing: Easing.inOut(Easing.ease),
+    });
+    translateX.value = withTiming(0, {
+      duration: 460,
+      easing: Easing.inOut(Easing.ease),
+    });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateX: translateX.value }],
+  }));
   return (
-      <MotiScrollView
+      <Animated.ScrollView
         horizontal
+        showsHorizontalScrollIndicator={false}
         style={styles.scrollView}
-        from={{ opacity: 0, translateX: 21 }}
-        animate={{ opacity: 1, translateX: 0 }}
-        transition={{
-          opacity: {
-            delay: 0,
-            easing: Easing.inOut(Easing.ease),
-            type: "timing",
-            duration: 280,
-          },
-          translateX: {
-            delay: 0,
-            easing: Easing.inOut(Easing.ease),
-            type: "timing",
-            duration: 600,
-          },
-        }}
-        contentContainerStyle={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start'}}
+        contentContainerStyle={styles.scrollContent}
       >
         {tiles.map((item) => (
           <LinearGradient
@@ -139,7 +147,7 @@ export default function Tiles() {
             </XStack>
           </LinearGradient>
         ))}
-      </MotiScrollView>
+      </Animated.ScrollView>
   );
 }
 
@@ -148,6 +156,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     paddingVertical: Metrics.moderateVerticalScale(20,.2),
+  },
+  scrollContent: {
+    paddingLeft: Metrics.moderateHorizontalScale(20,.2),
+    paddingRight: Metrics.moderateHorizontalScale(10,.2),
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
   },
   gradientCommon: {
     height: Metrics.moderateHorizontalScale(240,.2),
