@@ -57,7 +57,7 @@ export default function HomePage() {
           <Text style={styles.sectionHeader}>
             Campus Facilities
           </Text>
-          <View style={[styles.notifScroll, {paddingVertical: Metrics.moderateScale(20,.2)}]}>
+          <View style={[styles.notifScroll, {paddingVertical: Metrics.moderateHorizontalScale(20,.2)}]}>
             <CampusFacilityCards/>
           </View>
         </YStack>
@@ -95,52 +95,52 @@ const useResponsiveLayout = () => {
       flex: 1,
       flexDirection: "column",
       backgroundColor: "#181818",
-      paddingHorizontal: Metrics.moderateScale(20,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
     },
     header: {
       flex: 1,
       justifyContent: "space-between",
       alignItems: "center",
-      marginTop: Metrics.moderateScale(20,.2),
+      marginTop: Metrics.moderateHorizontalScale(20,.2),
     },
     profileInfo: {
       flex: 1,
       alignItems: "flex-start",
     },
     greetingText: {
-      fontSize: Metrics.moderateScale(18,.2),
+      fontSize: Metrics.moderateHorizontalScale(18,.2),
       fontWeight: '400',
       fontFamily: "WorkSans",
-      letterSpacing: Metrics.moderateScale(1,.2),
+      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
       color: "#95a1ac",
     },
     nameText: {
-      fontSize: Metrics.moderateScale(24,.2),
+      fontSize: Metrics.moderateHorizontalScale(24,.2),
       fontWeight: "400",
       fontFamily: "WorkSans",
       color: "#ffffff",
     },
     avatar: {
-      width: Metrics.moderateScale(60,.2),
-      height: Metrics.moderateScale(60,.2),
+      width: Metrics.moderateHorizontalScale(60,.2),
+      height: Metrics.moderateHorizontalScale(60,.2),
       borderRadius: '20%',
       backgroundColor: '#8345cf',
       justifyContent: 'center',
       alignItems: 'center',
       flexShrink: 0,
-      marginRight: Metrics.moderateScale(10,.2),
+      marginRight: Metrics.moderateHorizontalScale(10,.2),
     },
     avatarIcon: {
-      fontSize: Metrics.moderateScale(35,.1),
+      fontSize: Metrics.moderateHorizontalScale(35,.1),
       color: '#FFF',
     },
     sectionHeader: {
-      paddingTop: Metrics.moderateScale(20,.2),
+      paddingTop: Metrics.moderateHorizontalScale(20,.2),
       flexDirection: "row",
       alignSelf: "flex-start",
-      fontSize: Metrics.moderateScale(22,.2),
+      fontSize: Metrics.moderateHorizontalScale(22,.2),
       fontWeight: '400',
-      letterSpacing: Metrics.moderateScale(1,.2),
+      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
       fontFamily: "WorkSans",
       color: "#DDD",
     },
@@ -149,7 +149,7 @@ const useResponsiveLayout = () => {
     justifyContent: 'center',
     backgroundColor: '#181818',
     flex:1,
-    marginHorizontal: Metrics.moderateScale(-20,.2),
+    marginHorizontal: Metrics.moderateHorizontalScale(-20,.2),
     },
     eventImage: {
       width: "100%",
@@ -157,25 +157,25 @@ const useResponsiveLayout = () => {
     },
     eventButton: {
       width: Metrics.screenWidth*0.85,
-      height: Metrics.moderateScale(120,.2),
-      borderRadius: Metrics.moderateScale(18,.2),
+      height: Metrics.moderateHorizontalScale(120,.2),
+      borderRadius: Metrics.moderateHorizontalScale(18,.2),
       overflow: "hidden",
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      marginTop: Metrics.moderateScale(10,.2),
+      marginTop: Metrics.moderateHorizontalScale(10,.2),
       boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
     },
     manthanButton: {
       flexDirection: 'row',
       width: '80%',
-      height: Metrics.moderateScale(50,.2),
-      borderRadius: Metrics.moderateScale(24,.2),
+      height: Metrics.moderateHorizontalScale(50,.2),
+      borderRadius: Metrics.moderateHorizontalScale(24,.2),
       backgroundColor: "#857cc9ff",
       alignItems: 'center',
       justifyContent: 'center',
       borderColor: '#fff',
-      borderWidth: Metrics.moderateScale(1,.2)
+      borderWidth: Metrics.moderateHorizontalScale(1,.2)
     },
     manthanImage: {
       opacity: 0.2,
@@ -186,13 +186,13 @@ const useResponsiveLayout = () => {
       overflow: "hidden",
     },
     manthanText: {
-      fontSize: Metrics.moderateScale(22,.2),
+      fontSize: Metrics.moderateHorizontalScale(22,.2),
       fontWeight: '400',
       fontFamily: "OldEnglishFive",
       color: "#ffffffcb",
       textShadowColor: "#1f1f1f",
-      textShadowOffset: { width: Metrics.moderateScale(2,.2), height: Metrics.moderateScale(2,.2) },
-      textShadowRadius: Metrics.moderateScale(2,.2),
+      textShadowOffset: { width: Metrics.moderateHorizontalScale(2,.2), height: Metrics.moderateHorizontalScale(2,.2) },
+      textShadowRadius: Metrics.moderateHorizontalScale(2,.2),
     }
   });
 };
