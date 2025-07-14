@@ -9,14 +9,14 @@ const guidelineBaseHeight = 812;
 
 const horizontalScale = (size: number) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size: number) => (height / guidelineBaseHeight) * size;
-const moderateScale = (size: number, factor = 0.5) => size + (horizontalScale(size) - size) * factor;
+const moderateHorizontalScale = (size: number, factor = 0.5) => size + (horizontalScale(size) - size) * factor;
+const moderateVerticalScale = (size: number, factor = 0.5) => size + (verticalScale(size) - size) * factor;
 
 export const Metrics = {
   screenWidth: width,
   screenHeight: height,
-  horizontalScale,
-  verticalScale,
-  moderateScale,
+  moderateHorizontalScale,
+  moderateVerticalScale,
   isIOS: Platform.OS === 'ios',
   isAndroid: Platform.OS === 'android',
 };

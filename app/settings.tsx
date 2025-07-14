@@ -33,19 +33,30 @@ const Settings = () => {
 
         {/* Profile Section */}
         <View style={styles.profileSection}>
-          <View style={styles.profileInfo}>
+          <View style={styles.avatarSection}>
             <View style={styles.avatar}>
               <MaterialIcons name="person" style={styles.avatarIcon} />
             </View>
-            <View style={styles.profileText}>
-              <Text style={styles.name}>User Name</Text>
-              <Text style={styles.email}>xxxxxx@iisermohali.ac.in</Text>
-            </View>
           </View>
-          <TouchableOpacity style={styles.logoutIcon} onPress={() => {}}>
-            <MaterialIcons name="logout" style={styles.logoutIconIcon} />
-            <Text style={styles.logoutText}>Log out</Text>
-          </TouchableOpacity>
+          <View style={styles.profileText}>
+            <Text 
+              numberOfLines={1}
+              ellipsizeMode='tail'
+              style={styles.name}
+            >
+              User Name
+            </Text>
+            <Text 
+              numberOfLines={1}
+              ellipsizeMode='tail'
+              style={styles.email}>xxxxxx@iisermohali.ac.in</Text>
+          </View>
+          <View style={styles.buttonSection}>
+            <TouchableOpacity style={styles.logoutIcon} onPress={() => {}}>
+              <MaterialIcons name="logout" style={styles.logoutIconIcon} />
+              <Text style={styles.logoutText}>Log out</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.divider} />
 
@@ -79,7 +90,7 @@ const Settings = () => {
           <Text style={styles.footerText}>Updates</Text>
           <Text style={styles.regularText}>Version 4.0.0</Text>
 
-          <Text style={[styles.regularText, { marginTop: Metrics.moderateScale(16,.2) }]}>
+          <Text style={[styles.regularText, { marginTop: Metrics.moderateHorizontalScale(16,.2) }]}>
             An Initiative by The Turing Club
           </Text>
           <Text style={styles.regularText}>Convener: Gokul P B</Text>
@@ -100,167 +111,165 @@ const Settings = () => {
 export default Settings;
 
 const useResponsiveStyles = () => {
-  const fontSize = Metrics.moderateScale(12);
   return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#111',
-      paddingHorizontal: Metrics.moderateScale(15,.2),
-      paddingTop: Metrics.moderateScale(20,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(15,.2),
+      paddingTop: Metrics.moderateVerticalScale(20,.2),
     },
     header: {
-      paddingBottom: Metrics.moderateScale(20,.2),
-      paddingLeft: Metrics.moderateScale(6,.2),
+      paddingBottom: Metrics.moderateVerticalScale(20,.2),
+      paddingLeft: Metrics.moderateHorizontalScale(6,.2),
       flexDirection: 'row',
       alignItems: 'center',
     },
     backButtonIcon: {
-      fontSize: Metrics.moderateScale(20,.2),
+      fontSize: Metrics.moderateHorizontalScale(20,.2),
       color: '#FFF',
     },
     backButton: {
-      marginRight: Metrics.moderateScale(20,.2),
+      marginRight: Metrics.moderateHorizontalScale(20,.2),
     },
     title: {
-      fontSize: Metrics.moderateScale(18,.2),
+      fontSize: Metrics.moderateHorizontalScale(18,.2),
       fontWeight: '400',
       color: 'white',
       fontFamily: 'Nunito'
     },
-    // This needs to be dynamic using flexboxes. Tamaghna
     profileSection: {
-      position: 'relative',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      gap: Metrics.moderateHorizontalScale(8,.2),
       alignItems: 'center',
     },
-    profileInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      flex: 1,
-      paddingRight: Metrics.moderateScale(100,.2)
+    avatarSection: {
+      flex: 0,
+      justifyContent: 'center',
     },
     avatar: {
-      width: Metrics.moderateScale(48,.2),
-      height: Metrics.moderateScale(48,.2),
+      width: Metrics.moderateHorizontalScale(48,.2),
+      height: Metrics.moderateHorizontalScale(48,.2),
       borderRadius: '50%',
       backgroundColor: '#8345cf',
       justifyContent: 'center',
       alignItems: 'center',
-      flexShrink: 0,
     },
     avatarIcon: {
-      fontSize: Metrics.moderateScale(28,.1),
+      fontSize: Metrics.moderateHorizontalScale(28,.1),
       color: '#FFF',
     },
     profileText: {
-      marginLeft: Metrics.moderateScale(12,.2),
-      flexShrink: 1,
-    },
-    logoutIcon: {
-      position: 'absolute',
-      top: 2,
-      right: 2,
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: '#222',
-      paddingVertical: Metrics.moderateScale(6,.2),
-      paddingHorizontal: Metrics.moderateScale(12,.2),
-      borderRadius: Metrics.moderateScale(8,.1),
-      flexShrink: 0,
-    },
-    logoutIconIcon: {
-      marginRight: Metrics.moderateScale(6,.2),
-      color:'#FFF',
-      fontSize: Metrics.moderateScale(16,.2),
-    },
-    logoutText: {
-      color: '#DDD',
-      fontWeight: '400',
-      fontSize: Metrics.moderateScale(14,.2),
-      fontFamily: 'Nunito',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'flex-start',
     },
     name: {
       color: '#FFFFFF',
-      fontSize: Metrics.moderateScale(18,.2),
+      fontSize: Metrics.moderateHorizontalScale(18,.2),
       fontWeight: '500',
       fontFamily: "WorkSans",
     },
     email: {
       color: '#AAA',
-      fontSize: Metrics.moderateScale(14,.2),
+      fontSize: Metrics.moderateHorizontalScale(14,.2),
       fontWeight: '400',
+      fontFamily: 'Nunito',
+    },
+    buttonSection: {
+      height: '100%',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      flex: 0,
+    },
+    logoutIcon: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#222',
+      paddingVertical: Metrics.moderateVerticalScale(6,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(12,.2),
+      borderRadius: Metrics.moderateHorizontalScale(8,.1),
+    },
+    logoutIconIcon: {
+      marginRight: Metrics.moderateHorizontalScale(6,.2),
+      color:'#FFF',
+      fontSize: Metrics.moderateHorizontalScale(16,.2),
+    },
+    logoutText: {
+      color: '#DDD',
+      fontWeight: '400',
+      fontSize: Metrics.moderateHorizontalScale(14,.2),
       fontFamily: 'Nunito',
     },
     headingContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: Metrics.moderateScale(20,.2),
-      marginBottom: Metrics.moderateScale(8,.2),
+      marginTop: Metrics.moderateVerticalScale(20,.2),
+      marginBottom: Metrics.moderateVerticalScale(8,.2),
     },
     bullet: {
-      width: Metrics.moderateScale(6,.1),
-      height: Metrics.moderateScale(20,.1),
-      borderRadius: Metrics.moderateScale(2,.1),
+      width: Metrics.moderateHorizontalScale(6,.1),
+      height: Metrics.moderateVerticalScale(20,.1),
+      borderRadius: Metrics.moderateHorizontalScale(2,.1),
       backgroundColor: '#8345cf',
-      marginRight: Metrics.moderateScale(10,.2),
+      marginRight: Metrics.moderateHorizontalScale(10,.2),
     },
     sectionHeader: {
       color: '#FFF',
-      fontSize: Metrics.moderateScale(20,.2),
+      fontSize: Metrics.moderateHorizontalScale(20,.2),
       fontWeight: '400',
       fontFamily:"WorkSans",
     },
     subText: {
       color: '#999',
-      fontSize: Metrics.moderateScale(14,.2),
-      lineHeight: Metrics.moderateScale(18,.1),
+      fontSize: Metrics.moderateHorizontalScale(14,.2),
+      lineHeight: Metrics.moderateHorizontalScale(18,.1),
       fontWeight: '400',
       fontFamily: 'Nunito',
-      paddingLeft: Metrics.moderateScale(16,.2), 
+      paddingLeft: Metrics.moderateHorizontalScale(16,.2), 
     },
     githubLink: {
       alignSelf: 'flex-start',
       alignItems: 'center',
       flexDirection: 'row',
       backgroundColor: '#222',
-      marginTop: Metrics.moderateScale(5,.2),
-      paddingVertical: Metrics.moderateScale(5,.2),
-      paddingHorizontal: Metrics.moderateScale(8,.2),
-      borderRadius: Metrics.moderateScale(8,.1),
+      marginTop: Metrics.moderateVerticalScale(5,.2),
+      paddingVertical: Metrics.moderateVerticalScale(5,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(8,.2),
+      borderRadius: Metrics.moderateHorizontalScale(8,.1),
     },
     githubIcon: {
-      marginRight: Metrics.moderateScale(6,.2),
+      marginRight: Metrics.moderateHorizontalScale(6,.2),
       opacity: 0.8,
-      fontSize: Metrics.moderateScale(16,.1),
+      fontSize: Metrics.moderateHorizontalScale(16,.1),
       color: '#FFF',
     },
     linkText: {
       color: '#CCC',
-      fontSize: Metrics.moderateScale(12,.2),
+      fontSize: Metrics.moderateHorizontalScale(12,.2),
       fontWeight: '400',
       fontFamily: 'Nunito',
     },
     footerText: {
       color: '#DDD',
-      fontSize: Metrics.moderateScale(18,.2),
+      fontSize: Metrics.moderateHorizontalScale(18,.2),
       fontWeight: '400',
       fontFamily: 'WorkSans',
-      marginTop: Metrics.moderateScale(10,.2)
+      marginTop: Metrics.moderateVerticalScale(10,.2)
     },
     regularText: {
       color: '#999',
-      fontSize: Metrics.moderateScale(12,.2),
-      lineHeight: Metrics.moderateScale(18,.1),
+      fontSize: Metrics.moderateHorizontalScale(12,.2),
+      lineHeight: Metrics.moderateVerticalScale(18,.1),
       fontWeight: '400',
       fontFamily: 'Nunito',
     },
     divider: {
-      height: Metrics.moderateScale(1,.2),
+      height: Metrics.moderateVerticalScale(1,.2),
       backgroundColor: '#A678F1',
-      marginVertical: Metrics.moderateScale(10,.2),
+      marginVertical: Metrics.moderateVerticalScale(10,.2),
       opacity: 0.2,
-      marginHorizontal: Metrics.moderateScale(-15,.2)
+      marginHorizontal: Metrics.moderateHorizontalScale(-15,.2)
     },
   });
 };

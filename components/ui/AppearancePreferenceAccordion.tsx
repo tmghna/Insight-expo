@@ -18,50 +18,50 @@ const useResponsiveStyles = () => {
       width: '100%',
       alignSelf: 'center',
       backgroundColor: '#222',
-      borderRadius: Metrics.moderateScale(12,.1),
+      borderRadius: Metrics.moderateHorizontalScale(12,.1),
       overflow: 'hidden',
-      marginVertical: Metrics.moderateScale(6,.2),
+      marginVertical: Metrics.moderateVerticalScale(6,.2),
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: Metrics.moderateScale(4,.2),
-      paddingHorizontal: Metrics.moderateScale(16,.2),
+      paddingVertical: Metrics.moderateVerticalScale(4,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(16,.2),
       backgroundColor: '#222',
     },
     headerText: {
       color: 'white',
       fontWeight: '400',
-      fontSize: Metrics.moderateScale(14,.1),
+      fontSize: Metrics.moderateHorizontalScale(15,.1),
       fontFamily: 'Nunito',
-      letterSpacing: Metrics.moderateScale(1,.2),
+      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
     },
     contentContainer: {
       overflow: 'hidden',
       backgroundColor: '#1c1c1c',
     },
     contentInner: {
-      paddingHorizontal: Metrics.moderateScale(20,.2),
-      paddingVertical: Metrics.moderateScale(12,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
+      paddingVertical: Metrics.moderateVerticalScale(12,.2),
     },
     row: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: Metrics.moderateScale(18,.2),
+      marginBottom: Metrics.moderateVerticalScale(18,.2),
     },
     contentText: {
       color: '#ccc',
-      fontSize: Metrics.moderateScale(13,.1),
+      fontSize: Metrics.moderateHorizontalScale(14,.1),
       fontWeight: '400',
       fontFamily: 'Nunito',
     },
     checkbox: {
-      width: Metrics.moderateScale(16,.1),
-      height: Metrics.moderateScale(16,.1),
+      width: Metrics.moderateHorizontalScale(16,.1),
+      aspectRatio: 1,
       borderRadius: '50%',
-      borderWidth: Metrics.moderateScale(2,.1),
+      borderWidth: Metrics.moderateHorizontalScale(2,.1),
       borderColor: '#999',
       justifyContent: 'center',
       alignItems: 'center',
@@ -72,11 +72,11 @@ const useResponsiveStyles = () => {
     },
     checkMark: {
       color: 'white',
-      fontSize: Metrics.moderateScale(12,.1),
+      fontSize: Metrics.moderateHorizontalScale(12,.1),
     },
     chevron: {
       color: '#aaa',
-      fontSize: Metrics.moderateScale(24,.1),
+      fontSize: Metrics.moderateHorizontalScale(24,.1),
     }
   });
 };
@@ -94,7 +94,7 @@ export function CampusFacilities() {
     { key: 'map', label: 'Campus Map', onCheck: () => {} },
     { key: 'timings', label: 'Timings', onCheck: () => {} },
   ];
-  const outputRangeMax = Metrics.moderateScale(24,.1) + items.length * Metrics.moderateScale(35,.1);
+  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
@@ -219,7 +219,7 @@ export function HelpfulTiles() {
     { key: 'bookmaterial', label: 'Book Material', onCheck: () => {} },
     { key: 'laundry', label: 'Laundry', onCheck: () => {} },
   ];
-  const outputRangeMax = Metrics.moderateScale(24,.1) + items.length * Metrics.moderateScale(35,.1);
+  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
