@@ -53,14 +53,14 @@ export default function HomePage() {
         </TouchableOpacity>
 
         {/* Campus Facilities */}
-        <YStack flex={1}>
+        {/* <YStack flex={1}> */}
           <Text style={styles.sectionHeader}>
             Campus Facilities
           </Text>
           <View style={[styles.notifScroll, {paddingVertical: Metrics.moderateHorizontalScale(20,.2)}]}>
             <CampusFacilityCards/>
           </View>
-        </YStack>
+        {/* </YStack> */}
 
         {/* Manthan Button */}
         <TouchableOpacity style={styles.manthanButton} activeOpacity={0.8} onPress={() => {}}>

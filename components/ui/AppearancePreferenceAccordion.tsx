@@ -15,8 +15,10 @@ const useResponsiveStyles = () => {
 
   return StyleSheet.create({
     container: {
-      width: '100%',
-      alignSelf: 'center',
+      // width: '100%',
+      borderWidth: Metrics.moderateHorizontalScale(1,.2),
+      borderColor: '#666',
+      flex: 1,
       backgroundColor: '#222',
       borderRadius: Metrics.moderateHorizontalScale(12,.1),
       overflow: 'hidden',
