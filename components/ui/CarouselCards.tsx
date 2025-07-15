@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
-  View,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -15,6 +14,8 @@ import Animated, {
 import { Image, Text, Button } from "tamagui";
 import { Metrics } from "@/constants/Metric";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const width = Metrics.screenWidth;
 const CARD_WIDTH = width * 0.85;
@@ -146,10 +147,33 @@ const BOX_WIDTH = 135;
 const BOX_HEIGHT = 60;
 
 export function CampusFacilityCards() {
+  const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>({});
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   const opacity = useSharedValue(0);
   const translateX = useSharedValue(20);
+
+    const loadState = useCallback(async () => {
+      try {
+        const state: { [key: string]: boolean } = {};
+        for (const item of facilities) {
+          const value = await AsyncStorage.getItem(`CampusFacilities:${item.id.toLowerCase()}`);
+          state[item.id] = value === 'true';
+        }
+        setVisibleItems(state);
+      } catch (e) {
+        console.error('Error loading tile visibility:', e);
+      } finally {
+        setIsLoaded(true);
+      }
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadState();
+    }, [loadState])
+  );
 
   useEffect(() => {
     opacity.value = withTiming(1, {
@@ -175,18 +199,20 @@ export function CampusFacilityCards() {
       contentContainerStyle={styles.scrollContent}
     >
       {facilities.map((item) => (
-        <Animated.View key={item.id} style={[animatedStyle, styles.animatedCard]}>
-          <TouchableOpacity
-            onPress={() => router.push(item.push as any)}
-            style={styles.campusCard}
-            activeOpacity={0.8}
-          >
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
-              {item.id}
-            </Text>
-          </TouchableOpacity>
-        </Animated.View>
+        visibleItems[item.id] ? (
+          <Animated.View key={item.id} style={[animatedStyle, styles.animatedCard]}>
+            <TouchableOpacity
+              onPress={() => router.push(item.push as any)}
+              style={styles.campusCard}
+              activeOpacity={0.8}
+            >
+              <Image source={item.image} style={styles.image} />
+              <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
+                {item.id}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        ) : null
       ))}
     </Animated.ScrollView>
   );

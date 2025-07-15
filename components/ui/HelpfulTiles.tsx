@@ -1,4 +1,4 @@
-// HelpfulTiles.tsx
+import { useFocusEffect } from '@react-navigation/native';
 import { YStack, XStack, Text } from "tamagui";
 import Animated, { 
   Easing, 
@@ -10,11 +10,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons, } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Metrics } from "@/constants/Metric";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const tiles = [
   {
-    id: '1',
+    id: 'lostnfound',
     title: "Lost & Found",
     color: ["#5499bb", "#4475a6"],
     buttons: [
@@ -27,7 +28,7 @@ const tiles = [
     ],
   },
   {
-    id: '2',
+    id: 'lhbooking',
     title: "LH Booking",
     color: ["#5c6bc1","#4758ad"], 
     buttons: [
@@ -41,7 +42,7 @@ const tiles = [
     ],
   },
   {
-    id: '3',
+    id: 'academia',
     title: "Academia",
     color: ["#795cc1","#6043b1"],
     buttons: [
@@ -69,7 +70,7 @@ const tiles = [
     ],
   },
   {
-    id: '4',
+    id: 'helpline',
     title: "Helpline",
     color: [ "#c15c9c", "#a84388"],
     buttons: [
@@ -92,8 +93,32 @@ const tiles = [
 ]
 
 export default function Tiles() {
+  const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>({});
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   const opacity = useSharedValue(0);
   const translateX = useSharedValue(20);
+
+  const loadState = useCallback(async () => {
+      try {
+        const state: { [key: string]: boolean } = {};
+        for (const item of tiles) {
+          const value = await AsyncStorage.getItem(`HelpfulTiles:${item.id}`);
+          state[item.id] = value === 'true';
+        }
+        setVisibleItems(state);
+      } catch (e) {
+        console.error('Error loading tile visibility:', e);
+      } finally {
+        setIsLoaded(true);
+      }
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadState();
+    }, [loadState])
+  );
 
   useEffect(() => {
     opacity.value = withTiming(1, {
@@ -118,34 +143,36 @@ export default function Tiles() {
         contentContainerStyle={styles.scrollContent}
       >
         {tiles.map((item) => (
-          <LinearGradient
-            colors={item.color as any}
-            locations={[0, .5]}
-            start={[0.1, 0.1]}
-            end={[.9, .9]}
-            style={styles.gradientCommon}
-            key={item.id}
-          >
-            <XStack style={styles.tileContainer}>
-              <YStack style={styles.contentStack}>
-                <Text style={styles.headingText}>{item.title}</Text>
-                {item.buttons.map((btn) => (
-                  <LinearGradient
-                    colors={item.color as any}
-                    locations={[0, 1]}
-                    start={[0., 0]}
-                    end={[0.8, 1]}
-                    style={styles.buttonGradient}
-                    key={btn.key}>
-                    <TouchableOpacity style={styles.solidButton} activeOpacity={0.8} onPress={() => btn.onClick}>
-                      <MaterialIcons name={btn.buttonUI as any} style={styles.icon} />
-                      <Text style={styles.titleText}>{btn.buttonText}</Text>
-                    </TouchableOpacity>
-                  </LinearGradient>
-                ))}
-              </YStack>
-            </XStack>
-          </LinearGradient>
+          visibleItems[item.id] ? (
+            <LinearGradient
+              colors={item.color as any}
+              locations={[0, .5]}
+              start={[0.1, 0.1]}
+              end={[.9, .9]}
+              style={styles.gradientCommon}
+              key={item.id}
+            >
+              <XStack style={styles.tileContainer}>
+                <YStack style={styles.contentStack}>
+                  <Text style={styles.headingText}>{item.title}</Text>
+                  {item.buttons.map((btn) => (
+                    <LinearGradient
+                      colors={item.color as any}
+                      locations={[0, 1]}
+                      start={[0., 0]}
+                      end={[0.8, 1]}
+                      style={styles.buttonGradient}
+                      key={btn.key}>
+                      <TouchableOpacity style={styles.solidButton} activeOpacity={0.8} onPress={() => btn.onClick}>
+                        <MaterialIcons name={btn.buttonUI as any} style={styles.icon} />
+                        <Text style={styles.titleText}>{btn.buttonText}</Text>
+                      </TouchableOpacity>
+                    </LinearGradient>
+                  ))}
+                </YStack>
+              </XStack>
+            </LinearGradient>
+          ) : null
         ))}
       </Animated.ScrollView>
   );
