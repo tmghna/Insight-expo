@@ -93,7 +93,7 @@ export function CampusFacilities() {
     { key: 'market', label: 'Market', onCheck: () => {} },
     { key: 'complaints', label: 'Complaints', onCheck: () => {} },
     { key: 'contacts', label: 'Contacts', onCheck: () => {} },
-    { key: 'map', label: 'Campus Map', onCheck: () => {} },
+    { key: 'campus map', label: 'Campus Map', onCheck: () => {} },
     { key: 'timings', label: 'Timings', onCheck: () => {} },
   ];
   const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
@@ -107,8 +107,12 @@ export function CampusFacilities() {
       try {
         const savedState: { [key: string]: boolean } = {};
         for (const item of items) {
-          const value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
+          let value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
           console.log(`${item.key}:`, value); // Debug
+          if (value === null) {
+            await AsyncStorage.setItem(`CampusFacilities:${item.key}`, 'true');
+            value = 'true';
+          }
           savedState[item.key] = value === 'true';
         }
         setCheckedItems(savedState);
@@ -217,9 +221,9 @@ export function HelpfulTiles() {
 
   const items = [
     { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
-    { key: 'contacts', label: 'Emergency Contacts', onCheck: () => {} },
-    { key: 'bookmaterial', label: 'Book Material', onCheck: () => {} },
-    { key: 'laundry', label: 'Laundry', onCheck: () => {} },
+    { key: 'lhbooking', label: 'LH Booking', onCheck: () => {} },
+    { key: 'academia', label: 'Academia', onCheck: () => {} },
+    { key: 'helpline', label: 'Helpline', onCheck: () => {} },
   ];
   const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
 
@@ -232,8 +236,12 @@ export function HelpfulTiles() {
     try {
       const savedState: { [key: string]: boolean } = {};
       for (const item of items) {
-        const value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
+        let value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
         console.log(`${item.key}:`, value); // Debug
+        if (value === null) {
+          await AsyncStorage.setItem(`HelpfulTiles:${item.key}`, 'true');
+          value = 'true';
+        }
         savedState[item.key] = value === 'true';
       }
       setCheckedItems(savedState);
