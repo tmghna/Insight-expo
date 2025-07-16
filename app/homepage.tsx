@@ -49,7 +49,7 @@ const facilities = [
   {
     id: "Market",
     image: require("../assets/images/market2.png"),
-    push: "/+not-found",
+    push: "/market",
   },
   {
     id: "Complaints",

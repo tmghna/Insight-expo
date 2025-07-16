@@ -74,6 +74,7 @@ export default function RootLayout() {
             <Stack.Screen name="homepage" options={{ headerShown: false }} />
             <Stack.Screen name="contacts" options={{ headerShown: false }} />
             <Stack.Screen name="settings" options={{ headerShown: false }} />
+            <Stack.Screen name="market" options={{ headerShown: false }} />
           </Stack>
           <StatusBar style="auto" />
         </AuthProvider>
