@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
+  Text,
   TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
 } from 'react-native';
-import { Text } from 'tamagui';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Metrics } from '@/constants/Metric';

@@ -8,8 +8,6 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 // app/_layout.tsx
-import { TamaguiProvider } from "tamagui";
-import config from "../tamagui.config";
 import { AuthProvider } from "./auth-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -63,7 +61,6 @@ export default function RootLayout() {
   console.log('Fonts loaded:', loaded);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <TamaguiProvider config={config}>
         <AuthProvider>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -78,7 +75,6 @@ export default function RootLayout() {
           </Stack>
           <StatusBar style="auto" />
         </AuthProvider>
-      </TamaguiProvider>
     </GestureHandlerRootView>
   );
 }

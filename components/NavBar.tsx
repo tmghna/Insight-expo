@@ -1,5 +1,4 @@
-import { Button, View } from "tamagui";
-
+import { Button, View } from 'react-native';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { usePathname, useRouter } from "expo-router";
 import { MotiView } from "moti";

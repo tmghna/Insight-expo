@@ -1,15 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Accordion,
-  Anchor,
+import { Accordion } from "@/components/ui/Accordion";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { 
+  Alert,
+  Linking,
   ScrollView,
   Text,
-  Square,
-  XStack,
-  YStack,
-} from "tamagui";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Alert, Linking } from "react-native";
+  View,
+} from "react-native";
 
 const contacts = [
   {
@@ -59,7 +57,7 @@ export default function Contacts() {
       style={{ flex: 1, backgroundColor: "#181818", alignItems: "center" }}
       edges={["top", "right", "left"]}
     >
-      <XStack flex={1} width={"100%"} height={87} backgroundColor={"#384c7e00"}>
+      <View flexDirection='row' flex={1} width={"100%"} height={87} backgroundColor={"#384c7e00"}>
         <Text
           paddingStart={30}
           paddingTop={10}
@@ -71,7 +69,7 @@ export default function Contacts() {
         >
           Contacts
         </Text>
-      </XStack>
+      </View>
       <ScrollView
         flexDirection="column"
         backgroundColor="#384c7e00"
@@ -81,7 +79,7 @@ export default function Contacts() {
         height={"80%"}
         borderRadius={0}
       >
-        {contacts.map((contact) => (
+        {/*{contacts.map((contact) => (
           <Accordion
             type="multiple"
             key={contact.id}
@@ -104,12 +102,13 @@ export default function Contacts() {
                 paddingBottom={5}
               >
                 {({ open }: { open: boolean }) => (
-                  <YStack
+                  <View
+                    flexDirection='column'
                     alignSelf="flex-start"
                     width={"100%"}
                     paddingVertical={2}
                   >
-                    <XStack alignSelf="stretch" justifyContent="space-between">
+                    <View flexDirection='row' alignSelf="stretch" justifyContent="space-between">
                       <Text
                         color={"#ffffff"}
                         fontSize={25}
@@ -121,7 +120,9 @@ export default function Contacts() {
                       >
                         {contact.id}
                       </Text>
-                      <Square
+                      <View
+                        width={27}
+                        height={27}
                         animation={"quick"}
                         rotate={open ? "180deg" : "0deg"}
                       >
@@ -130,8 +131,8 @@ export default function Contacts() {
                           size={25}
                           color="#ffffff"
                         />
-                      </Square>
-                    </XStack>
+                      </View>
+                    </View>
                     {open ? null : (
                       <Text
                         color={"#95a1ac"}
@@ -146,7 +147,7 @@ export default function Contacts() {
                         {contact.description}
                       </Text>
                     )}
-                  </YStack>
+                  </View>
                 )}
               </Accordion.Trigger>
 
@@ -156,10 +157,10 @@ export default function Contacts() {
                   paddingTop={5}
                   marginTop={0}
                 >
-                  <YStack gap={10}>
+                  <View flexDirection='column' gap={10}>
                     {contact.id === "Faculty"
                       ? contact.name.map((_, index) => (
-                          <YStack key={index} gap={5}>
+                          <View flexDirection='column' key={index} gap={5}>
                             <Text
                               color={"#ffffff"}
                               fontWeight={400}
@@ -191,7 +192,7 @@ export default function Contacts() {
                               {contact.department[index]}
                             </Text>
 
-                            <Anchor
+                            <Text
                               color={"#95a1ac"}
                               fontWeight={400}
                               fontFamily={"$WorkSans"}
@@ -211,11 +212,11 @@ export default function Contacts() {
                               }}
                             >
                               {contact.email[index]}
-                            </Anchor>
-                          </YStack>
+                            </Text>
+                          </View>
                         ))
                       : contact.name.map((_, index) => (
-                          <YStack key={index} gap={5}>
+                          <View flexDirection='column' key={index} gap={5}>
                             <Text
                               color={"#ffffff"}
                               fontWeight={400}
@@ -236,8 +237,8 @@ export default function Contacts() {
                             >
                               {contact.designation[index]}
                             </Text>
-                            <XStack>
-                              <Anchor
+                            <View>
+                              <Text
                                 color={"#ffffff"}
                                 fontWeight={400}
                                 fontFamily={"$WorkSans"}
@@ -260,8 +261,8 @@ export default function Contacts() {
                                 }}
                               >
                                 {contact.number[index]} /{" "}
-                              </Anchor>
-                              <Anchor
+                              </Text>
+                              <Text
                                 color={"#ffffff"}
                                 fontWeight={400}
                                 fontFamily={"$WorkSans"}
@@ -281,18 +282,19 @@ export default function Contacts() {
                                 }}
                               >
                                 {contact.email[index]}
-                              </Anchor>
-                            </XStack>
-                          </YStack>
+                              </Text>
+                            </View>
+                          </View>
                         ))}
-                  </YStack>
+                  </View>
                 </Accordion.Content>
               </Accordion.HeightAnimator>
             </Accordion.Item>
           </Accordion>
-        ))}
+        ))}*/} {/*Need to figure out Accordion logic*/}
       </ScrollView>
-      <XStack
+      <View
+        flexDirection='row'
         flex={1}
         width={"100%"}
         height={77}

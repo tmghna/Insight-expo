@@ -1,5 +1,11 @@
-import { Image, ScrollView, Text, XStack, YStack } from "tamagui";
-import { Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
+import { 
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import NavBar from "@/components/NavBar";
@@ -21,66 +27,70 @@ export default function HomePage() {
         }}
       >
         {/* Header Section */}
-        <XStack style={styles.header}>
-          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
+        <View flexDirection="row" style={styles.header}>
+          <TouchableOpacity
+            style={styles.avatar}
+            onPress={() => router.push("/settings")}
+          >
             <MaterialIcons name="person" style={styles.avatarIcon} />
           </TouchableOpacity>
-          <YStack style={styles.profileInfo}>
-            <Text style={styles.greetingText}>
-              Hello,
-            </Text>
-            <Text
-              style={styles.nameText}>
-              User Name
-            </Text>
-          </YStack>
-        </XStack>
+          <View flexDirection="column" style={styles.profileInfo}>
+            <Text style={styles.greetingText}>Hello,</Text>
+            <Text style={styles.nameText}>User Name</Text>
+          </View>
+        </View>
 
         {/* Notification Section */}
-        <Text style={styles.sectionHeader}>
-          Notifications
-        </Text>
+        <Text style={styles.sectionHeader}>Notifications</Text>
         <View style={styles.notifScroll}>
-          <NotifCards/>
+          <NotifCards />
         </View>
 
         {/* Events Section */}
-        <TouchableOpacity activeOpacity={0.8} style={styles.eventButton} onPress={() => {}}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.eventButton}
+          onPress={() => {}}
+        >
           <Image
-            source={require('../assets/images/Card.png')}
+            source={require("../assets/images/Card.png")}
             style={styles.eventImage}
           />
         </TouchableOpacity>
 
         {/* Campus Facilities */}
-        {/* <YStack flex={1}> */}
-          <Text style={styles.sectionHeader}>
-            Campus Facilities
-          </Text>
-          <View style={[styles.notifScroll, {paddingVertical: Metrics.moderateHorizontalScale(20,.2)}]}>
-            <CampusFacilityCards/>
-          </View>
-        {/* </YStack> */}
+        {/* <View flexDirection='column' flex={1}> */}
+        <Text style={styles.sectionHeader}>Campus Facilities</Text>
+        <View
+          style={[
+            styles.notifScroll,
+            { paddingVertical: Metrics.moderateHorizontalScale(20, 0.2) },
+          ]}
+        >
+          <CampusFacilityCards />
+        </View>
+        {/* </View> */}
 
         {/* Manthan Button */}
-        <TouchableOpacity style={styles.manthanButton} activeOpacity={0.8} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.manthanButton}
+          activeOpacity={0.8}
+          onPress={() => {}}
+        >
           <Image
             source={require("../assets/images/newspaper.png")}
             style={styles.manthanImage}
           />
-          <Text style={styles.manthanText}>
-            Manthan Times
-          </Text>
+          <Text style={styles.manthanText}>Manthan Times</Text>
         </TouchableOpacity>
 
         {/* Helpful Tiles */}
         <Text style={styles.sectionHeader}>Helpful</Text>
         <View style={styles.notifScroll}>
-          <Tiles/>
+          <Tiles />
         </View>
-
       </ScrollView>
-      <NavBar/>
+      <NavBar />
     </SafeAreaView>
   );
 };

@@ -1,29 +1,23 @@
-import React, { useState } from "react";
-import { useRouter } from "expo-router";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from 'react-native';
-import { 
-  Text,
-  XStack,
-  YStack,
-  Button,
-} from "tamagui";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import {
-  CampusFacilities,
-  HelpfulTiles,
-} from "@/components/ui/AppearancePreferenceAccordion";
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { Metrics } from "@/constants/Metric";
 
 export default function Market() {
   const router = useRouter();
   const styles = useStyles();
-
+  
   return (
     <SafeAreaView>
-      <YStack>
+      <View flexDirection="column">
         {/*Header Section*/}
-        <XStack style={styles.header}>
+        <View flexDirection="row" style={styles.header}>
           <Button
             style={styles.backButton}
             icon={
@@ -34,10 +28,10 @@ export default function Market() {
             }
           />
           <Text style={styles.title}>Market</Text>
-        </XStack>
+        </View>
 
         {/*User Section*/}
-        <XStack style={styles.userSection}>
+        <View flexDirection="row" style={styles.userSection}>
           <Button
             style={styles.cataloguesButton}
             icon={
@@ -49,7 +43,7 @@ export default function Market() {
           >
             Your Catalogues
           </Button>
-          <YStack>
+          <View flexDirection="column">
             <Button
               style={styles.savedItemsButton}
               icon={
@@ -61,7 +55,7 @@ export default function Market() {
             >
               Items Saved
             </Button>
-            <XStack style={styles.userSection}>
+            <View flexDirection="row" style={styles.userSection}>
               <Button
                 style={styles.addInfoButton}
                 icon={
@@ -81,15 +75,15 @@ export default function Market() {
               >
                 Add Items
               </Button>
-            </XStack>
-          </YStack>
-        </XStack>
+            </View>
+          </View>
+        </View>
 
         {/*Public Market Section*/}
         <View style={styles.publicSection}>
           <PublicMarketSection />
         </View>
-      </YStack>
+      </View>
     </SafeAreaView>
   );
 };

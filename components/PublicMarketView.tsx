@@ -1,21 +1,21 @@
 import {
   Button,
+  Image,
   ScrollView,
+  StyleSheet,
   Text,
-  XStack,
-  YStack,
-} from 'tamagui';
-import { StyleSheet } from 'react-native';
+  View,
+ } from 'react-native';
 
 export function PublicMarketSection() {
   const styles = useStyles();
 
   return (
     <ScrollView style={styles.container}>
-      <XStack style={styles.startMark} />
+      <View flexDirection="row" style={styles.startMark} />
 
       {/*Categories*/}
-      <XStack style={styles.categoriesSection}>
+      <View flexDirection="row" style={styles.categoriesSection}>
         <Button
           style={styles.categories}
           icon={<Image style={styles.appliancesImage} />}
@@ -32,25 +32,25 @@ export function PublicMarketSection() {
           style={styles.categories}
           icon={<Image style={styles.utilityImage} />}
         />
-      </XStack>
+      </View>
 
       {/*Peoples Catalogues*/}
-      <XStack style={styles.divider} />
-      <YStack style={styles.section}>
-        <XStack style={styles.sectionHeader}>
+      <View flexDirection="row" style={styles.divider} />
+      <View flexDirection="column" style={styles.section}>
+        <View flexDirection="row" style={styles.sectionHeader}>
           <Text style={styles.sectionHeading}>Peoples Catalogues</Text>
           <Text style={styles.more}>See all</Text>
-        </XStack>
-      </YStack>
+        </View>
+      </View>
 
       {/*Recent Items*/}
-      <XStack style={styles.divider} />
-      <YStack style={styles.section}>
-        <XStack style={styles.sectionHeader}>
+      <View flexDirection="row" style={styles.divider} />
+      <View flexDirection="column" style={styles.section}>
+        <View flexDirection="row" style={styles.sectionHeader}>
           <Text style={styles.sectionHeading}>Recent Items</Text>
           <Text style={styles.more}>See all</Text>
-        </XStack>
-      </YStack>
+        </View>
+      </View>
     </ScrollView>
   );
 }

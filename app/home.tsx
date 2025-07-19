@@ -1,4 +1,4 @@
-import { Button, YStack, Text } from "tamagui";
+import { Button, Text, View } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -18,11 +18,11 @@ export default function Home() {
   };
 
   return (
-    <YStack f={1} ai={"center"} jc={"center"}>
+    <View flexDirection="column" f={1} ai={"center"} jc={"center"}>
       <Text>Hello {user?.displayName}</Text>
       <Button onPress={handleSignOut} theme={"active"}>
         Sign Out
       </Button>
-    </YStack>
+    </View>
   );
 }

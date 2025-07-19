@@ -1,6 +1,11 @@
-import { ImageBackground } from "react-native";
-import { YStack, Text, Button, Image } from "tamagui";
-import { LinearGradient } from "@tamagui/linear-gradient";
+import {
+  Button,
+  Image,
+  ImageBackground,
+  Test,
+  View
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Home() {
   return (
@@ -22,7 +27,8 @@ export default function Home() {
         flex={1}
         justifyContent="center"
       >
-        <YStack
+        <View
+          flexDirection='column'
           flex={1}
           jc="center"
           ai="center"
@@ -30,7 +36,7 @@ export default function Home() {
           shadowOffset={{ width: 0, height: 2 }}
         >
           <Text>Insight Tabs Index</Text>
-        </YStack>
+        </View>
       </LinearGradient>
     </ImageBackground>
   );

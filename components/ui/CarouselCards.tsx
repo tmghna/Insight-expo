@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
+  Button,
+  Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
 } from "react-native";
 import Animated, {
@@ -11,7 +14,6 @@ import Animated, {
   interpolate,
   withTiming,
 } from "react-native-reanimated";
-import { Image, Text, Button } from "tamagui";
 import { Metrics } from "@/constants/Metric";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
@@ -124,7 +126,7 @@ const facilities = [
   {
     id: "Market",
     image: require("@/assets/images/market2.png"),
-    push: "/+not-found",
+    push: "/market",
   },
   {
     id: "Complaints",

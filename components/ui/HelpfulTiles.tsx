@@ -1,5 +1,4 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { YStack, XStack, Text } from "tamagui";
 import Animated, { 
   Easing, 
   useAnimatedStyle, 
@@ -8,7 +7,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons, } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { 
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Metrics } from "@/constants/Metric";
 import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -146,8 +150,8 @@ export default function Tiles() {
               style={styles.gradientCommon}
               key={item.id}
             >
-              <XStack style={styles.tileContainer}>
-                <YStack style={styles.contentStack}>
+              <View flexDirection='row' style={styles.tileContainer}>
+                <View flexDirection='column' style={styles.contentStack}>
                   <Text style={styles.headingText}>{item.title}</Text>
                   {item.buttons.map((btn) => (
                     <LinearGradient
@@ -163,8 +167,8 @@ export default function Tiles() {
                       </TouchableOpacity>
                     </LinearGradient>
                   ))}
-                </YStack>
-              </XStack>
+                </View>
+              </View>
             </LinearGradient>
           ) : null
         ))}

@@ -3,12 +3,12 @@ import { useRouter } from 'expo-router';
 import {
   View,
   StyleSheet,
+  Text,
   TouchableOpacity,
   ScrollView,
   Linking,
 } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
-import {Text, XStack, YStack} from 'tamagui';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {CampusFacilities, HelpfulTiles} from '@/components/ui/AppearancePreferenceAccordion';
 import { Metrics } from '@/constants/Metric';
@@ -80,15 +80,15 @@ const Settings = () => {
         </View>
         <Text style={styles.subText}>Homepage Appearances</Text>
         {isWide ?(
-          <XStack justifyContent='space-between' alignItems='flex-start' gap={Metrics.moderateHorizontalScale(10,.2)}>
+          <View flexDirection='row' justifyContent='space-between' alignItems='flex-start' gap={Metrics.moderateHorizontalScale(10,.2)}>
             <CampusFacilities/>
             <HelpfulTiles/>
-          </XStack>
+          </View>
         ):(
-          <YStack>
+          <View flexDirection='column'>
             <CampusFacilities/>
             <HelpfulTiles/>
-          </YStack>
+          </View>
         )}
 
         <View style={styles.divider} />
