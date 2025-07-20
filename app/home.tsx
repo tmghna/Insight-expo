@@ -1,4 +1,4 @@
-import { Button, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -18,11 +18,17 @@ export default function Home() {
   };
 
   return (
-    <View flexDirection="column" f={1} ai={"center"} jc={"center"}>
+    <View
+      style={{
+        flexDirection: "column",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Text>Hello {user?.displayName}</Text>
-      <Button onPress={handleSignOut} theme={"active"}>
-        Sign Out
-      </Button>
+      <TouchableOpacity onPress={handleSignOut}/>
+        //TODO:- Some active theme - Harshita Sign Out
     </View>
   );
 }

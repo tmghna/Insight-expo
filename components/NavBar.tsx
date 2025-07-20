@@ -1,10 +1,11 @@
-import { Button, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { usePathname, useRouter } from "expo-router";
 import { MotiView } from "moti";
 
 export default function NavBar() {
   const router = useRouter();
+  const styles = useStyles();
   const pathname = usePathname();
   const tabs = [
     { icon: "home", path: "/homepage" },
@@ -15,35 +16,13 @@ export default function NavBar() {
   ];
 
   return (
-    <View
-      height={60}
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="space-between"
-      paddingHorizontal={20}
-      backgroundColor={"#181818"}
-    >
+    <View style={styles.footer}>
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
         return (
-          <Button
+          <TouchableOpacity
             key={tab.icon}
-            circular
-            bg={"#181818"}
-            borderWidth={0}
-            paddingBottom={5}
-            pressStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            focusStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            hoverStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
+            style={styles.tab}
             onPress={() => {
               if (!isActive) {
                 router.push(tab.path as any);
@@ -66,9 +45,27 @@ export default function NavBar() {
                 color={isActive ? "#ffffff" : "#95a1ac"}
               />
             </MotiView>
-          </Button>
+          </TouchableOpacity>
         );
       })}
     </View>
   );
 }
+
+const useStyles = () => {
+  return StyleSheet.create({
+    footer: {
+      height: 60,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
+      backgroundColor: "#181818",
+    },
+    tab: {
+      backgroundColor: "#181818",
+      borderWidth: 0,
+      paddingBottom: 5,
+    },
+  });
+};

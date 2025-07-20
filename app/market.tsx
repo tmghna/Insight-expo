@@ -1,80 +1,54 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { Metrics } from "@/constants/Metric";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { PublicMarketSection } from "@/components/PublicMarketView";
 
 export default function Market() {
   const router = useRouter();
   const styles = useStyles();
-  
+
   return (
     <SafeAreaView>
-      <View flexDirection="column">
+      <View>
         {/*Header Section*/}
-        <View flexDirection="row" style={styles.header}>
-          <Button
-            style={styles.backButton}
-            icon={
-              <MaterialIcons
-                name="arrow-back-ios"
-                style={styles.backButtonIcon}
-              />
-            }
-          />
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton}>
+            <MaterialIcons
+              name="arrow-back-ios"
+              style={styles.backButtonIcon}
+            />
+          </TouchableOpacity>
           <Text style={styles.title}>Market</Text>
         </View>
 
         {/*User Section*/}
-        <View flexDirection="row" style={styles.userSection}>
-          <Button
-            style={styles.cataloguesButton}
-            icon={
+        <View style={styles.userSection}>
+          <TouchableOpacity style={styles.cataloguesButton}>
+            <MaterialIcons name="library-books" style={styles.userButtonIcon} />
+            <Text style={styles.userButtonText}>Your Catalogues</Text>
+          </TouchableOpacity>
+          <View style={{ flexDirection: "column" }}>
+            <TouchableOpacity style={styles.savedItemsButton}>
               <MaterialIcons
-                name="library-books"
+                name="format-list-bulleted"
                 style={styles.userButtonIcon}
               />
-            }
-          >
-            Your Catalogues
-          </Button>
-          <View flexDirection="column">
-            <Button
-              style={styles.savedItemsButton}
-              icon={
+              <Text style={styles.userButtonText}>Items Saved</Text>
+            </TouchableOpacity>
+            <View style={styles.userSection}>
+              <TouchableOpacity style={styles.addInfoButton}>
+                <MaterialIcons name="phone" style={styles.userButtonIcon} />
+                <Text style={styles.userButtonText}>Contacts</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.addInfoButton}>
                 <MaterialIcons
-                  name="format-list-bulleted"
+                  name="playlist-add"
                   style={styles.userButtonIcon}
                 />
-              }
-            >
-              Items Saved
-            </Button>
-            <View flexDirection="row" style={styles.userSection}>
-              <Button
-                style={styles.addInfoButton}
-                icon={
-                  <MaterialIcons name="phone" style={styles.userButtonIcon} />
-                }
-              >
-                Contacts
-              </Button>
-              <Button
-                style={styles.addInfoButton}
-                icon={
-                  <MaterialIcons
-                    name="playlist-add"
-                    style={styles.userButtonIcon}
-                  />
-                }
-              >
-                Add Items
-              </Button>
+                <Text style={styles.userButtonText}>Add Items</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -86,19 +60,27 @@ export default function Market() {
       </View>
     </SafeAreaView>
   );
-};
+}
 
 const useStyles = () => {
   return StyleSheet.create({
-    header: {},
+    background: {
+      flexDirection: "column",
+    },
+    header: {
+      flexDirection: "row",
+    },
     backButton: {},
     backButtonIcon: {},
     title: {},
-    userSection: {},
+    userSection: {
+      flexDirection: "row",
+    },
     cataloguesButton: {},
     savedItemsButton: {},
     addInfoButton: {},
     userButtonIcon: {},
+    userButtonText: {},
     publicSection: {},
-  })
-}
+  });
+};

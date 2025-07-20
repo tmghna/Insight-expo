@@ -1,52 +1,48 @@
 import {
-  Button,
   Image,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
- } from 'react-native';
+} from "react-native";
 
 export function PublicMarketSection() {
   const styles = useStyles();
 
   return (
     <ScrollView style={styles.container}>
-      <View flexDirection="row" style={styles.startMark} />
+      <View style={styles.startMark} />
 
       {/*Categories*/}
-      <View flexDirection="row" style={styles.categoriesSection}>
-        <Button
-          style={styles.categories}
-          icon={<Image style={styles.appliancesImage} />}
-        />
-        <Button
-          style={styles.categories}
-          icon={<Image style={styles.booksImage} />}
-        />
-        <Button
-          style={styles.categories}
-          icon={<Image style={styles.furnitureImage} />}
-        />
-        <Button
-          style={styles.categories}
-          icon={<Image style={styles.utilityImage} />}
-        />
+      <View style={styles.categoriesSection}>
+        <TouchableOpacity style={styles.categories}>
+          <Image style={styles.appliancesImage} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categories}>
+          <Image style={styles.booksImage} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categories}>
+          <Image style={styles.furnitureImage} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categories}>
+          <Image style={styles.utilityImage} />
+        </TouchableOpacity>
       </View>
 
       {/*Peoples Catalogues*/}
-      <View flexDirection="row" style={styles.divider} />
-      <View flexDirection="column" style={styles.section}>
-        <View flexDirection="row" style={styles.sectionHeader}>
+      <View style={styles.divider} />
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
           <Text style={styles.sectionHeading}>Peoples Catalogues</Text>
           <Text style={styles.more}>See all</Text>
         </View>
       </View>
 
       {/*Recent Items*/}
-      <View flexDirection="row" style={styles.divider} />
-      <View flexDirection="column" style={styles.section}>
-        <View flexDirection="row" style={styles.sectionHeader}>
+      <View style={styles.divider} />
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
           <Text style={styles.sectionHeading}>Recent Items</Text>
           <Text style={styles.more}>See all</Text>
         </View>
@@ -55,20 +51,30 @@ export function PublicMarketSection() {
   );
 }
 
-const useStyles=() => {
+const useStyles = () => {
   return StyleSheet.create({
     container: {},
-    startMark: {},
-    categoriesSection: {},
+    startMark: {
+      flexDirection: "row",
+    },
+    categoriesSection: {
+      flexDirection: "row",
+    },
     categories: {},
     appliancesImage: {},
     booksImage: {},
     furnitureImage: {},
     utilityImage: {},
-    divider: {},
-    section: {},
-    sectionHeader: {},
+    divider: {
+      flexDirection: "row",
+    },
+    section: {
+      flexDirection: "column",
+    },
+    sectionHeader: {
+      flexDirection: "row",
+    },
     sectionHeading: {},
     more: {},
-  })
-}
+  });
+};

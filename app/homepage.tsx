@@ -1,4 +1,4 @@
-import { 
+import {
   Image,
   ScrollView,
   StyleSheet,
@@ -27,14 +27,14 @@ export default function HomePage() {
         }}
       >
         {/* Header Section */}
-        <View flexDirection="row" style={styles.header}>
+        <View style={styles.header}>
           <TouchableOpacity
             style={styles.avatar}
             onPress={() => router.push("/settings")}
           >
             <MaterialIcons name="person" style={styles.avatarIcon} />
           </TouchableOpacity>
-          <View flexDirection="column" style={styles.profileInfo}>
+          <View style={styles.profileInfo}>
             <Text style={styles.greetingText}>Hello,</Text>
             <Text style={styles.nameText}>User Name</Text>
           </View>
@@ -93,7 +93,7 @@ export default function HomePage() {
       <NavBar />
     </SafeAreaView>
   );
-};
+}
 
 const useResponsiveLayout = () => {
   return StyleSheet.create({
@@ -105,104 +105,109 @@ const useResponsiveLayout = () => {
       flex: 1,
       flexDirection: "column",
       backgroundColor: "#181818",
-      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20, 0.2),
     },
     header: {
+      flexDirection: "row",
       flex: 1,
       justifyContent: "space-between",
       alignItems: "center",
-      marginTop: Metrics.moderateHorizontalScale(20,.2),
+      marginTop: Metrics.moderateHorizontalScale(20, 0.2),
     },
     profileInfo: {
+      flexDirection: "column",
       flex: 1,
       alignItems: "flex-start",
     },
     greetingText: {
-      fontSize: Metrics.moderateHorizontalScale(18,.2),
-      fontWeight: '400',
+      fontSize: Metrics.moderateHorizontalScale(18, 0.2),
+      fontWeight: "400",
       fontFamily: "WorkSans",
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
+      letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
       color: "#95a1ac",
     },
     nameText: {
-      fontSize: Metrics.moderateHorizontalScale(24,.2),
+      fontSize: Metrics.moderateHorizontalScale(24, 0.2),
       fontWeight: "400",
       fontFamily: "WorkSans",
       color: "#ffffff",
     },
     avatar: {
-      width: Metrics.moderateHorizontalScale(60,.2),
-      height: Metrics.moderateHorizontalScale(60,.2),
-      borderRadius: '20%',
-      backgroundColor: '#8345cf',
-      justifyContent: 'center',
-      alignItems: 'center',
+      width: Metrics.moderateHorizontalScale(60, 0.2),
+      height: Metrics.moderateHorizontalScale(60, 0.2),
+      borderRadius: "20%",
+      backgroundColor: "#8345cf",
+      justifyContent: "center",
+      alignItems: "center",
       flexShrink: 0,
-      marginRight: Metrics.moderateHorizontalScale(10,.2),
+      marginRight: Metrics.moderateHorizontalScale(10, 0.2),
     },
     avatarIcon: {
-      fontSize: Metrics.moderateHorizontalScale(35,.1),
-      color: '#FFF',
+      fontSize: Metrics.moderateHorizontalScale(35, 0.1),
+      color: "#FFF",
     },
     sectionHeader: {
-      paddingTop: Metrics.moderateHorizontalScale(20,.2),
+      paddingTop: Metrics.moderateHorizontalScale(20, 0.2),
       flexDirection: "row",
       alignSelf: "flex-start",
-      fontSize: Metrics.moderateHorizontalScale(22,.2),
-      fontWeight: '400',
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
+      fontSize: Metrics.moderateHorizontalScale(22, 0.2),
+      fontWeight: "400",
+      letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
       fontFamily: "WorkSans",
       color: "#DDD",
     },
     notifScroll: {
-    alignItems: "center",
-    justifyContent: 'center',
-    backgroundColor: '#181818',
-    flex:1,
-    marginHorizontal: Metrics.moderateHorizontalScale(-20,.2),
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#181818",
+      flex: 1,
+      marginHorizontal: Metrics.moderateHorizontalScale(-20, 0.2),
     },
     eventImage: {
       width: "100%",
-      height: '100%',
+      height: "100%",
     },
     eventButton: {
-      width: Metrics.screenWidth*0.85,
-      height: Metrics.moderateHorizontalScale(120,.2),
-      borderRadius: Metrics.moderateHorizontalScale(18,.2),
+      width: Metrics.screenWidth * 0.85,
+      height: Metrics.moderateHorizontalScale(120, 0.2),
+      borderRadius: Metrics.moderateHorizontalScale(18, 0.2),
       overflow: "hidden",
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      marginTop: Metrics.moderateHorizontalScale(10,.2),
-      boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
+      marginTop: Metrics.moderateHorizontalScale(10, 0.2),
+      boxShadow: "0px 5px 4px rgba(0,0,0,0.3)",
     },
     manthanButton: {
-      flexDirection: 'row',
-      width: '80%',
-      height: Metrics.moderateHorizontalScale(50,.2),
-      borderRadius: Metrics.moderateHorizontalScale(24,.2),
+      flexDirection: "row",
+      width: "80%",
+      height: Metrics.moderateHorizontalScale(50, 0.2),
+      borderRadius: Metrics.moderateHorizontalScale(24, 0.2),
       backgroundColor: "#857cc9ff",
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderColor: '#fff',
-      borderWidth: Metrics.moderateHorizontalScale(1,.2)
+      alignItems: "center",
+      justifyContent: "center",
+      borderColor: "#fff",
+      borderWidth: Metrics.moderateHorizontalScale(1, 0.2),
     },
     manthanImage: {
       opacity: 0.2,
-      width: '80%',
-      height: '100%',
+      width: "80%",
+      height: "100%",
       resizeMode: "cover",
       position: "absolute",
       overflow: "hidden",
     },
     manthanText: {
-      fontSize: Metrics.moderateHorizontalScale(22,.2),
-      fontWeight: '400',
+      fontSize: Metrics.moderateHorizontalScale(22, 0.2),
+      fontWeight: "400",
       fontFamily: "OldEnglishFive",
       color: "#ffffffcb",
       textShadowColor: "#1f1f1f",
-      textShadowOffset: { width: Metrics.moderateHorizontalScale(2,.2), height: Metrics.moderateHorizontalScale(2,.2) },
-      textShadowRadius: Metrics.moderateHorizontalScale(2,.2),
-    }
+      textShadowOffset: {
+        width: Metrics.moderateHorizontalScale(2, 0.2),
+        height: Metrics.moderateHorizontalScale(2, 0.2),
+      },
+      textShadowRadius: Metrics.moderateHorizontalScale(2, 0.2),
+    },
   });
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,97 +6,100 @@ import {
   Animated,
   Easing,
   StyleSheet,
-} from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Metrics } from '@/constants/Metric';
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Metrics } from "@/constants/Metric";
 
 const useResponsiveStyles = () => {
-
   return StyleSheet.create({
     container: {
       // width: '100%',
-      borderWidth: Metrics.moderateHorizontalScale(1,.2),
-      borderColor: '#666',
+      borderWidth: Metrics.moderateHorizontalScale(1, 0.2),
+      borderColor: "#666",
       flex: 1,
-      backgroundColor: '#222',
-      borderRadius: Metrics.moderateHorizontalScale(12,.1),
-      overflow: 'hidden',
-      marginVertical: Metrics.moderateVerticalScale(6,.2),
+      backgroundColor: "#222",
+      borderRadius: Metrics.moderateHorizontalScale(12, 0.1),
+      overflow: "hidden",
+      marginVertical: Metrics.moderateVerticalScale(6, 0.2),
     },
     header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingVertical: Metrics.moderateVerticalScale(4,.2),
-      paddingHorizontal: Metrics.moderateHorizontalScale(16,.2),
-      backgroundColor: '#222',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: Metrics.moderateVerticalScale(4, 0.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(16, 0.2),
+      backgroundColor: "#222",
     },
     headerText: {
-      color: 'white',
-      fontWeight: '400',
-      fontSize: Metrics.moderateHorizontalScale(15,.1),
-      fontFamily: 'Nunito',
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
+      color: "white",
+      fontWeight: "400",
+      fontSize: Metrics.moderateHorizontalScale(15, 0.1),
+      fontFamily: "Nunito",
+      letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
     },
     contentContainer: {
-      overflow: 'hidden',
-      backgroundColor: '#1c1c1c',
+      overflow: "hidden",
+      backgroundColor: "#1c1c1c",
     },
     contentInner: {
-      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
-      paddingVertical: Metrics.moderateVerticalScale(12,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20, 0.2),
+      paddingVertical: Metrics.moderateVerticalScale(12, 0.2),
     },
     row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: Metrics.moderateVerticalScale(18,.2),
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: Metrics.moderateVerticalScale(18, 0.2),
     },
     contentText: {
-      color: '#ccc',
-      fontSize: Metrics.moderateHorizontalScale(14,.1),
-      fontWeight: '400',
-      fontFamily: 'Nunito',
+      color: "#ccc",
+      fontSize: Metrics.moderateHorizontalScale(14, 0.1),
+      fontWeight: "400",
+      fontFamily: "Nunito",
     },
     checkbox: {
-      width: Metrics.moderateHorizontalScale(16,.1),
+      width: Metrics.moderateHorizontalScale(16, 0.1),
       aspectRatio: 1,
-      borderRadius: '50%',
-      borderWidth: Metrics.moderateHorizontalScale(2,.1),
-      borderColor: '#999',
-      justifyContent: 'center',
-      alignItems: 'center',
+      borderRadius: "50%",
+      borderWidth: Metrics.moderateHorizontalScale(2, 0.1),
+      borderColor: "#999",
+      justifyContent: "center",
+      alignItems: "center",
     },
     checkedBox: {
-      backgroundColor: '#8345cf',
-      borderColor: '#8345cf',
+      backgroundColor: "#8345cf",
+      borderColor: "#8345cf",
     },
     checkMark: {
-      color: 'white',
-      fontSize: Metrics.moderateHorizontalScale(12,.1),
+      color: "white",
+      fontSize: Metrics.moderateHorizontalScale(12, 0.1),
     },
     chevron: {
-      color: '#aaa',
-      fontSize: Metrics.moderateHorizontalScale(24,.1),
-    }
+      color: "#aaa",
+      fontSize: Metrics.moderateHorizontalScale(24, 0.1),
+    },
   });
 };
 
 export function CampusFacilities() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
-    { key: 'market', label: 'Market', onCheck: () => {} },
-    { key: 'complaints', label: 'Complaints', onCheck: () => {} },
-    { key: 'contacts', label: 'Contacts', onCheck: () => {} },
-    { key: 'campus map', label: 'Campus Map', onCheck: () => {} },
-    { key: 'timings', label: 'Timings', onCheck: () => {} },
+    { key: "market", label: "Market", onCheck: () => {} },
+    { key: "complaints", label: "Complaints", onCheck: () => {} },
+    { key: "contacts", label: "Contacts", onCheck: () => {} },
+    { key: "campus map", label: "Campus Map", onCheck: () => {} },
+    { key: "timings", label: "Timings", onCheck: () => {} },
   ];
-  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
+  const outputRangeMax =
+    Metrics.moderateVerticalScale(24, 0.2) +
+    items.length * Metrics.moderateVerticalScale(35, 0.2);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
@@ -107,13 +110,15 @@ export function CampusFacilities() {
       try {
         const savedState: { [key: string]: boolean } = {};
         for (const item of items) {
-          let value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
+          let value = await AsyncStorage.getItem(
+            `CampusFacilities:${item.key}`
+          );
           console.log(`${item.key}:`, value); // Debug
           if (value === null) {
-            await AsyncStorage.setItem(`CampusFacilities:${item.key}`, 'true');
-            value = 'true';
+            await AsyncStorage.setItem(`CampusFacilities:${item.key}`, "true");
+            value = "true";
           }
-          savedState[item.key] = value === 'true';
+          savedState[item.key] = value === "true";
         }
         setCheckedItems(savedState);
       } catch (e) {
@@ -128,7 +133,10 @@ export function CampusFacilities() {
     const newValue = !checkedItems[key];
     const newState = { ...checkedItems, [key]: newValue };
     setCheckedItems(newState);
-    await AsyncStorage.setItem(`CampusFacilities:${key}`, JSON.stringify(newValue));
+    await AsyncStorage.setItem(
+      `CampusFacilities:${key}`,
+      JSON.stringify(newValue)
+    );
     if (newValue) callback();
   };
 
@@ -152,7 +160,7 @@ export function CampusFacilities() {
     }
   };
 
-  const toggle = () => setIsOpen(prev => !prev);
+  const toggle = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -171,11 +179,11 @@ export function CampusFacilities() {
 
   const openingRotation = openAnim.interpolate({
     inputRange: [0, 0.7, 0.9, 1],
-    outputRange: ['0deg', '210deg', '170deg', '180deg'],
+    outputRange: ["0deg", "210deg", "170deg", "180deg"],
   });
   const closingRotation = closeAnim.interpolate({
     inputRange: [0, 0.1, 0.3, 1],
-    outputRange: ['0deg', '-30deg', '10deg', '180deg'],
+    outputRange: ["0deg", "-30deg", "10deg", "180deg"],
   });
   const rotation = isOpen ? openingRotation : closingRotation;
 
@@ -190,9 +198,11 @@ export function CampusFacilities() {
         </View>
       </TouchableOpacity>
 
-      <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
+      <Animated.View
+        style={[styles.contentContainer, { height: animatedHeight }]}
+      >
         <View style={styles.contentInner}>
-          {items.map(item => (
+          {items.map((item) => (
             <View key={item.key} style={styles.row}>
               <Text style={styles.contentText}>{item.label}</Text>
               <TouchableOpacity
@@ -200,7 +210,8 @@ export function CampusFacilities() {
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
-                ]}>
+                ]}
+              >
                 {checkedItems[item.key] && (
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
@@ -211,47 +222,51 @@ export function CampusFacilities() {
       </Animated.View>
     </View>
   );
-};
+}
 
 export function HelpfulTiles() {
   const styles = useResponsiveStyles();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
-    { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
-    { key: 'lhbooking', label: 'LH Booking', onCheck: () => {} },
-    { key: 'academia', label: 'Academia', onCheck: () => {} },
-    { key: 'helpline', label: 'Helpline', onCheck: () => {} },
+    { key: "lostnfound", label: "Lost & Found", onCheck: () => {} },
+    { key: "lhbooking", label: "LH Booking", onCheck: () => {} },
+    { key: "academia", label: "Academia", onCheck: () => {} },
+    { key: "helpline", label: "Helpline", onCheck: () => {} },
   ];
-  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
+  const outputRangeMax =
+    Metrics.moderateVerticalScale(24, 0.2) +
+    items.length * Metrics.moderateVerticalScale(35, 0.2);
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-  (async () => {
-    try {
-      const savedState: { [key: string]: boolean } = {};
-      for (const item of items) {
-        let value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
-        console.log(`${item.key}:`, value); // Debug
-        if (value === null) {
-          await AsyncStorage.setItem(`HelpfulTiles:${item.key}`, 'true');
-          value = 'true';
+    (async () => {
+      try {
+        const savedState: { [key: string]: boolean } = {};
+        for (const item of items) {
+          let value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
+          console.log(`${item.key}:`, value); // Debug
+          if (value === null) {
+            await AsyncStorage.setItem(`HelpfulTiles:${item.key}`, "true");
+            value = "true";
+          }
+          savedState[item.key] = value === "true";
         }
-        savedState[item.key] = value === 'true';
+        setCheckedItems(savedState);
+      } catch (e) {
+        console.error("Error loading checkbox state:", e);
+      } finally {
+        setIsLoaded(true); // renders after this
       }
-      setCheckedItems(savedState);
-    } catch (e) {
-      console.error("Error loading checkbox state:", e);
-    } finally {
-      setIsLoaded(true); // renders after this
-    }
-  })();
-}, []);
+    })();
+  }, []);
 
   const toggleCheckbox = async (key: string, callback: () => void) => {
     const newValue = !checkedItems[key];
@@ -281,7 +296,7 @@ export function HelpfulTiles() {
     }
   };
 
-  const toggle = () => setIsOpen(prev => !prev);
+  const toggle = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -300,11 +315,11 @@ export function HelpfulTiles() {
 
   const openingRotation = openAnim.interpolate({
     inputRange: [0, 0.7, 0.9, 1],
-    outputRange: ['0deg', '210deg', '170deg', '180deg'],
+    outputRange: ["0deg", "210deg", "170deg", "180deg"],
   });
   const closingRotation = closeAnim.interpolate({
     inputRange: [0, 0.1, 0.3, 1],
-    outputRange: ['0deg', '-30deg', '10deg', '180deg'],
+    outputRange: ["0deg", "-30deg", "10deg", "180deg"],
   });
   const rotation = isOpen ? openingRotation : closingRotation;
 
@@ -319,9 +334,11 @@ export function HelpfulTiles() {
         </View>
       </TouchableOpacity>
 
-      <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
+      <Animated.View
+        style={[styles.contentContainer, { height: animatedHeight }]}
+      >
         <View style={styles.contentInner}>
-          {items.map(item => (
+          {items.map((item) => (
             <View key={item.key} style={styles.row}>
               <Text style={styles.contentText}>{item.label}</Text>
               <TouchableOpacity
@@ -329,7 +346,8 @@ export function HelpfulTiles() {
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
-                ]}>
+                ]}
+              >
                 {checkedItems[item.key] && (
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
@@ -340,4 +358,4 @@ export function HelpfulTiles() {
       </Animated.View>
     </View>
   );
-};
+}

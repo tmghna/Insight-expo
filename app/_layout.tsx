@@ -58,23 +58,23 @@ export default function RootLayout() {
     return null;
   }
   console.log("Hello");
-  console.log('Fonts loaded:', loaded);
+  console.log("Fonts loaded:", loaded);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-        <AuthProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="auth" options={{ headerShown: false }} />
-            <Stack.Screen name="home" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-            <Stack.Screen name="homepage" options={{ headerShown: false }} />
-            <Stack.Screen name="contacts" options={{ headerShown: false }} />
-            <Stack.Screen name="settings" options={{ headerShown: false }} />
-            <Stack.Screen name="market" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </AuthProvider>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+          <Stack.Screen name="home" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="homepage" options={{ headerShown: false }} />
+          <Stack.Screen name="contacts" options={{ headerShown: false }} />
+          <Stack.Screen name="settings" options={{ headerShown: false }} />
+          <Stack.Screen name="market" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }
