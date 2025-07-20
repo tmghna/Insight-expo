@@ -1,19 +1,21 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { usePathname, useRouter } from "expo-router";
-import { MotiView } from "moti";
+import { useRef, useEffect } from "react";
+
+const tabs = [
+  { icon: "home", path: "/homepage" },
+  { icon: "fastfood", path: "/+not-found" },
+  { icon: "notifications", path: "/(tabs)/explore" },
+  { icon: "calendar-today", path: "/+not-found" },
+  { icon: "auto-awesome-mosaic", path: "/+not-found" },
+];
 
 export default function NavBar() {
   const router = useRouter();
   const styles = useStyles();
   const pathname = usePathname();
-  const tabs = [
-    { icon: "home", path: "/homepage" },
-    { icon: "fastfood", path: "/+not-found" },
-    { icon: "notifications", path: "/(tabs)/explore" },
-    { icon: "calendar-today", path: "/+not-found" },
-    { icon: "auto-awesome-mosaic", path: "/+not-found" },
-  ];
+  
 
   return (
     <View style={styles.footer}>
@@ -29,28 +31,45 @@ export default function NavBar() {
               }
             }}
           >
-            <MotiView
-              animate={{
-                translateY: isActive ? -5 : 0,
-              }}
-              transition={{ type: "spring" }}
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <MaterialIcons
-                name={tab.icon as any}
-                size={30}
-                color={isActive ? "#ffffff" : "#95a1ac"}
-              />
-            </MotiView>
+            <AnimatedTabIcon  icon={tab.icon} isActive={isActive} />
           </TouchableOpacity>
         );
       })}
     </View>
   );
 }
+const AnimatedTabIcon = ({
+  icon,
+  isActive,
+}: {
+  icon: string;
+  isActive: boolean;
+}) => {
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(translateY, {
+      toValue: isActive ? -5 : 0,
+      useNativeDriver: true,
+    }).start();
+  }, [isActive]);
+
+  return (
+    <Animated.View
+      style={{
+        transform: [{ translateY }],
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <MaterialIcons
+        name={icon}
+        size={30}
+        color={isActive ? "#ffffff" : "#95a1ac"}
+      />
+    </Animated.View>
+  );
+};
 
 const useStyles = () => {
   return StyleSheet.create({
