@@ -1,62 +1,50 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  View,
-  Text,
   TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
-} from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Metrics } from "@/constants/Metric";
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Metrics } from '@/constants/Metric';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const useResponsiveStyles = () => {
   return StyleSheet.create({
     container: {
-      // width: '100%',
       borderWidth: Metrics.moderateHorizontalScale(1, 0.2),
       borderColor: "#666",
       flex: 1,
-      backgroundColor: "#222",
-      borderRadius: Metrics.moderateHorizontalScale(12, 0.1),
-      overflow: "hidden",
-      marginVertical: Metrics.moderateVerticalScale(6, 0.2),
+      borderRadius: Metrics.moderateHorizontalScale(12,.1),
+      overflow: 'hidden',
+      marginVertical: Metrics.moderateVerticalScale(6,.2),
     },
     header: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      paddingVertical: Metrics.moderateVerticalScale(4, 0.2),
-      paddingHorizontal: Metrics.moderateHorizontalScale(16, 0.2),
-      backgroundColor: "#222",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: Metrics.moderateVerticalScale(4,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(16,.2),
     },
     headerText: {
-      color: "white",
-      fontWeight: "400",
-      fontSize: Metrics.moderateHorizontalScale(15, 0.1),
-      fontFamily: "Nunito",
-      letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
+      fontSize: Metrics.moderateHorizontalScale(15,.1),
+      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
     },
     contentContainer: {
-      overflow: "hidden",
-      backgroundColor: "#1c1c1c",
+      overflow: 'hidden',
     },
     contentInner: {
-      paddingHorizontal: Metrics.moderateHorizontalScale(20, 0.2),
-      paddingVertical: Metrics.moderateVerticalScale(12, 0.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
+      paddingVertical: Metrics.moderateVerticalScale(12,.2),
     },
     row: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
       marginBottom: Metrics.moderateVerticalScale(18, 0.2),
-    },
-    contentText: {
-      color: "#ccc",
-      fontSize: Metrics.moderateHorizontalScale(14, 0.1),
-      fontWeight: "400",
-      fontFamily: "Nunito",
     },
     checkbox: {
       width: Metrics.moderateHorizontalScale(16, 0.1),
@@ -76,9 +64,8 @@ const useResponsiveStyles = () => {
       fontSize: Metrics.moderateHorizontalScale(12, 0.1),
     },
     chevron: {
-      color: "#aaa",
-      fontSize: Metrics.moderateHorizontalScale(24, 0.1),
-    },
+      fontSize: Metrics.moderateHorizontalScale(24,.1),
+    }
   });
 };
 
@@ -89,13 +76,18 @@ export function CampusFacilities() {
     {}
   );
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
+  const iconColor = useThemeColor({}, 'icon');
+  const primaryColor = useThemeColor(
+    { light: '#f6f6f6', dark: '#222' },
+    'background'
+  );
 
   const items = [
-    { key: "market", label: "Market", onCheck: () => {} },
-    { key: "complaints", label: "Complaints", onCheck: () => {} },
-    { key: "contacts", label: "Contacts", onCheck: () => {} },
-    { key: "campus map", label: "Campus Map", onCheck: () => {} },
-    { key: "timings", label: "Timings", onCheck: () => {} },
+    { key: "market", label: "Market" },
+    { key: "complaints", label: "Complaints" },
+    { key: "contacts", label: "Contacts" },
+    { key: "campus map", label: "Campus Map" },
+    { key: "timings", label: "Timings" },
   ];
   const outputRangeMax =
     Metrics.moderateVerticalScale(24, 0.2) +
@@ -129,7 +121,7 @@ export function CampusFacilities() {
     })();
   }, []);
 
-  const toggleCheckbox = async (key: string, callback: () => void) => {
+  const toggleCheckbox = async (key: string) => {
     const newValue = !checkedItems[key];
     const newState = { ...checkedItems, [key]: newValue };
     setCheckedItems(newState);
@@ -137,7 +129,6 @@ export function CampusFacilities() {
       `CampusFacilities:${key}`,
       JSON.stringify(newValue)
     );
-    if (newValue) callback();
   };
 
   const triggerAnimation = (toOpen: boolean) => {
@@ -188,25 +179,23 @@ export function CampusFacilities() {
   const rotation = isOpen ? openingRotation : closingRotation;
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={[styles.container, {backgroundColor: primaryColor}]}>
       <TouchableOpacity activeOpacity={0.9} onPress={toggle}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Campus Facilities</Text>
+        <ThemedView unstyled style={styles.header}>
+          <ThemedText style={styles.headerText}>Campus Facilities</ThemedText>
           <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-            <MaterialIcons name="expand-more" style={styles.chevron} />
+            <MaterialIcons name="expand-more" style={[styles.chevron, {color: iconColor}]} />
           </Animated.View>
-        </View>
+        </ThemedView>
       </TouchableOpacity>
 
-      <Animated.View
-        style={[styles.contentContainer, { height: animatedHeight }]}
-      >
-        <View style={styles.contentInner}>
+      <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
+        <ThemedView unstyled style={styles.contentInner}>
           {items.map((item) => (
-            <View key={item.key} style={styles.row}>
-              <Text style={styles.contentText}>{item.label}</Text>
+            <ThemedView unstyled key={item.key} style={styles.row}>
+              <ThemedText>{item.label}</ThemedText>
               <TouchableOpacity
-                onPress={() => toggleCheckbox(item.key, item.onCheck)}
+                onPress={() => toggleCheckbox(item.key)}
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
@@ -216,11 +205,11 @@ export function CampusFacilities() {
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
               </TouchableOpacity>
-            </View>
+            </ThemedView>
           ))}
-        </View>
+        </ThemedView>
       </Animated.View>
-    </View>
+    </ThemedView>
   );
 }
 
@@ -231,12 +220,17 @@ export function HelpfulTiles() {
     {}
   );
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
+  const iconColor = useThemeColor({}, 'icon');
+  const primaryColor = useThemeColor(
+    { light: '#f6f6f6', dark: '#222' },
+    'background'
+  )
 
   const items = [
-    { key: "lostnfound", label: "Lost & Found", onCheck: () => {} },
-    { key: "lhbooking", label: "LH Booking", onCheck: () => {} },
-    { key: "academia", label: "Academia", onCheck: () => {} },
-    { key: "helpline", label: "Helpline", onCheck: () => {} },
+    { key: "lostnfound", label: "Lost & Found" },
+    { key: "lhbooking", label: "LH Booking" },
+    { key: "academia", label: "Academia" },
+    { key: "helpline", label: "Helpline" },
   ];
   const outputRangeMax =
     Metrics.moderateVerticalScale(24, 0.2) +
@@ -268,12 +262,11 @@ export function HelpfulTiles() {
     })();
   }, []);
 
-  const toggleCheckbox = async (key: string, callback: () => void) => {
+  const toggleCheckbox = async (key: string) => {
     const newValue = !checkedItems[key];
     const newState = { ...checkedItems, [key]: newValue };
     setCheckedItems(newState);
     await AsyncStorage.setItem(`HelpfulTiles:${key}`, JSON.stringify(newValue));
-    if (newValue) callback();
   };
 
   const triggerAnimation = (toOpen: boolean) => {
@@ -324,25 +317,23 @@ export function HelpfulTiles() {
   const rotation = isOpen ? openingRotation : closingRotation;
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={[styles.container, {backgroundColor: primaryColor}]}>
       <TouchableOpacity activeOpacity={0.9} onPress={toggle}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Helpful Tiles</Text>
+        <ThemedView unstyled style={styles.header}>
+          <ThemedText style={styles.headerText}>Helpful Tiles</ThemedText>
           <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-            <MaterialIcons name="expand-more" style={styles.chevron} />
+            <MaterialIcons name="expand-more" style={[styles.chevron, {color: iconColor}]} />
           </Animated.View>
-        </View>
+        </ThemedView>
       </TouchableOpacity>
 
-      <Animated.View
-        style={[styles.contentContainer, { height: animatedHeight }]}
-      >
-        <View style={styles.contentInner}>
+      <Animated.View style={[styles.contentContainer, { height: animatedHeight }]}>
+        <ThemedView unstyled style={styles.contentInner}>
           {items.map((item) => (
-            <View key={item.key} style={styles.row}>
-              <Text style={styles.contentText}>{item.label}</Text>
+            <ThemedView unstyled key={item.key} style={styles.row}>
+              <ThemedText>{item.label}</ThemedText>
               <TouchableOpacity
-                onPress={() => toggleCheckbox(item.key, item.onCheck)}
+                onPress={() => toggleCheckbox(item.key)}
                 style={[
                   styles.checkbox,
                   checkedItems[item.key] && styles.checkedBox,
@@ -352,10 +343,10 @@ export function HelpfulTiles() {
                   <MaterialIcons name="check" style={styles.checkMark} />
                 )}
               </TouchableOpacity>
-            </View>
+            </ThemedView>
           ))}
-        </View>
+        </ThemedView>
       </Animated.View>
-    </View>
+    </ThemedView>
   );
 }

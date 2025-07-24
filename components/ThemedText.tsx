@@ -40,9 +40,7 @@ export function ThemedText({
 const styles = StyleSheet.create({
   default: {
     fontSize: Metrics.moderateHorizontalScale(14,.2),
-    fontWeight: '400',
-    fontFamily: 'Nunito'
-    // lineHeight: 24,
+    fontFamily: 'Nunito400'
   },
   defaultSemiBold: {
     fontSize: 16,
@@ -56,13 +54,11 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: Metrics.moderateHorizontalScale(20,.2),
-    fontWeight: '500',
-    fontFamily: 'WorkSans'
+    fontFamily: 'WorkSans500'
   },
   subText: {
     fontSize: Metrics.moderateHorizontalScale(16,.2),
-    fontWeight: '400',
-    fontFamily: 'Nunito'
+    fontFamily: 'Nunito400'
   },
   link: {
     lineHeight: 30,
@@ -71,8 +67,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     fontSize: Metrics.moderateHorizontalScale(12,.2),
-    fontWeight: '400',
-    fontFamily: 'Nunito',
+    fontFamily: 'Nunito400',
     opacity: 0.6,
   },
 });

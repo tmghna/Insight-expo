@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import Animated, {
   Easing,
   useSharedValue,
@@ -12,6 +12,8 @@ import { Metrics } from "@/constants/Metric";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedButton } from '@/components/ThemedButton';
 
 const width = Metrics.screenWidth;
 const CARD_WIDTH = width * 0.85;
@@ -97,18 +99,21 @@ export function NotifCards() {
         });
 
         return (
-          <TouchableOpacity
+          <ThemedButton
+            unstyled
             key={item.id}
             onPress={() => handleCardPress(index)}
             activeOpacity={1}
           >
             <Animated.View style={[styles.card, animatedStyle]}>
               <Image source={item.image} style={styles.cardImage} />
-              <Text style={[styles.cardTitle, { color: item.textcolor }]}>
+              <ThemedText type='subText' 
+                style={{color: item.textcolor, position: 'absolute', paddingBottom: Metrics.moderateHorizontalScale(20,.2) }}
+              >
                 {item.description}
-              </Text>
+              </ThemedText>
             </Animated.View>
-          </TouchableOpacity>
+          </ThemedButton>
         );
       })}
     </Animated.ScrollView>
@@ -199,20 +204,22 @@ export function CampusFacilityCards() {
     >
       {facilities.map((item) =>
         visibleItems[item.id] ? (
-          <Animated.View
-            key={item.id}
-            style={[animatedStyle, styles.animatedCard]}
-          >
-            <TouchableOpacity
+          <Animated.View key={item.id} style={[animatedStyle, styles.animatedCard]}>
+            <ThemedButton
               onPress={() => router.push(item.push as any)}
               style={styles.campusCard}
               activeOpacity={0.8}
             >
               <Image source={item.image} style={styles.image} />
-              <Text style={styles.text} numberOfLines={1} adjustsFontSizeToFit>
+              <ThemedText 
+                style={styles.text} 
+                numberOfLines={1} 
+                ellipsizeMode='tail'
+                adjustsFontSizeToFit
+              >
                 {item.id}
-              </Text>
-            </TouchableOpacity>
+              </ThemedText>
+            </ThemedButton>
           </Animated.View>
         ) : null
       )}
@@ -224,26 +231,20 @@ const styles = StyleSheet.create({
   // Notif styles
   card: {
     width: CARD_WIDTH,
-    height: Metrics.moderateHorizontalScale(160, 0.2),
-    marginVertical: Metrics.moderateHorizontalScale(20, 0.2),
-    borderRadius: Metrics.moderateHorizontalScale(20, 0.1),
-    backgroundColor: "#111",
+    aspectRatio: 16/9,
+    marginVertical: Metrics.moderateHorizontalScale(20,.2),
+    borderRadius: Metrics.moderateHorizontalScale(20,.1),
+    // backgroundColor: "#111",
     justifyContent: "flex-end",
-    alignItems: "center",
-    boxShadow: "0px 5px 4px rgba(0,0,0,0.3)",
+    alignItems: "center", 
+    boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
+    elevation: Metrics.moderateHorizontalScale(10,.2),
   },
   cardImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
     borderRadius: Metrics.moderateHorizontalScale(20, 0.1),
-  },
-  cardTitle: {
-    position: "absolute",
-    fontSize: Metrics.moderateHorizontalScale(18, 0.2),
-    fontWeight: "400",
-    fontFamily: "Nunito",
-    paddingBottom: Metrics.moderateHorizontalScale(20, 0.2),
   },
   container: {
     flex: 0,
@@ -255,30 +256,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   animatedCard: {
-    marginRight: Metrics.moderateHorizontalScale(10, 0.2),
+    marginRight: Metrics.moderateHorizontalScale(10,.2),
+    marginBottom: Metrics.moderateHorizontalScale(10,.2),
+
   },
   campusCard: {
     width: BOX_WIDTH,
     height: BOX_HEIGHT,
-    borderRadius: Metrics.moderateHorizontalScale(16, 0.1),
-    backgroundColor: "#1f1f1f",
-    borderColor: "#1f1f1f",
+    borderRadius: Metrics.moderateHorizontalScale(16,.1),
     flexDirection: "row",
+    gap: Metrics.moderateHorizontalScale(10,.2),
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: 'space-between',
+    paddingHorizontal: Metrics.moderateHorizontalScale(10,.2),
   },
   image: {
-    width: "25%",
+    flex: 0,
+    width: "30%",
     aspectRatio: 1,
-    borderRadius: Metrics.moderateHorizontalScale(8, 0.1),
+    borderRadius: Metrics.moderateHorizontalScale(8,.1),
+    borderColor: '#666',
+    borderWidth: Metrics.moderateHorizontalScale(1,.2),
     resizeMode: "cover",
   },
   text: {
     // flexShrink: 1,
-    fontSize: Metrics.moderateHorizontalScale(14, 0.2),
-    color: "#fff",
-    fontWeight: "400",
-    fontFamily: "Nunito",
-    letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
+    fontSize: Metrics.moderateHorizontalScale(14,.2),
+    // color: "#fff",
+    // fontWeight: '400',
+    // fontFamily: "Nunito",
+    flex: 1,
+    letterSpacing: Metrics.moderateHorizontalScale(1,.2),
   },
 });

@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
 import {
-  View,
-  Text,
   TouchableOpacity,
   Animated,
   Easing,
@@ -11,11 +9,20 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Metrics } from "@/constants/Metric";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export function ContactsAccordion() {
   const styles = useResponsiveStyles();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>(
     {}
+  );
+
+  const iconColor = useThemeColor({}, 'icon');
+  const primaryColor = useThemeColor(
+    { light: '#f6f6f6', dark: '#222' },
+    'background'
   );
 
   const items = [
@@ -111,21 +118,22 @@ export function ContactsAccordion() {
             outputRange: [0, contentHeight[item.key] || 0],
           }),
         };
-        const renderContent = (item) => {
+        const renderContent = (item: any) => {
           return item.key === "Faculty"
-            ? item.name.map((_, index) => (
-                <View key={index}>
-                  <Text style={styles.contentName}>{item.name[index]}</Text>
+            ? item.name.map((_: any, index: any) => (
+                <ThemedView unstyled key={index}>
+                  <ThemedText style={styles.contentName}>{item.name[index]}</ThemedText>
                   {item.office && (
-                    <Text style={styles.contentText}>{item.office[index]}</Text>
+                    <ThemedText type="footer" style={styles.contentText}>{item.office[index]}</ThemedText>
                   )}
                   {item.department && (
-                    <Text style={styles.contentText}>
+                    <ThemedText type="footer" style={styles.contentText}>
                       {item.department[index]}
-                    </Text>
+                    </ThemedText>
                   )}
-                  <Text
-                    style={styles.contentText}
+                  <ThemedText
+                    type="footer"
+                    style={[styles.contentText, styles.link]}
                     onPress={async () => {
                       const emailURL = `mailto:${item.email[index]}@iisermohali.ac.in`;
                       const canOpen = await Linking.canOpenURL(emailURL);
@@ -137,21 +145,27 @@ export function ContactsAccordion() {
                     }}
                   >
                     {item.email[index]}
-                  </Text>
-                </View>
+                  </ThemedText>
+                </ThemedView>
               ))
-            : item.name.map((_, index) => (
-                <View key={index}>
-                  <Text style={styles.contentName}>{item.name[index]}</Text>
+            : item.name.map((_: any, index: any) => (
+                <ThemedView unstyled key={index}>
+                  <ThemedText 
+                    type="subText"
+                    style={styles.contentName}
+                  >
+                    {item.name[index]}
+                  </ThemedText>
                   {item.designation && (
-                    <Text style={styles.contentText}>
+                    <ThemedText type="footer" style={styles.contentText}>
                       {item.designation[index]}
-                    </Text>
+                    </ThemedText>
                   )}
-                  <View style={styles.row}>
+                  <ThemedView unstyled style={styles.row}>
                     {item.number && (
-                      <Text
-                        style={styles.contentText}
+                      <ThemedText
+                        type="footer"
+                        style={[styles.contentText, styles.link]}
                         onPress={async () => {
                           const phoneURL = `tel:${item.number[index]}`;
                           const canOpen = await Linking.canOpenURL(phoneURL);
@@ -163,11 +177,12 @@ export function ContactsAccordion() {
                         }}
                       >
                         {item.number[index]}
-                      </Text>
+                      </ThemedText>
                     )}
-                    <Text style={styles.contentText}>{" / "}</Text>
-                    <Text
-                      style={styles.contentText}
+                    <ThemedText type="footer" style={styles.contentText}>{" / "}</ThemedText>
+                    <ThemedText
+                      type="footer"
+                      style={[styles.contentText, styles.link]}
                       onPress={async () => {
                         const emailURL = `mailto:${item.email[index]}@iisermohali.ac.in`;
                         const canOpen = await Linking.canOpenURL(emailURL);
@@ -179,63 +194,60 @@ export function ContactsAccordion() {
                       }}
                     >
                       {item.email[index]}
-                    </Text>
-                  </View>
-                </View>
+                    </ThemedText>
+                  </ThemedView>
+                </ThemedView>
               ));
         };
 
         return (
-          <View key={item.key} style={styles.container}>
+          <ThemedView key={item.key} style={[styles.container, {backgroundColor: primaryColor}]}>
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => toggle(item.key)}
             >
-              <View style={styles.header}>
-                <View style={styles.headerText}>
-                  <Text
-                    numberOfLines={2}
+              <ThemedView unstyled style={styles.header}>
+                <ThemedView unstyled style={styles.headerText}>
+                  <ThemedText
+                    type="subtitle"
+                    numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={styles.heading}
                   >
                     {item.key}
-                  </Text>
-                </View>
-                <Animated.View
-                  style={{
-                    transform: [{ rotate: rotation }],
-                    width: Metrics.moderateHorizontalScale(27, 0.2),
-                    height: Metrics.moderateVerticalScale(27, 0.2),
-                  }}
-                >
-                  <MaterialIcons name="expand-more" style={styles.chevron} />
+                  </ThemedText>
+                </ThemedView>
+                <Animated.View style={{transform: [{ rotate: rotation }] }}>
+                  <MaterialIcons name="expand-more" style={[styles.chevron, {color: iconColor}]} />
                 </Animated.View>
-              </View>
+              </ThemedView>
             </TouchableOpacity>
             {!isOpen ? (
-              <Text style={styles.description}>{item.description}</Text>
+              <ThemedText 
+                type="footer"
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.description}
+              >
+                {item.description}
+              </ThemedText>
             ) : null}
             {contentHeight[item.key] == null && (
-              <View
-                style={{
-                  position: "absolute",
-                  opacity: 0,
-                  zIndex: -1,
-                  left: 0,
-                  right: 0,
-                }}
+              <ThemedView
+                unstyled
                 onLayout={(event) => {
                   const height = event.nativeEvent.layout.height;
                   setContentHeight((prev) => ({ ...prev, [item.key]: height }));
                 }}
               >
-                <View style={styles.contentInner}>{renderContent(item)}</View>
-              </View>
+                <ThemedView unstyled style={styles.contentInner}>
+                  {renderContent(item)}
+                </ThemedView>
+              </ThemedView>
             )}
             <Animated.View style={[styles.contentContainer, animatedHeight]}>
-              <View style={styles.contentInner}>{renderContent(item)}</View>
+              <ThemedView unstyled style={styles.contentInner}>{renderContent(item)}</ThemedView>
             </Animated.View>
-          </View>
+          </ThemedView>
         );
       })}
     </>
@@ -247,7 +259,6 @@ const useResponsiveStyles = () => {
     container: {
       flexDirection: "column",
       flex: 1,
-      backgroundColor: "#0000",
       borderRadius: Metrics.moderateHorizontalScale(12, 0.1),
       overflow: "visible",
       marginVertical: Metrics.moderateVerticalScale(6, 0.2),
@@ -256,58 +267,38 @@ const useResponsiveStyles = () => {
       alignSelf: "center",
       justifyContent: "space-between",
       paddingHorizontal: Metrics.moderateHorizontalScale(16, 0.2),
-      paddingVertical: Metrics.moderateVerticalScale(4, 0.2),
+      paddingVertical: Metrics.moderateVerticalScale(10, 0.2),
+      borderWidth: Metrics.moderateHorizontalScale(1,0.2),
+      borderColor: '#42a6c2aa',
     },
     header: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      gap: Metrics.moderateHorizontalScale(15, 0.2),
-      backgroundColor: "#00000000",
       marginBottom: Metrics.moderateVerticalScale(10, 0.2),
     },
     headerText: {
-      //flexDirection: 'row',
       alignSelf: "stretch",
       justifyContent: "space-between",
       flexShrink: 1,
     },
-    heading: {
-      color: "white",
-      fontWeight: "400",
-      fontSize: Metrics.moderateHorizontalScale(25, 0.1),
-      fontFamily: "WorkSans",
-      letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
-    },
     description: {
-      color: "#95a1ac",
-      fontWeight: 400,
-      fontFamily: "WorkSans",
-      fontSize: Metrics.moderateHorizontalScale(14, 0.1),
-      letterSpacing: 0,
+      fontSize: Metrics.moderateHorizontalScale(14, 0.2),
       textAlign: "justify",
     },
     contentContainer: {
       overflow: "scroll",
-      backgroundColor: "#00000000",
-      marginTop: 0,
     },
     contentInner: {
       flexDirection: "column",
-      gap: Metrics.moderateVerticalScale(15, 0.2),
+      gap: Metrics.moderateVerticalScale(5, 0.2),
     },
     contentName: {
-      color: "#fff",
-      fontSize: Metrics.moderateHorizontalScale(18, 0.1),
-      fontWeight: "400",
-      fontFamily: "WorkSans",
       overflow: "hidden",
+      letterSpacing: Metrics.moderateHorizontalScale(1,0.2)
     },
     contentText: {
-      color: "#95a1ac",
-      fontSize: Metrics.moderateHorizontalScale(14, 0.1),
-      fontWeight: "400",
-      fontFamily: "WorkSans",
+      fontSize: Metrics.moderateHorizontalScale(14, 0.2),
       overflow: "hidden",
     },
     row: {
@@ -315,8 +306,11 @@ const useResponsiveStyles = () => {
       alignItems: "center",
     },
     chevron: {
-      color: "#fff",
-      fontSize: Metrics.moderateHorizontalScale(25, 0.1),
+      fontSize: Metrics.moderateHorizontalScale(24, 0.2),
     },
+    link: {
+      color: "#42a6c2",
+      textDecorationLine: 'underline'
+    }
   });
 };

@@ -18,7 +18,7 @@ export default function Market() {
         <View style={styles.background}>
           {/*Header Section*/}
           <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton}>
+            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
               <MaterialIcons
                 name="arrow-back-ios"
                 style={styles.backButtonIcon}

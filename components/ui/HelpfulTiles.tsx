@@ -1,16 +1,18 @@
-import { useFocusEffect } from "@react-navigation/native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
+import { useFocusEffect } from '@react-navigation/native';
+import Animated, { 
+  Easing, 
+  useAnimatedStyle, 
+  useSharedValue, 
   withTiming,
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
-import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MaterialIcons, } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Metrics } from "@/constants/Metric";
 import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
 const tiles = [
   {
@@ -131,53 +133,45 @@ export default function Tiles() {
     transform: [{ translateX: translateX.value }],
   }));
   return (
-    <Animated.ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.scrollView}
-      contentContainerStyle={styles.scrollContent}
-    >
-      {tiles.map((item) =>
-        visibleItems[item.id] ? (
-          <LinearGradient
-            colors={item.color as any}
-            locations={[0, 0.5]}
-            start={[0.1, 0.1]}
-            end={[0.9, 0.9]}
-            style={styles.gradientCommon}
-            key={item.id}
-          >
-            <View style={styles.tileContainer}>
-              <View style={styles.contentStack}>
-                <Text style={styles.headingText}>{item.title}</Text>
-                {item.buttons.map((btn) => (
-                  <LinearGradient
-                    colors={item.color as any}
-                    locations={[0, 1]}
-                    start={[0, 0]}
-                    end={[0.8, 1]}
-                    style={styles.buttonGradient}
-                    key={btn.key}
-                  >
-                    <TouchableOpacity
-                      style={styles.solidButton}
-                      activeOpacity={0.8}
-                      onPress={() => btn.onClick}
-                    >
-                      <MaterialIcons
-                        name={btn.buttonUI as any}
-                        style={styles.icon}
-                      />
-                      <Text style={styles.titleText}>{btn.buttonText}</Text>
-                    </TouchableOpacity>
-                  </LinearGradient>
-                ))}
-              </View>
-            </View>
-          </LinearGradient>
-        ) : null
-      )}
-    </Animated.ScrollView>
+      <Animated.ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {tiles.map((item) => (
+          visibleItems[item.id] ? (
+            <LinearGradient
+              colors={item.color as any}
+              locations={[0, .5]}
+              start={[0.1, 0.1]}
+              end={[.9, .9]}
+              style={styles.gradientCommon}
+              key={item.id}
+            >
+              <ThemedView unstyled style={styles.tileContainer}>
+                <ThemedView unstyled style={styles.contentStack}>
+                  <ThemedText style={styles.headingText}>{item.title}</ThemedText>
+                  {item.buttons.map((btn) => (
+                    <LinearGradient
+                      colors={item.color as any}
+                      locations={[0, 1]}
+                      start={[0.2, 0]}
+                      end={[0.5, 1]}
+                      style={styles.buttonGradient}
+                      key={btn.key}>
+                      <TouchableOpacity style={styles.solidButton} onPress={() => btn.onClick}>
+                        <MaterialIcons name={btn.buttonUI as any} style={styles.icon} />
+                        <ThemedText style={styles.titleText}>{btn.buttonText}</ThemedText>
+                      </TouchableOpacity>
+                    </LinearGradient>
+                  ))}
+                </ThemedView>
+              </ThemedView>
+            </LinearGradient>
+          ) : null
+        ))}
+      </Animated.ScrollView>
   );
 }
 
@@ -195,11 +189,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   gradientCommon: {
-    height: Metrics.moderateHorizontalScale(240, 0.2),
-    width: Metrics.moderateHorizontalScale(160, 0.2),
-    borderRadius: Metrics.moderateHorizontalScale(16, 0.1),
-    marginHorizontal: Metrics.moderateHorizontalScale(5, 0.2),
-    boxShadow: "0px 5px 4px rgba(0,0,0,0.3)",
+    height: Metrics.moderateHorizontalScale(240,.2),
+    width: Metrics.moderateHorizontalScale(160,.2),
+    borderRadius: Metrics.moderateHorizontalScale(16,.1),
+    marginHorizontal: Metrics.moderateHorizontalScale(5,.2),
+    boxShadow: '0px 5px 2px rgba(0,0,0,0.2)',
   },
   tileContainer: {
     width: "100%",
@@ -220,15 +214,13 @@ const styles = StyleSheet.create({
   },
   headingText: {
     fontSize: Metrics.moderateHorizontalScale(16, 0.2),
-    fontWeight: "700",
-    fontFamily: "Kreadon",
+    fontFamily: "Kreadon700",
     color: "#ddd",
     marginBottom: 5,
   },
   titleText: {
     fontSize: Metrics.moderateHorizontalScale(13, 0.2),
-    fontWeight: "600",
-    fontFamily: "Kreadon",
+    fontFamily: "Kreadon600",
     color: "#ccc",
   },
   buttonGradient: {
@@ -236,7 +228,7 @@ const styles = StyleSheet.create({
     width: Metrics.moderateHorizontalScale(110, 0.2),
     borderRadius: Metrics.moderateHorizontalScale(14, 0.1),
     overflow: "hidden",
-    boxShadow: "3px 3px 6px rgba(0,0,0,0.3)",
+    boxShadow: '2px 2px 4px rgba(0,0,0,0.2)',
   },
   solidButton: {
     flex: 1,

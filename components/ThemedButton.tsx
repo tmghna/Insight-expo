@@ -6,6 +6,7 @@ import {
   GestureResponderEvent,
   StyleProp,
   Animated,
+  useColorScheme,
 } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -36,7 +37,9 @@ export function ThemedButton({
   ...otherProps
 }: ThemedButtonProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'buttonBackground');
+  const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'buttonBorder');
   const textColor = useThemeColor({}, 'text');
+  const borderWidth = useColorScheme() === 'dark' ? Metrics.moderateHorizontalScale(1,0.2) : 0;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -61,7 +64,7 @@ export function ThemedButton({
     ? style
     : [
         styles.button,
-        type === 'primary' && { backgroundColor },
+        type === 'primary' && { backgroundColor, borderColor, borderWidth },
         type === 'secondary' && styles.secondary,
         type === 'outline' && [styles.outline, { borderColor: textColor }],
         style,
