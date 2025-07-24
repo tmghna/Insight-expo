@@ -15,30 +15,6 @@ const useResponsiveStyles = () => {
   return StyleSheet.create({
     container: {
       // width: '100%',
-<<<<<<< HEAD
-      borderWidth: Metrics.moderateHorizontalScale(1,.2),
-      borderColor: '#666',
-      flex: 1,
-      backgroundColor: '#222',
-      borderRadius: Metrics.moderateHorizontalScale(12,.1),
-      overflow: 'hidden',
-      marginVertical: Metrics.moderateVerticalScale(6,.2),
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingVertical: Metrics.moderateVerticalScale(4,.2),
-      paddingHorizontal: Metrics.moderateHorizontalScale(16,.2),
-      backgroundColor: '#222',
-    },
-    headerText: {
-      color: 'white',
-      fontWeight: '400',
-      fontSize: Metrics.moderateHorizontalScale(15,.1),
-      fontFamily: 'Nunito',
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
-=======
       borderWidth: Metrics.moderateHorizontalScale(1, 0.2),
       borderColor: "#666",
       flex: 1,
@@ -61,38 +37,12 @@ const useResponsiveStyles = () => {
       fontSize: Metrics.moderateHorizontalScale(15, 0.1),
       fontFamily: "Nunito",
       letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
     },
     contentContainer: {
       overflow: "hidden",
       backgroundColor: "#1c1c1c",
     },
     contentInner: {
-<<<<<<< HEAD
-      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
-      paddingVertical: Metrics.moderateVerticalScale(12,.2),
-    },
-    row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: Metrics.moderateVerticalScale(18,.2),
-    },
-    contentText: {
-      color: '#ccc',
-      fontSize: Metrics.moderateHorizontalScale(14,.1),
-      fontWeight: '400',
-      fontFamily: 'Nunito',
-    },
-    checkbox: {
-      width: Metrics.moderateHorizontalScale(16,.1),
-      aspectRatio: 1,
-      borderRadius: '50%',
-      borderWidth: Metrics.moderateHorizontalScale(2,.1),
-      borderColor: '#999',
-      justifyContent: 'center',
-      alignItems: 'center',
-=======
       paddingHorizontal: Metrics.moderateHorizontalScale(20, 0.2),
       paddingVertical: Metrics.moderateVerticalScale(12, 0.2),
     },
@@ -116,22 +66,12 @@ const useResponsiveStyles = () => {
       borderColor: "#999",
       justifyContent: "center",
       alignItems: "center",
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
     },
     checkedBox: {
       backgroundColor: "#8345cf",
       borderColor: "#8345cf",
     },
     checkMark: {
-<<<<<<< HEAD
-      color: 'white',
-      fontSize: Metrics.moderateHorizontalScale(12,.1),
-    },
-    chevron: {
-      color: '#aaa',
-      fontSize: Metrics.moderateHorizontalScale(24,.1),
-    }
-=======
       color: "white",
       fontSize: Metrics.moderateHorizontalScale(12, 0.1),
     },
@@ -139,7 +79,6 @@ const useResponsiveStyles = () => {
       color: "#aaa",
       fontSize: Metrics.moderateHorizontalScale(24, 0.1),
     },
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
   });
 };
 
@@ -152,15 +91,6 @@ export function CampusFacilities() {
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
-<<<<<<< HEAD
-    { key: 'market', label: 'Market', onCheck: () => {} },
-    { key: 'complaints', label: 'Complaints', onCheck: () => {} },
-    { key: 'contacts', label: 'Contacts', onCheck: () => {} },
-    { key: 'campus map', label: 'Campus Map', onCheck: () => {} },
-    { key: 'timings', label: 'Timings', onCheck: () => {} },
-  ];
-  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
-=======
     { key: "market", label: "Market", onCheck: () => {} },
     { key: "complaints", label: "Complaints", onCheck: () => {} },
     { key: "contacts", label: "Contacts", onCheck: () => {} },
@@ -170,7 +100,6 @@ export function CampusFacilities() {
   const outputRangeMax =
     Metrics.moderateVerticalScale(24, 0.2) +
     items.length * Metrics.moderateVerticalScale(35, 0.2);
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
@@ -181,15 +110,6 @@ export function CampusFacilities() {
       try {
         const savedState: { [key: string]: boolean } = {};
         for (const item of items) {
-<<<<<<< HEAD
-          let value = await AsyncStorage.getItem(`CampusFacilities:${item.key}`);
-          console.log(`${item.key}:`, value); // Debug
-          if (value === null) {
-            await AsyncStorage.setItem(`CampusFacilities:${item.key}`, 'true');
-            value = 'true';
-          }
-          savedState[item.key] = value === 'true';
-=======
           let value = await AsyncStorage.getItem(
             `CampusFacilities:${item.key}`
           );
@@ -199,7 +119,6 @@ export function CampusFacilities() {
             value = "true";
           }
           savedState[item.key] = value === "true";
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
         }
         setCheckedItems(savedState);
       } catch (e) {
@@ -314,14 +233,6 @@ export function HelpfulTiles() {
   const [isLoaded, setIsLoaded] = useState(false); // waits till async load data
 
   const items = [
-<<<<<<< HEAD
-    { key: 'lostnfound', label: 'Lost & Found', onCheck: () => {} },
-    { key: 'lhbooking', label: 'LH Booking', onCheck: () => {} },
-    { key: 'academia', label: 'Academia', onCheck: () => {} },
-    { key: 'helpline', label: 'Helpline', onCheck: () => {} },
-  ];
-  const outputRangeMax = Metrics.moderateVerticalScale(24,.2) + items.length * Metrics.moderateVerticalScale(35,.2);
-=======
     { key: "lostnfound", label: "Lost & Found", onCheck: () => {} },
     { key: "lhbooking", label: "LH Booking", onCheck: () => {} },
     { key: "academia", label: "Academia", onCheck: () => {} },
@@ -330,26 +241,12 @@ export function HelpfulTiles() {
   const outputRangeMax =
     Metrics.moderateVerticalScale(24, 0.2) +
     items.length * Metrics.moderateVerticalScale(35, 0.2);
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
 
   const animation = useRef(new Animated.Value(0)).current;
   const openAnim = useRef(new Animated.Value(0)).current;
   const closeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-<<<<<<< HEAD
-  (async () => {
-    try {
-      const savedState: { [key: string]: boolean } = {};
-      for (const item of items) {
-        let value = await AsyncStorage.getItem(`HelpfulTiles:${item.key}`);
-        console.log(`${item.key}:`, value); // Debug
-        if (value === null) {
-          await AsyncStorage.setItem(`HelpfulTiles:${item.key}`, 'true');
-          value = 'true';
-        }
-        savedState[item.key] = value === 'true';
-=======
     (async () => {
       try {
         const savedState: { [key: string]: boolean } = {};
@@ -367,7 +264,6 @@ export function HelpfulTiles() {
         console.error("Error loading checkbox state:", e);
       } finally {
         setIsLoaded(true); // renders after this
->>>>>>> 6ecc9d5d25ba667ddd324712e8bbe975170b642a
       }
     })();
   }, []);
