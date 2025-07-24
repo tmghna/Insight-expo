@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Animated, {
   Easing,
   useSharedValue,
@@ -11,7 +8,6 @@ import Animated, {
   interpolate,
   withTiming,
 } from "react-native-reanimated";
-import { Image, Text, Button } from "tamagui";
 import { Metrics } from "@/constants/Metric";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
@@ -42,7 +38,6 @@ const data = [
     description: "card3",
     textcolor: "#FFF",
   },
-
 ];
 
 export function NotifCards() {
@@ -83,12 +78,10 @@ export function NotifCards() {
             (index + 1) * CARD_WIDTH,
           ];
 
-          const scale = interpolate(
-            scrollX.value,
-            inputRange,
-            [0.9, 1, 0.9],
-            { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-          );
+          const scale = interpolate(scrollX.value, inputRange, [0.9, 1, 0.9], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
 
           const opacity = interpolate(
             scrollX.value,
@@ -111,20 +104,22 @@ export function NotifCards() {
           >
             <Animated.View style={[styles.card, animatedStyle]}>
               <Image source={item.image} style={styles.cardImage} />
-              <Text style={[styles.cardTitle, {color: item.textcolor}]}>{item.description}</Text>
+              <Text style={[styles.cardTitle, { color: item.textcolor }]}>
+                {item.description}
+              </Text>
             </Animated.View>
           </TouchableOpacity>
         );
       })}
     </Animated.ScrollView>
   );
-};
+}
 
 const facilities = [
   {
     id: "Market",
     image: require("@/assets/images/market2.png"),
-    push: "/+not-found",
+    push: "/market",
   },
   {
     id: "Complaints",
@@ -147,26 +142,30 @@ const BOX_WIDTH = 135;
 const BOX_HEIGHT = 60;
 
 export function CampusFacilityCards() {
-  const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>({});
+  const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   const opacity = useSharedValue(0);
   const translateX = useSharedValue(20);
 
-    const loadState = useCallback(async () => {
-      try {
-        const state: { [key: string]: boolean } = {};
-        for (const item of facilities) {
-          const value = await AsyncStorage.getItem(`CampusFacilities:${item.id.toLowerCase()}`);
-          state[item.id] = value === 'true';
-        }
-        setVisibleItems(state);
-      } catch (e) {
-        console.error('Error loading tile visibility:', e);
-      } finally {
-        setIsLoaded(true);
+  const loadState = useCallback(async () => {
+    try {
+      const state: { [key: string]: boolean } = {};
+      for (const item of facilities) {
+        const value = await AsyncStorage.getItem(
+          `CampusFacilities:${item.id.toLowerCase()}`
+        );
+        state[item.id] = value === "true";
       }
+      setVisibleItems(state);
+    } catch (e) {
+      console.error("Error loading tile visibility:", e);
+    } finally {
+      setIsLoaded(true);
+    }
   }, []);
 
   useFocusEffect(
@@ -198,9 +197,12 @@ export function CampusFacilityCards() {
       style={styles.container}
       contentContainerStyle={styles.scrollContent}
     >
-      {facilities.map((item) => (
+      {facilities.map((item) =>
         visibleItems[item.id] ? (
-          <Animated.View key={item.id} style={[animatedStyle, styles.animatedCard]}>
+          <Animated.View
+            key={item.id}
+            style={[animatedStyle, styles.animatedCard]}
+          >
             <TouchableOpacity
               onPress={() => router.push(item.push as any)}
               style={styles.campusCard}
@@ -213,70 +215,70 @@ export function CampusFacilityCards() {
             </TouchableOpacity>
           </Animated.View>
         ) : null
-      ))}
+      )}
     </Animated.ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   // Notif styles
   card: {
     width: CARD_WIDTH,
-    height: Metrics.moderateHorizontalScale(160,.2),
-    marginVertical: Metrics.moderateHorizontalScale(20,.2),
-    borderRadius: Metrics.moderateHorizontalScale(20,.1),
+    height: Metrics.moderateHorizontalScale(160, 0.2),
+    marginVertical: Metrics.moderateHorizontalScale(20, 0.2),
+    borderRadius: Metrics.moderateHorizontalScale(20, 0.1),
     backgroundColor: "#111",
     justifyContent: "flex-end",
-    alignItems: "center", 
-    boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
+    alignItems: "center",
+    boxShadow: "0px 5px 4px rgba(0,0,0,0.3)",
   },
   cardImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: Metrics.moderateHorizontalScale(20,.1),
+    borderRadius: Metrics.moderateHorizontalScale(20, 0.1),
   },
   cardTitle: {
-    position: 'absolute',
-    fontSize: Metrics.moderateHorizontalScale(18,.2),
+    position: "absolute",
+    fontSize: Metrics.moderateHorizontalScale(18, 0.2),
     fontWeight: "400",
     fontFamily: "Nunito",
-    paddingBottom: Metrics.moderateHorizontalScale(20,.2),
+    paddingBottom: Metrics.moderateHorizontalScale(20, 0.2),
   },
   container: {
     flex: 0,
     flexDirection: "row",
   },
   scrollContent: {
-    paddingLeft: Metrics.moderateHorizontalScale(20,.2),
-    paddingRight: Metrics.moderateHorizontalScale(10,.2),
+    paddingLeft: Metrics.moderateHorizontalScale(20, 0.2),
+    paddingRight: Metrics.moderateHorizontalScale(10, 0.2),
     alignItems: "center",
   },
   animatedCard: {
-    marginRight: Metrics.moderateHorizontalScale(10,.2),
+    marginRight: Metrics.moderateHorizontalScale(10, 0.2),
   },
   campusCard: {
     width: BOX_WIDTH,
     height: BOX_HEIGHT,
-    borderRadius: Metrics.moderateHorizontalScale(16,.1),
+    borderRadius: Metrics.moderateHorizontalScale(16, 0.1),
     backgroundColor: "#1f1f1f",
     borderColor: "#1f1f1f",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'space-evenly'
+    justifyContent: "space-evenly",
   },
   image: {
     width: "25%",
     aspectRatio: 1,
-    borderRadius: Metrics.moderateHorizontalScale(8,.1),
+    borderRadius: Metrics.moderateHorizontalScale(8, 0.1),
     resizeMode: "cover",
   },
   text: {
     // flexShrink: 1,
-    fontSize: Metrics.moderateHorizontalScale(14,.2),
+    fontSize: Metrics.moderateHorizontalScale(14, 0.2),
     color: "#fff",
-    fontWeight: '400',
+    fontWeight: "400",
     fontFamily: "Nunito",
-    letterSpacing: Metrics.moderateHorizontalScale(1,.2),
+    letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
   },
 });
