@@ -1,11 +1,13 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text, type TextProps } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Metrics } from '@/constants/Metric';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'subText' | 'link' | 'footer';
 };
 
 export function ThemedText({
@@ -25,7 +27,9 @@ export function ThemedText({
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
+        type === 'subText' ? styles.subText : undefined,
         type === 'link' ? styles.link : undefined,
+        type === 'footer' ? styles.footer : undefined,
         style,
       ]}
       {...rest}
@@ -35,8 +39,10 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: Metrics.moderateHorizontalScale(14,.2),
+    fontWeight: '400',
+    fontFamily: 'Nunito'
+    // lineHeight: 24,
   },
   defaultSemiBold: {
     fontSize: 16,
@@ -49,12 +55,24 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: Metrics.moderateHorizontalScale(20,.2),
+    fontWeight: '500',
+    fontFamily: 'WorkSans'
+  },
+  subText: {
+    fontSize: Metrics.moderateHorizontalScale(16,.2),
+    fontWeight: '400',
+    fontFamily: 'Nunito'
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
     color: '#0a7ea4',
+  },
+  footer: {
+    fontSize: Metrics.moderateHorizontalScale(12,.2),
+    fontWeight: '400',
+    fontFamily: 'Nunito',
+    opacity: 0.6,
   },
 });
