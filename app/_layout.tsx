@@ -8,8 +8,6 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 // app/_layout.tsx
-import { TamaguiProvider } from "tamagui";
-import config from "../tamagui.config";
 import { AuthProvider } from "./auth-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -60,24 +58,23 @@ export default function RootLayout() {
     return null;
   }
   console.log("Hello");
-  console.log('Fonts loaded:', loaded);
+  console.log("Fonts loaded:", loaded);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <TamaguiProvider config={config}>
-        <AuthProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="auth" options={{ headerShown: false }} />
-            <Stack.Screen name="home" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-            <Stack.Screen name="homepage" options={{ headerShown: false }} />
-            <Stack.Screen name="contacts" options={{ headerShown: false }} />
-            <Stack.Screen name="settings" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </AuthProvider>
-      </TamaguiProvider>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+          <Stack.Screen name="home" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="homepage" options={{ headerShown: false }} />
+          <Stack.Screen name="contacts" options={{ headerShown: false }} />
+          <Stack.Screen name="settings" options={{ headerShown: false }} />
+          <Stack.Screen name="market" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }

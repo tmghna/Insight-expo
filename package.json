@@ -23,9 +23,6 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.3.6",
-    "@tamagui/config": "^1.125.34",
-    "@tamagui/core": "^1.125.34",
-    "@tamagui/linear-gradient": "^1.125.34",
     "expo": "^53.0.9",
     "expo-blur": "~14.1.4",
     "expo-constants": "~17.1.6",
@@ -41,7 +38,6 @@
     "expo-system-ui": "~5.0.7",
     "expo-web-browser": "~14.1.6",
     "firebase": "^11.6.0",
-    "moti": "^0.30.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
@@ -51,12 +47,10 @@
     "react-native-screens": "~4.10.0",
     "react-native-svg": "15.11.2",
     "react-native-web": "^0.20.0",
-    "react-native-webview": "13.13.5",
-    "tamagui": "^1.125.34"
+    "react-native-webview": "13.13.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@tamagui/babel-plugin": "^1.125.34",
     "@types/jest": "^29.5.12",
     "@types/react": "~19.0.10",
     "@types/react-native": "^0.72.8",

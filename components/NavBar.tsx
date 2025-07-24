@@ -1,75 +1,90 @@
-import { Button, View } from "tamagui";
-
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { usePathname, useRouter } from "expo-router";
-import { MotiView } from "moti";
+import { useRef, useEffect } from "react";
+
+const tabs = [
+  { icon: "home", path: "/homepage" },
+  { icon: "fastfood", path: "/+not-found" },
+  { icon: "notifications", path: "/(tabs)/explore" },
+  { icon: "calendar-today", path: "/+not-found" },
+  { icon: "auto-awesome-mosaic", path: "/+not-found" },
+];
 
 export default function NavBar() {
   const router = useRouter();
+  const styles = useStyles();
   const pathname = usePathname();
-  const tabs = [
-    { icon: "home", path: "/homepage" },
-    { icon: "fastfood", path: "/+not-found" },
-    { icon: "notifications", path: "/(tabs)/explore" },
-    { icon: "calendar-today", path: "/+not-found" },
-    { icon: "auto-awesome-mosaic", path: "/+not-found" },
-  ];
+  
 
   return (
-    <View
-      height={60}
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="space-between"
-      paddingHorizontal={20}
-      backgroundColor={"#181818"}
-    >
+    <View style={styles.footer}>
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
         return (
-          <Button
+          <TouchableOpacity
             key={tab.icon}
-            circular
-            bg={"#181818"}
-            borderWidth={0}
-            paddingBottom={5}
-            pressStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            focusStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
-            hoverStyle={{
-              backgroundColor: "#00000000",
-              borderColor: "#00000000",
-            }}
+            style={styles.tab}
             onPress={() => {
               if (!isActive) {
                 router.push(tab.path as any);
               }
             }}
           >
-            <MotiView
-              animate={{
-                translateY: isActive ? -5 : 0,
-              }}
-              transition={{ type: "spring" }}
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <MaterialIcons
-                name={tab.icon as any}
-                size={30}
-                color={isActive ? "#ffffff" : "#95a1ac"}
-              />
-            </MotiView>
-          </Button>
+            <AnimatedTabIcon  icon={tab.icon} isActive={isActive} />
+          </TouchableOpacity>
         );
       })}
     </View>
   );
 }
+const AnimatedTabIcon = ({
+  icon,
+  isActive,
+}: {
+  icon: string;
+  isActive: boolean;
+}) => {
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(translateY, {
+      toValue: isActive ? -5 : 0,
+      useNativeDriver: true,
+    }).start();
+  }, [isActive]);
+
+  return (
+    <Animated.View
+      style={{
+        transform: [{ translateY }],
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <MaterialIcons
+        name={icon}
+        size={30}
+        color={isActive ? "#ffffff" : "#95a1ac"}
+      />
+    </Animated.View>
+  );
+};
+
+const useStyles = () => {
+  return StyleSheet.create({
+    footer: {
+      height: 60,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
+      backgroundColor: "#181818",
+    },
+    tab: {
+      backgroundColor: "#181818",
+      borderWidth: 0,
+      paddingBottom: 5,
+    },
+  });
+};
