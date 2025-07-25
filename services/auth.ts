@@ -5,14 +5,15 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import { Router, useRouter } from "expo-router";
-import auth from "@react-native-firebase/auth";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { Alert } from "react-native";
 
 GoogleSignin.configure({
   webClientId:
     "372122265926-jako302r2cfcrk9ne6qtgt62arme3dps.apps.googleusercontent.com",
 });
 
-export default async function signInMethod(router: Router) {
+export default async function signInMethod(router: Router): Promise<FirebaseAuthTypes.User | null> {
   try {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
     const response = await GoogleSignin.signIn();
@@ -20,9 +21,19 @@ export default async function signInMethod(router: Router) {
     if (isSuccessResponse(response)) {
       const { idToken, user } = response.data;
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
-      router.replace("/home");
-      return user;
+      const userCredential = await auth().signInWithCredential(googleCredential);
+      const signedInUser = userCredential.user;
+      if (!signedInUser.email?.endsWith("@iisermohali.ac.in")) {
+        await auth().signOut(); //Immediate signout with alert
+        await GoogleSignin.signOut();
+        Alert.alert(
+          "Login Error: Wrong Email", 
+          "It seems that you tried to login through a non-institute email ID."
+        );
+        return null;
+      }
+      router.replace("/homepage");
+      return signedInUser;
     } else {
       console.log("Unsuccessful");
     }
@@ -39,4 +50,5 @@ export default async function signInMethod(router: Router) {
       console.log("Error", error);
     }
   }
+  return null;
 }

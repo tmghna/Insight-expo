@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import {
   StyleSheet,
@@ -14,8 +14,31 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedButton } from '@/components/ThemedButton';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const Settings = () => {
+  const [loginType, setLoginType] = useState("guest");
+  const user = auth().currentUser;
+
+  useEffect(() => {
+    // Example logic: if user is signed in with email, mark as student
+    if (user?.email && !user.isAnonymous) {
+      setLoginType("student");
+    } else {
+      setLoginType("guest");
+    }
+  }, [user]);
+
+  const handleSignOut = async () => {
+    try {
+      await auth().signOut();
+      await GoogleSignin.signOut();
+      router.replace("/auth");
+    } catch (error) {
+      console.log("Error signing out: ", error);
+    }
+  };
   // const [campusOpen, setCampusOpen] = useState(false);
   // const [tilesOpen, setTilesOpen] = useState(false);
   const router = useRouter();
@@ -48,20 +71,24 @@ const Settings = () => {
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              User Name
+              {((user?.displayName ?? "Guest").split(" ")[0]).trim()}
             </ThemedText>
             <ThemedText 
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              xxxxxx@iisermohali.ac.in
+              {(user?.email ?? "blank").trim()}
             </ThemedText>
           </ThemedView>
           <ThemedView style={styles.buttonSection}>
-            <ThemedButton style={styles.logoutIcon} onPress={() => {}}>
-              <MaterialIcons name="logout" style={[styles.logoutIconIcon, {color: iconColor}]} />
-              <ThemedText>Log out</ThemedText>
-            </ThemedButton>
+            {loginType === "student" ? (
+              <ThemedButton style={styles.logoutIcon} onPress={handleSignOut}>
+                <MaterialIcons name="logout" style={[styles.logoutIconIcon, {color: iconColor}]} />
+                <ThemedText>Log out</ThemedText>
+              </ThemedButton>
+            ) : (
+              null
+            )}
           </ThemedView>
         </ThemedView>
         <ThemedView style={styles.divider} />

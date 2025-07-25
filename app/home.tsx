@@ -27,8 +27,11 @@ export default function Home() {
       }}
     >
       <Text>Hello {user?.displayName}</Text>
-      <TouchableOpacity onPress={handleSignOut}/>
-        //TODO:- Some active theme - Harshita Sign Out
+      {/* <TouchableOpacity onPress={handleSignOut}/> */}
+        {/* //TODO:- Some active theme - Harshita Sign Out */}
+      <TouchableOpacity onPress={handleSignOut}>
+        <Text style={{ fontSize: 16, color: "blue", marginTop: 20 }}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 }

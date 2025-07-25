@@ -6,6 +6,7 @@ import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { Metrics } from "@/constants/Metric";
 
 export default function Home() {
   const [initializing, setInitializing] = useState(true);
@@ -47,8 +48,8 @@ export default function Home() {
             <Image
               source={require("../assets/images/insight_logo.png")}
               style={{
-                width: 300,
-                height: 200,
+                width: Metrics.moderateHorizontalScale(300,0.2),
+                height: Metrics.moderateVerticalScale(200,0.2),
               }}
             />
             <TouchableOpacity
@@ -61,15 +62,15 @@ export default function Home() {
               style={styles.login}
               onPress={() =>
                 signInMethod(router).then((user) => {
-                  onAuthStateChanged(user); // TODO:- Checkout TS type issue (not major) Gokul
+                  onAuthStateChanged(user); // TODO:- Checkout TS type issue (not major) Gokul. Fixed Tamaghna
                 })
               }
             >
-              <Text style={styles.loginText}>Student Login</Text>
+              <Text style={styles.loginText}>Institute Login</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.dev} onPress={() => {}}>
-            <Text style={styles.devText}>{"< dev login >"}</Text>
+            <Text style={styles.devText}>{"Dev Login >"}</Text>
           </TouchableOpacity>
         </LinearGradient>
       </View>
@@ -83,7 +84,6 @@ const useStyles = () => {
       flex: 1,
       justifyContent: "center",
       flexDirection: "column",
-      //color: "#00000000"
     },
     content: {
       flexDirection: "column",
@@ -94,33 +94,32 @@ const useStyles = () => {
       shadowOffset: { width: 0, height: 2 },
     },
     login: {
-      backgroundColor: "#ffffff00",
-      height: 40,
-      paddingHorizontal: 22,
-      borderRadius: 10,
-      borderWidth: 0.4,
-      borderColor: "white",
+      backgroundColor: "transparent",
+      height: Metrics.moderateVerticalScale(40,0.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(22,0.2),
+      borderRadius: Metrics.moderateHorizontalScale(10,0.1),
+      borderWidth: Metrics.moderateHorizontalScale(1,0.2),
+      borderColor: "#ffffff99",
       alignContent: "center",
       justifyContent: "center",
-      marginTop: 30,
+      marginTop: Metrics.moderateVerticalScale(30,0.2),
     },
     loginText: {
       color: "#d6d6ff",
-      fontWeight: 300,
-      fontSize: 16.3,
+      fontFamily: "WorkSans400",
+      fontSize: Metrics.moderateHorizontalScale(16,0.2),
     },
     dev: {
-      height: 40,
-      paddingHorizontal: 16,
+      height: Metrics.moderateVerticalScale(40,0.2),
       position: "absolute",
-      bottom: "1.4%",
-      right: "1.5%",
-      backgroundColor: "#00000000",
+      bottom: "0.5%",
+      right: "4%",
+      backgroundColor: "transparent",
     },
     devText: {
       color: "white",
-      fontSize: 14,
-      fontWeight: 400,
+      fontSize: Metrics.moderateHorizontalScale(14,0.2),
+      fontFamily: "WorkSans400",
     },
   });
 };
