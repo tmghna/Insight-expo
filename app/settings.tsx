@@ -22,9 +22,9 @@ const Settings = () => {
   const user = auth().currentUser;
 
   useEffect(() => {
-    // Example logic: if user is signed in with email, mark as student
+    // If user is signed in with email, mark as Institute, otherwise guest
     if (user?.email && !user.isAnonymous) {
-      setLoginType("student");
+      setLoginType("institute");
     } else {
       setLoginType("guest");
     }
@@ -81,7 +81,7 @@ const Settings = () => {
             </ThemedText>
           </ThemedView>
           <ThemedView style={styles.buttonSection}>
-            {loginType === "student" ? (
+            {loginType === "institute" ? (
               <ThemedButton style={styles.logoutIcon} onPress={handleSignOut}>
                 <MaterialIcons name="logout" style={[styles.logoutIconIcon, {color: iconColor}]} />
                 <ThemedText>Log out</ThemedText>

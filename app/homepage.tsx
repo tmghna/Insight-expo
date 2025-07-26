@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageSourcePropType,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -14,8 +15,24 @@ import Tiles from "../components/ui/HelpfulTiles";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from '@/hooks/useThemeColor';
+import auth from "@react-native-firebase/auth";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
+
+  const [loginType, setLoginType] = useState("guest");
+  const user = auth().currentUser;
+
+  useEffect(() => {
+    // If user is signed in with email, mark as Institute, otherwise guest
+    if (user?.email && !user.isAnonymous) {
+      setLoginType("institute");
+    } else {
+      setLoginType("guest");
+    }
+  }, [user]);
+  
+  const isWide = Metrics.screenWidth >= 600;
   const styles = useResponsiveLayout();
   const router = useRouter();
   const backgroundColor = useThemeColor({}, 'background');
@@ -30,16 +47,19 @@ export default function HomePage() {
       >
         {/* Header Section */}
         <ThemedView style={styles.header}>
-          <TouchableOpacity style={styles.avatar} onPress={ () => router.push('/settings')}>
+          <TouchableOpacity activeOpacity={0.9} style={styles.avatar} onPress={ () => router.push('/settings')}>
+            {loginType === "institute" ? (
+              <Image source={{uri: user?.photoURL} as ImageSourcePropType} style={styles.profilePhoto} />
+            ) : (
             <MaterialIcons name="person" style={styles.avatarIcon} />
+            )}
           </TouchableOpacity>
           <ThemedView style={styles.profileInfo}>
-            <ThemedText style={styles.greetingText}>
+            <ThemedText type="footer" style={styles.greetingText}>
               Hello,
             </ThemedText>
-            <ThemedText type='subtitle'
-              style={styles.nameText}>
-              User Name
+            <ThemedText type='subtitle'>
+              {((user?.displayName ?? "Guest").split(" ")[0]).trim()}
             </ThemedText>
           </ThemedView>
         </ThemedView>
@@ -72,7 +92,7 @@ export default function HomePage() {
 
         {/* Manthan Button */}
         <TouchableOpacity
-          style={styles.manthanButton}
+          style={[styles.manthanButton, {width: isWide ? "60%" : "80%"}]}
           activeOpacity={0.8}
           onPress={() => {}}
         >
@@ -102,16 +122,15 @@ const useResponsiveLayout = () => {
     container: {
       flex: 1,
       flexDirection: "column",
-      // backgroundColor: "#181818",
-      paddingHorizontal: Metrics.moderateHorizontalScale(20,.2),
+      paddingHorizontal: Metrics.moderateHorizontalScale(20,0.2),
     },
     header: {
       flexDirection: "row",
       flex: 1,
       justifyContent: "space-between",
       alignItems: "center",
-      marginTop: Metrics.moderateHorizontalScale(20,.2),
-      gap: Metrics.moderateHorizontalScale(10,.2),
+      marginTop: Metrics.moderateHorizontalScale(20,0.2),
+      gap: Metrics.moderateHorizontalScale(10,0.2),
     },
     profileInfo: {
       flexDirection: "column",
@@ -119,48 +138,40 @@ const useResponsiveLayout = () => {
       alignItems: "flex-start",
     },
     greetingText: {
-      fontSize: Metrics.moderateHorizontalScale(16,.2),
-      // fontWeight: '400',
-      // fontFamily: "WorkSans",
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
-      // color: "#95a1ac",
-      opacity: 0.6,
-    },
-    nameText: {
-      fontSize: Metrics.moderateHorizontalScale(22,.2),
-      fontWeight: "400",
-      // fontFamily: "WorkSans",
-      // color: "#ffffff",
+      fontSize: Metrics.moderateHorizontalScale(16,0.2),
+      letterSpacing: Metrics.moderateHorizontalScale(1,0.2),
     },
     avatar: {
       flex: 0,
-      width: Metrics.moderateHorizontalScale(50,.2),
-      height: Metrics.moderateHorizontalScale(50,.2),
+      width: Metrics.moderateHorizontalScale(50,0.2),
+      height: Metrics.moderateHorizontalScale(50,0.2),
       borderRadius: '20%',
       backgroundColor: '#8345cf',
       justifyContent: 'center',
       alignItems: 'center',
     },
+    profilePhoto: {
+      width: "100%",
+      height: "100%",
+      resizeMode: "cover",
+      overflow: "hidden",
+      borderRadius: Metrics.moderateHorizontalScale(10,0.2) //20% of 50
+    },
     avatarIcon: {
-      fontSize: Metrics.moderateHorizontalScale(30,.1),
+      fontSize: Metrics.moderateHorizontalScale(30,0.1),
       color: '#FFF',
     },
     sectionHeader: {
       paddingTop: Metrics.moderateHorizontalScale(20, 0.2),
       flexDirection: "row",
       alignSelf: "flex-start",
-      // fontSize: Metrics.moderateHorizontalScale(22,.2),
-      // fontWeight: '400',
-      letterSpacing: Metrics.moderateHorizontalScale(1,.2),
-      // fontFamily: "WorkSans",
-      // color: "#DDD",
+      letterSpacing: Metrics.moderateHorizontalScale(1,0.2),
     },
     notifScroll: {
       alignItems: "center",
       justifyContent: 'center',
-      // backgroundColor: '#181818',
       flex: 1,
-      marginHorizontal: Metrics.moderateHorizontalScale(-20,.2),
+      marginHorizontal: Metrics.moderateHorizontalScale(-20,0.2),
     },
     eventImage: {
       width: "100%",
@@ -179,16 +190,14 @@ const useResponsiveLayout = () => {
     },
     manthanButton: {
       flexDirection: "row",
-      width: "80%",
       height: Metrics.moderateHorizontalScale(50, 0.2),
       borderRadius: Metrics.moderateHorizontalScale(24, 0.2),
       backgroundColor: "#857cc9ff",
       alignItems: 'center',
       justifyContent: 'center',
       // borderColor: '#fff',
-      borderWidth: Metrics.moderateHorizontalScale(1,.2),
-      boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
-      // elevation: Metrics.moderateHorizontalScale(10,.2),
+      // borderWidth: Metrics.moderateHorizontalScale(1,0.2),
+      boxShadow: '0px 4px 5px rgba(0,0,0,0.3)',
     },
     manthanImage: {
       opacity: 0.2,
@@ -200,12 +209,11 @@ const useResponsiveLayout = () => {
     },
     manthanText: {
       fontSize: Metrics.moderateHorizontalScale(22, 0.2),
-      fontWeight: "400",
       fontFamily: "OldEnglishFive",
       color: "#ffffffcb",
       textShadowColor: "#1f1f1f",
-      textShadowOffset: { width: Metrics.moderateHorizontalScale(2,.2), height: Metrics.moderateHorizontalScale(2,.2) },
-      textShadowRadius: Metrics.moderateHorizontalScale(2,.2),
+      textShadowOffset: { width: Metrics.moderateHorizontalScale(2,0.2), height: Metrics.moderateHorizontalScale(2,0.2) },
+      textShadowRadius: Metrics.moderateHorizontalScale(2,0.2),
     },
   });
 };

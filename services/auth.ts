@@ -13,6 +13,27 @@ GoogleSignin.configure({
     "372122265926-jako302r2cfcrk9ne6qtgt62arme3dps.apps.googleusercontent.com",
 });
 
+function showPermissionModal(): Promise<boolean> {
+  return new Promise((resolve) => {
+    Alert.alert(
+      "Access Permissions",
+      "Do you agree to provide access to your Gmail content which will be end-to-end encrypted and only available to you as a user?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => resolve(false),
+          style: "cancel",
+        },
+        {
+          text: "I Accept the Terms",
+          onPress: () => resolve(true),
+        },
+      ],
+      { cancelable: false }
+    );
+  });
+}
+
 export default async function signInMethod(router: Router): Promise<FirebaseAuthTypes.User | null> {
   try {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
@@ -23,6 +44,7 @@ export default async function signInMethod(router: Router): Promise<FirebaseAuth
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       const userCredential = await auth().signInWithCredential(googleCredential);
       const signedInUser = userCredential.user;
+
       if (!signedInUser.email?.endsWith("@iisermohali.ac.in")) {
         await auth().signOut(); //Immediate signout with alert
         await GoogleSignin.signOut();
@@ -30,6 +52,12 @@ export default async function signInMethod(router: Router): Promise<FirebaseAuth
           "Login Error: Wrong Email", 
           "It seems that you tried to login through a non-institute email ID."
         );
+        return null;
+      }
+      const permissionGranted = await showPermissionModal();
+      if (!permissionGranted) {
+        await auth().signOut();
+        await GoogleSignin.signOut();
         return null;
       }
       router.replace("/homepage");

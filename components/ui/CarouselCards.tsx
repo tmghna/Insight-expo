@@ -16,7 +16,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedButton } from '@/components/ThemedButton';
 
 const width = Metrics.screenWidth;
-const CARD_WIDTH = width * 0.85;
+const isWide = width >= 600;
+const CARD_WIDTH = isWide? width * 0.75 : width * 0.85;
 const SIDE_SPACING = (width - CARD_WIDTH) / 2; // to center cards
 
 const data = [
@@ -105,7 +106,7 @@ export function NotifCards() {
             onPress={() => handleCardPress(index)}
             activeOpacity={1}
           >
-            <Animated.View style={[styles.card, animatedStyle]}>
+            <Animated.View style={[styles.card, animatedStyle, {aspectRatio: isWide? 2 : 16/9}]}>
               <Image source={item.image} style={styles.cardImage} />
               <ThemedText type='subText' 
                 style={{color: item.textcolor, position: 'absolute', paddingBottom: Metrics.moderateHorizontalScale(20,.2) }}
@@ -143,8 +144,8 @@ const facilities = [
   },
 ];
 
-const BOX_WIDTH = 135;
-const BOX_HEIGHT = 60;
+const BOX_WIDTH = Metrics.moderateHorizontalScale(135, 0.2);
+const BOX_HEIGHT = Metrics.moderateVerticalScale(60, 0.2);
 
 export function CampusFacilityCards() {
   const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>(
@@ -214,7 +215,6 @@ export function CampusFacilityCards() {
               <ThemedText 
                 style={styles.text} 
                 numberOfLines={1} 
-                ellipsizeMode='tail'
                 adjustsFontSizeToFit
               >
                 {item.id}
@@ -231,14 +231,12 @@ const styles = StyleSheet.create({
   // Notif styles
   card: {
     width: CARD_WIDTH,
-    aspectRatio: 16/9,
-    marginVertical: Metrics.moderateHorizontalScale(20,.2),
-    borderRadius: Metrics.moderateHorizontalScale(20,.1),
-    // backgroundColor: "#111",
+    marginVertical: Metrics.moderateHorizontalScale(20, 0.2),
+    borderRadius: Metrics.moderateHorizontalScale(20, 0.1),
     justifyContent: "flex-end",
     alignItems: "center", 
     boxShadow: '0px 5px 4px rgba(0,0,0,0.3)',
-    elevation: Metrics.moderateHorizontalScale(10,.2),
+    elevation: Metrics.moderateHorizontalScale(10, 0.2),
   },
   cardImage: {
     width: "100%",
@@ -256,36 +254,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   animatedCard: {
-    marginRight: Metrics.moderateHorizontalScale(10,.2),
-    marginBottom: Metrics.moderateHorizontalScale(10,.2),
+    marginRight: Metrics.moderateHorizontalScale(10, 0.2),
+    marginBottom: Metrics.moderateHorizontalScale(10, 0.2),
 
   },
   campusCard: {
     width: BOX_WIDTH,
     height: BOX_HEIGHT,
-    borderRadius: Metrics.moderateHorizontalScale(16,.1),
+    borderRadius: Metrics.moderateHorizontalScale(16, 0.1),
     flexDirection: "row",
-    gap: Metrics.moderateHorizontalScale(10,.2),
+    gap: Metrics.moderateHorizontalScale(10, 0.2),
     alignItems: "center",
     justifyContent: 'space-between',
-    paddingHorizontal: Metrics.moderateHorizontalScale(10,.2),
+    paddingHorizontal: Metrics.moderateHorizontalScale(10, 0.2),
   },
   image: {
     flex: 0,
     width: "30%",
     aspectRatio: 1,
-    borderRadius: Metrics.moderateHorizontalScale(8,.1),
+    borderRadius: Metrics.moderateHorizontalScale(8, 0.1),
     borderColor: '#666',
-    borderWidth: Metrics.moderateHorizontalScale(1,.2),
+    borderWidth: Metrics.moderateHorizontalScale(1, 0.2),
     resizeMode: "cover",
   },
   text: {
-    // flexShrink: 1,
-    fontSize: Metrics.moderateHorizontalScale(14,.2),
-    // color: "#fff",
-    // fontWeight: '400',
-    // fontFamily: "Nunito",
+    fontSize: Metrics.moderateHorizontalScale(14, 0.2),
     flex: 1,
-    letterSpacing: Metrics.moderateHorizontalScale(1,.2),
+    letterSpacing: Metrics.moderateHorizontalScale(1, 0.2),
   },
 });

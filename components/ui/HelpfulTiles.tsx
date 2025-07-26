@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
     width: Metrics.moderateHorizontalScale(160,.2),
     borderRadius: Metrics.moderateHorizontalScale(16,.1),
     marginHorizontal: Metrics.moderateHorizontalScale(5,.2),
-    boxShadow: '0px 5px 2px rgba(0,0,0,0.2)',
+    boxShadow: '0px 4px 4px rgba(0,0,0,0.2)',
+    elevation: Metrics.moderateHorizontalScale(10, 0.2)
   },
   tileContainer: {
     width: "100%",
