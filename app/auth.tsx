@@ -54,7 +54,7 @@ export default function Home() {
             />
             <TouchableOpacity
               style={styles.login}
-              onPress={() => router.push("/homepage")}
+              onPress={() => router.push("/(tabs)")}
             >
               <Text style={styles.loginText}>Guest Login</Text>
             </TouchableOpacity>

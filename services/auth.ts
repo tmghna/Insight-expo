@@ -60,7 +60,7 @@ export default async function signInMethod(router: Router): Promise<FirebaseAuth
         await GoogleSignin.signOut();
         return null;
       }
-      router.replace("/homepage");
+      router.replace("/(tabs)");
       return signedInUser;
     } else {
       console.log("Unsuccessful");

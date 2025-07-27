@@ -7,7 +7,7 @@ import { Metrics } from '@/constants/Metric';
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'subText' | 'link' | 'footer';
+  type?: 'default' | 'title' | 'subtitle' | 'subText' | 'link' | 'footer';
 };
 
 export function ThemedText({
@@ -25,7 +25,6 @@ export function ThemedText({
         { color },
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'subText' ? styles.subText : undefined,
         type === 'link' ? styles.link : undefined,
@@ -42,15 +41,10 @@ const styles = StyleSheet.create({
     fontSize: Metrics.moderateHorizontalScale(14,.2),
     fontFamily: 'Nunito400'
   },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
+    fontSize: Metrics.moderateHorizontalScale(32, 0.2),
+    fontFamily: 'WorkSans600',
+    lineHeight: Metrics.moderateHorizontalScale(32, 0.2),
   },
   subtitle: {
     fontSize: Metrics.moderateHorizontalScale(20,.2),
@@ -61,8 +55,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito400'
   },
   link: {
-    lineHeight: 30,
-    fontSize: 16,
+    // lineHeight: 30,
+    fontSize: Metrics.moderateHorizontalScale(16, 0.2),
     color: '#0a7ea4',
   },
   footer: {
