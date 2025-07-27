@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  useColorScheme,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -36,6 +37,7 @@ export default function HomePage() {
   const styles = useResponsiveLayout();
   const router = useRouter();
   const backgroundColor = useThemeColor({}, 'background');
+  const borderColor = useColorScheme() === 'dark' ? "#fff" : "#222";
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor}} edges={["top"]}>
@@ -92,7 +94,7 @@ export default function HomePage() {
 
         {/* Manthan Button */}
         <TouchableOpacity
-          style={[styles.manthanButton, {width: isWide ? "60%" : "80%"}]}
+          style={[styles.manthanButton, {width: isWide ? "60%" : "80%", borderColor}]}
           activeOpacity={0.8}
           onPress={() => {}}
         >
@@ -195,8 +197,7 @@ const useResponsiveLayout = () => {
       backgroundColor: "#857cc9ff",
       alignItems: 'center',
       justifyContent: 'center',
-      // borderColor: '#fff',
-      // borderWidth: Metrics.moderateHorizontalScale(1,0.2),
+      borderWidth: Metrics.moderateHorizontalScale(1,0.2),
       boxShadow: '0px 4px 5px rgba(0,0,0,0.3)',
     },
     manthanImage: {

@@ -68,6 +68,7 @@ const Settings = () => {
           <ThemedView style={styles.profileText}>
             <ThemedText 
               type="subtitle"
+              style={{fontFamily: "WorkSans400"}}
               numberOfLines={1}
               ellipsizeMode="tail"
             >
