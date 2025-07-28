@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, StyleSheet } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -12,38 +12,59 @@ import { Metrics } from '@/constants/Metric';
 
 type Props = {
   icon: string;
+  size: number;
   path: string;
   onPress: () => void;
 };
 
-export function TabBarButton({ icon, path, onPress }: Props) {
+export function TabBarButton({ icon, size, path, onPress }: Props) {
   const iconColor = useThemeColor({}, 'icon');
   const translateY = useSharedValue(0);
   const pathname = usePathname();
   const isFocused = pathname === '/' ? path === 'index' : pathname === `/${path}`;
+  const scale = useSharedValue(1);
+  
+  const handlePressIn = () => {
+    scale.value = withSpring(0.95, {
+      damping: 20,
+      stiffness: 250,
+    });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, {
+      damping: 10,
+      stiffness: 200,
+    });
+  };
 
   useEffect(() => {
     translateY.value = withSpring(isFocused ? Metrics.moderateVerticalScale(-5,0.2) : 0, {
-      damping: 15,
+      damping: 10,
       stiffness: 150,
     });
   }, [isFocused]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
+    transform: [{ translateY: translateY.value}, { scale: scale.value }],
   }));
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <Pressable 
+      onPress={onPress} 
+      onPressIn={handlePressIn} 
+      onPressOut={handlePressOut} 
+      style={styles.button}
+    >
       <Animated.View style={[styles.iconWrapper, animatedStyle]}>
         <MaterialIcons
           name={icon as any}
-          size={Metrics.moderateHorizontalScale(28,0.2)}
+          size={Metrics.moderateHorizontalScale(size,0.2)}
           color={iconColor}
           style={{ opacity: isFocused ? 1 : 0.6 }}
         />
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

@@ -5,11 +5,11 @@ import { Metrics } from '@/constants/Metric';
 import { TabBarButton } from '@/components/ui/TabBarButton';
 
 const tabs = [
-  { icon: 'home', path: 'index', name: 'home' },
-  { icon: 'fastfood', path: 'mess', name: 'mess' },
-  { icon: 'notifications', path: 'explore', name: 'notification' },
-  { icon: 'calendar-today', path: 'calendar', name: 'calendar' },
-  { icon: 'auto-awesome-mosaic', path: 'clubs', name: 'clubs' },
+  { icon: 'home', path: 'index', name: 'home', size: 28 },
+  { icon: 'fastfood', path: 'mess', name: 'mess', size: 26 },
+  { icon: 'notifications', path: 'explore', name: 'notification', size: 27 },
+  { icon: 'calendar-today', path: 'calendar', name: 'calendar', size: 26 },
+  { icon: 'auto-awesome-mosaic', path: 'clubs', name: 'clubs', size: 28 },
 ];
 
 export default function TabsLayout() {
@@ -42,10 +42,12 @@ export default function TabsLayout() {
             tabBarButton: (props) => (
               <TabBarButton
                 icon={tab.icon}
+                size={tab.size}
                 path={tab.path}
                 onPress={props.onPress as any}
               />
             ),
+            lazy: true, // This prevents rendering screens until they are in the viewport
           }}
           />
         ))};

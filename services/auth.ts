@@ -4,7 +4,7 @@ import {
   isSuccessResponse,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
-import { Router, useRouter } from "expo-router";
+import { Router } from "expo-router";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { Alert } from "react-native";
 

@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import NavBar from "@/components/NavBar";
 import { useRouter } from "expo-router";
 import { Metrics } from "@/constants/Metric";
 import { NotifCards, CampusFacilityCards } from "@/components/ui/CarouselCards";
