@@ -98,7 +98,7 @@ export default function HomePage() {
           onPress={() => {}}
         >
           <Image
-            source={require("../../assets/images/newspaper.png")}
+            source={require("@/assets/images/newspaper.png")}
             style={styles.manthanImage}
           />
           <ThemedText style={styles.manthanText}>

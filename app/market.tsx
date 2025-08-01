@@ -11,7 +11,7 @@ export default function Market() {
 
   return (
     <ImageBackground
-      source={require("../assets/images/MARKETBGGGG.png")}
+      source={require("@/assets/images/MARKETBGGGG.png")}
       style={{ flex: 1 }}
     >
       <SafeAreaView edges={["top"]} style={styles.background}>

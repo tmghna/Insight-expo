@@ -32,6 +32,7 @@ export default function TabsLayout() {
               elevation: 0,
             },
           }),
+          // animation: "shift"
         }}
       >
         {tabs.map((tab) => (
