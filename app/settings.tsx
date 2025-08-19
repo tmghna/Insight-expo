@@ -16,10 +16,15 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { useAuth } from "./auth-context";
 
 const Settings = () => {
   const [loginType, setLoginType] = useState("guest");
-  const user = auth().currentUser;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <ThemedText>Loading...</ThemedText>; // feature needs to be polished
+  }
 
   useEffect(() => {
     // If user is signed in with email, mark as Institute, otherwise guest

@@ -15,13 +15,17 @@ import Tiles from "@/components/ui/HelpfulTiles";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from '@/hooks/useThemeColor';
-import auth from "@react-native-firebase/auth";
 import { useEffect, useState } from "react";
+import { useAuth } from "../auth-context";
 
 export default function HomePage() {
 
   const [loginType, setLoginType] = useState("guest");
-  const user = auth().currentUser;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <ThemedText>Loading...</ThemedText>; // feature needs to be polished
+  }
 
   useEffect(() => {
     // If user is signed in with email, mark as Institute, otherwise guest
